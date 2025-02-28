@@ -50,7 +50,10 @@ biometry <- read("data/biometry.rds")
 ### Description par l'étudiant 1
 
 ```{r AB}
-
+chart(data=biometry, genre ~ activite_physique %fill=% genre)+ 
+  geom_violin()+
+  coord_flip()+ 
+  scale_fill_viridis_d()
 ```
 
 ### Description par l'étudiant 2
