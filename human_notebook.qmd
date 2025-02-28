@@ -42,31 +42,35 @@ La description des données et les tests statistiques sont réalisés dans la Sc
 <!--% Ajoutez un chunk d'importation des données à partir de vos données remaniées dans `data/biometry.rds`. Inspirez-vous de vos projets individuels pour écrire correctement ces chunks. -->
 
 ```{r import}
-# Lecture de données
 biometry <- read("data/biometry.rds")
-# Tableau des premières et dernières lignes
-tabularise$headtail(biometry)
-# Description des données
-skimr::skim(biometry)
 ```
 
 <!--% Ensuite vous décrirez graphiquement (avec `chart()`) et numériquement (tableaux avec `tabularise()`, `skimr::skim()`, etc.) vos données. Chaque étudiant ajoute deux éléments descriptifs pertinents. -->
 
 ### Description par l'étudiant 1
 
-...Vos deux descriptions ici...
+```{r AB}
+
+```
+
 
 ### Description par l'étudiant 2
 
-...Vos deux descriptions ici...
+```{r CS}
+
+```
 
 ### Description par l'étudiant 3
 
-...Vos deux descriptions ici...
+```{r JC}
+
+```
 
 ### Description par l'étudiant 4
 
-...Vos deux descriptions ici...
+```{r LH}
+
+```
 
 ## Calcul d'indices
 
