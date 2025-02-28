@@ -1,6 +1,6 @@
 ---
 title: "___"
-author: "Jeanne CURTO, Camille SPAGNA, Alexia BAIRE, Lou HALLOT"
+author: "Alexia BAIRE, Camille SPAGNA, Jeanne CURTO, Lou HALLOT"
 date: "`r Sys.Date()`"
 format:
   html:
