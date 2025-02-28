@@ -1,6 +1,6 @@
 ---
 title: "Santé humaine liée à l'obésité (bloc-notes)"
-author: "Jeanne CURTO, ___, ___, ___"
+author: "Jeanne CURTO, Camille SPAGNA, ___, ___"
 date: "`r Sys.Date()`"
 format:
   html:
