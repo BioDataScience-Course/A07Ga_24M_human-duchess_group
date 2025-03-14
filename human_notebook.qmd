@@ -69,8 +69,7 @@ L'activité physique en minutes par semaine des hommes et des femmes est représ
 chart(data=biometry, genre ~ activite_physique %fill=% genre)+ 
   geom_violin()+
   coord_flip()+ 
-  scale_fill_viridis_d()+ 
-  labs (title= "Distribution de l'activité physique en fonction du genre")
+  scale_fill_viridis_d()
 ```
 
 Les hommes ont une activité physique plutôt diversifiée mais sans valeurs extrêmes. La plupart d'entre eux ayant néanmoins un faible niveau. 
