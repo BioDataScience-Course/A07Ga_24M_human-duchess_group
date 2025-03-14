@@ -58,8 +58,52 @@ chart(data=biometry, genre ~ activite_physique %fill=% genre)+
 
 ### Description par l'étudiant 2
 
-```{r CS}
+```{r CS remaniement}
+## Recodage de biometry$age en biometry$age_rec
+biometry$age_rec <- cut(biometry$age,
+  include.lowest = TRUE,
+  right = FALSE,
+  dig.lab = 2,
+  breaks = c(14, 25, 40, 65, 99)
+)
 
+## Recodage de biometry$age_rec en biometry$age_rec_rec
+biometry$age_rec_rec <- biometry$age_rec %>%
+  fct_recode(
+    "jeune adulte" = "[14,25)",
+    "adulte" = "[25,40)",
+    "adulte avancé" = "[40,65)",
+    "senior" = "[65,99]"
+  )
+
+## Recodage de biometry$sommeil en biometry$sommeil_rec
+biometry$sommeil_rec <- cut(biometry$sommeil,
+  include.lowest = TRUE,
+  right = FALSE,
+  dig.lab = 4,
+  breaks = c(0, 6.7, 8.6, 14))
+
+## Recodage de biometry$sommeil_rec en biometry$sommeil_rec_rec
+biometry$sommeil_rec_rec <- biometry$sommeil_rec %>%
+  fct_recode(
+    "sommeil court" = "[0,6.7)",
+    "sommeil normal" = "[6.7,8.6)",
+    "sommeil long" = "[8.6,14]"
+  )
+  
+```
+
+```{r CS tableau}
+Camille_tab <- table(biometry$sommeil_rec_rec, biometry$age_rec_rec)
+pander::pander(Camille_tab)
+```
+
+```{r CS}
+chart(data = biometry, ~ sommeil_rec_rec %fill=% age_rec_rec) +
+  geom_bar(position = "dodge") +
+  labs(fill = "Âge") +
+  scale_fill_viridis_d() +
+  labs (title = "Qualité du sommeil en fonction de l'âge",y = "Effectifs", x = "Qualité du sommeil")
 ```
 
 ### Description par l'étudiant 3
