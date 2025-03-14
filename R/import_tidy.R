@@ -95,7 +95,7 @@ biometry <- labelise (biometry,
     cortisone = "Cortisone",
     eau = "Consommation d'eau",
     age = "Âge",
-    masse_cor = "Masse corrigée"),
+    masse_corr = "Masse corrigée"),
   units = list(
     masse_std_ref = "kg",
     masse_std = "kg",
@@ -111,7 +111,7 @@ biometry <- labelise (biometry,
     fumeur = "nbr cigarettes/sem",
     eau = "L/j",
     age = "Années",
-    masse_cor = "kg"
+    masse_corr = "kg"
     ))
 
 
