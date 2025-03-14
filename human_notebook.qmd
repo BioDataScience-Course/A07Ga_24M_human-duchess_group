@@ -123,7 +123,7 @@ chart(data = biometry, ~ sommeil_rec_rec %fill=% age_rec_rec) +
   geom_bar(position = "dodge") +
   labs(fill = "Âge") +
   scale_fill_viridis_d() +
-  labs (title = "Qualité du sommeil en fonction de l'âge",y = "Effectifs", x = "Qualité du sommeil")
+  labs (y = "Effectifs", x = "Qualité du sommeil")
 ```
 
 ### Description par l'étudiant 3
