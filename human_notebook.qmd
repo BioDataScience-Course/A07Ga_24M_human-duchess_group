@@ -70,9 +70,31 @@ chart(data=biometry, genre ~ activite_physique %fill=% genre)+
 
 ### Description par l'étudiant 4
 
-```{r LH}
+```{r LH tableau}
+## Recodage de biometry$sucre en biometry$sucre_rec
+biometry$sucre_rec <- biometry$sucre %>%
+  fct_recode(
+    "exception" = "jamais",
+    "exception" = "rarement")
 
+Lou_tab <- table("Consommation de sucre" = biometry$sucre_rec, "Masse corrigée" = biometry$masse_corr)
+  skimr::skim(Lou_tab)
 ```
+
+```{r LH}
+give_n <- function(x)
+  c(y = max(x) * 1.1, label = length(x)) 
+
+chart(data = biometry, masse_corr ~ sucre_rec %fill=% genre) +
+  geom_boxplot() + 
+  scale_fill_viridis_d() +
+  stat_summary(fun.data = give_n, geom = "text", hjust = 0.5,
+    position = position_dodge(0.75))
+```
+
+
+
+
 
 ## Calcul d'indices
 
