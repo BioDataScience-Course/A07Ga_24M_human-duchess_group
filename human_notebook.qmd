@@ -127,9 +127,38 @@ chart(data = biometry, ~ sommeil_rec_rec %fill=% age_rec_rec) +
 
 ### Description par l'étudiant 3
 
-```{r JC}
-
+```{r JC remaniement}
+## Recodage de biometry$alcool en biometry$alcool_rec
+biometry$alcool_rec <- cut(biometry$alcool,
+  include.lowest = FALSE,
+  right = FALSE,
+  dig.lab = 4,
+  breaks = c(0, 7, 21, 50)
+)
+## Recodage de biometry$alcool_rec en biometry$alcool_rec_rec
+biometry$alcool_rec_rec <- biometry$alcool_rec %>%
+  fct_recode(
+    "Exceptionnellement" = "[0,7)",
+    "Régulièrement" = "[7,21)",
+    "Souvent" = "[21,50)"
+  )
 ```
+
+```{r JC tableau}
+Jeanne_tab <- table(biometry$alcool_rec_rec, biometry$eau)
+Jeanne_tab
+```
+
+```{r JC graphique}
+chart(data=biometry, aes(x=eau, y=alcool_rec_rec, fill=genre )) +
+  ggridges::geom_density_ridges(alpha=0.7, show.legend=FALSE)+
+  scale_fill_viridis_d()+
+  facet_wrap(~genre)
+```
+
+Pourquoi j'ai rien dans souvent lol à l'aide ???
+
+Pas complètement sûre de moi
 
 ### Description par l'étudiant 4
 
