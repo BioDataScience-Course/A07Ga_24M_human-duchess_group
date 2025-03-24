@@ -70,8 +70,7 @@ L'activité physique en minutes par semaine des hommes et des femmes est représ
 chart(data=biometry, genre ~ activite_physique %fill=% genre)+ 
   geom_violin()+
   coord_flip()+ 
-  scale_fill_viridis_d()+ 
-  labs (title= "Distribution de l'activité physique en fonction du genre")
+  scale_fill_viridis_d()
 ```
 
 Les hommes ont une activité physique plutôt diversifiée mais sans valeurs extrêmes. La plupart d'entre eux ayant néanmoins un faible niveau. À l'inverse, il y a deux grands extrêmes chez les les femmes, traduisant une plus grande diversité dans leurs pratiques. Énormément de femmes ont une activité physique assez faible voir nulle alors que quelques unes d'entre elles s'avèrent avoir un niveaux beaucoup plus élevé.
@@ -123,14 +122,44 @@ chart(data = biometry, ~ sommeil_rec_rec %fill=% age_rec_rec) +
   geom_bar(position = "dodge") +
   labs(fill = "Âge") +
   scale_fill_viridis_d() +
-  labs (title = "Qualité du sommeil en fonction de l'âge",y = "Effectifs", x = "Qualité du sommeil")
+  labs (y = "Effectifs", x = "Qualité du sommeil")
 ```
 
 ### Description par l'étudiant 3
 
-```{r JC}
-
+```{r JC remaniement}
+## Recodage de biometry$alcool en biometry$alcool_rec
+biometry$alcool_rec <- cut(biometry$alcool,
+  include.lowest = FALSE,
+  right = FALSE,
+  dig.lab = 4,
+  breaks = c(0, 8, 22, 50)
+)
+## Recodage de biometry$alcool_rec en biometry$alcool_rec_rec
+biometry$alcool_rec_rec <- biometry$alcool_rec %>%
+  fct_recode(
+    "Exceptionnellement" = "[0,8)",
+    "Régulièrement" = "[8,22)",
+    "Souvent" = "[22,50)"
+  )
 ```
+
+```{r JC tableau}
+Jeanne_tab <- table(biometry$alcool_rec_rec, biometry$eau)
+Jeanne_tab
+```
+
+```{r JC graphique}
+chart(data=biometry, aes(x=eau, y=alcool_rec_rec, fill=genre )) +
+  ylab("Consommation d'alcool") +
+  ggridges::geom_density_ridges(alpha=0.6,bandwidth=0.2, show.legend=FALSE)+
+  scale_fill_viridis_d()+
+  facet_wrap(~genre)
+```
+
+Pourquoi j'ai rien dans souvent lol à l'aide ???
+
+Pas complètement sûre de moi
 
 ### Description par l'étudiant 4
 
@@ -167,7 +196,23 @@ chart(data = biometry, masse_corr ~ sucre_rec %fill=% genre) +
 <!--% Description et formule ci-dessous. -->
 
 ```{r indice1}
+
 # Calcul de la ou des variables reprenant l'indice sous forme numérique (et facteur)
+
+# Conversion de la taille en mètres car dans IMC taille = en mètres 
+biometry$taille_m <- biometry$taille / 100
+
+# Calcul de l'IMC
+biometry$IMC <- biometry$masse / (biometry$taille_m^2)
+
+# Création de catégorie 
+biometry$IMC_cat <- cut(
+  biometry$IMC,
+  breaks = c(-Inf, 18.5, 25, 29.9, 34.9, 39.9, 50, Inf),
+  labels = c("Maigreur", "Poids normal", "Surpoids",
+    "Obésité modérée (Grade I)", "Obésité sévère (Grade II)",
+    "Obésité morbide (Grade III)", "Super-obésité (Obésité massive)"),
+  right = TRUE)
 
 ```
 
@@ -175,6 +220,16 @@ chart(data = biometry, masse_corr ~ sucre_rec %fill=% genre) +
 
 ```{r plot_indice1}
 # Graphique ou tableau utilisant l'indice calculé.
+chart(data = biometry, sucre_rec ~  IMC_cat %fill=% IMC_cat) +
+  ggridges::geom_density_ridges(alpha = 0.8, scale = 1.2) +  
+  scale_fill_viridis_d() +  
+  labs(title = "Consommation de fast-food en fonction des résultats d'IMC",
+       x = "Nombre de repas fast-food",
+       y = "Catégorie IMC",
+       fill = "IMC") +
+  theme_minimal() +
+  theme(legend.position = "right",
+        plot.title = element_text(hjust = 0.5, face = "bold", size = 14))
 
 ```
 
