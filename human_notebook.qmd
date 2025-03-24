@@ -163,18 +163,20 @@ Pas complètement sûre de moi
 
 ### Description par l'étudiant 4
 
-```{r LH tableau}
+```{r LH remaniement}
 ## Recodage de biometry$sucre en biometry$sucre_rec
 biometry$sucre_rec <- biometry$sucre %>%
   fct_recode(
     "exception" = "jamais",
     "exception" = "rarement")
+```
 
+```{r LH tableau}
 Lou_tab <- table("Consommation de sucre" = biometry$sucre_rec, "Masse corrigée" = biometry$masse_corr)
   skimr::skim(Lou_tab)
 ```
 
-```{r LH}
+```{r LH graphique}
 give_n <- function(x)
   c(y = max(x) * 1.1, label = length(x)) 
 
