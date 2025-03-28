@@ -291,12 +291,12 @@ $RTH = \frac{\text{Tour de taille (cm)}}{\text{Tour de hanches (cm)}}$
 biometry$RTH <- biometry$tour_taille / biometry$tour_hanche
 biometry <- smutate(biometry,
   RTH_rec = case_when(
-    genre == "H" & RTH >= 1 ~ "risque élevé",
-    genre == "H" & RTH >= 0.90 ~ "risque modéré",
-    genre == "H" & RTH < 0.90 ~ "risque faible",
-    genre == "F" & RTH >= 0.9 ~ "risque élevé",
-    genre == "F" & RTH >= 0.8 ~ "risque modéré",
-    genre == "F" & RTH < 0.8 ~ "risque faible"
+    genre == "H" & RTH >= 1 ~ "Élevé",
+    genre == "H" & RTH >= 0.90 ~ "Modéré",
+    genre == "H" & RTH < 0.90 ~ "Faible",
+    genre == "F" & RTH >= 0.9 ~ "Élevé",
+    genre == "F" & RTH >= 0.8 ~ "Modéré",
+    genre == "F" & RTH < 0.8 ~ "Faible"
   ))
 
 ```
@@ -307,7 +307,8 @@ biometry <- smutate(biometry,
 # Graphique ou tableau utilisant l'indice calculé.
 chart(biometry, RTH ~ genre %fill=% RTH_rec) +
   geom_boxplot() +
-  scale_fill_viridis_d()
+  scale_fill_viridis_d() +
+  labs(fill = "Risque", y = "RTH")
 ```
 
 <!--% Interprétation en quelques points du graphique ou tableau. -->
