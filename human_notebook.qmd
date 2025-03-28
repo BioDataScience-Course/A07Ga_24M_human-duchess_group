@@ -83,16 +83,15 @@ biometry$age_rec <- cut(biometry$age,
   include.lowest = TRUE,
   right = FALSE,
   dig.lab = 2,
-  breaks = c(14, 25, 40, 65, 99)
+  breaks = c(14, 35, 65, 99)
 )
 
 ## Recodage de biometry$age_rec en biometry$age_rec_rec
 biometry$age_rec_rec <- biometry$age_rec %>%
   fct_recode(
-    "jeune adulte" = "[14,25)",
-    "adulte" = "[25,40)",
-    "adulte avancé" = "[40,65)",
-    "senior" = "[65,99]"
+    "Jeune adulte" = "[14,35)",
+    "Adulte" = "[35,65)",
+    "Senior" = "[65,99]"
   )
 
 ## Recodage de biometry$sommeil en biometry$sommeil_rec
@@ -127,39 +126,52 @@ chart(data = biometry, ~ sommeil_rec_rec %fill=% age_rec_rec) +
 
 ### Description par l'étudiant 3
 
-```{r JC remaniement}
+```{r JC remaniement 1}
 ## Recodage de biometry$alcool en biometry$alcool_rec
 biometry$alcool_rec <- cut(biometry$alcool,
   include.lowest = FALSE,
   right = FALSE,
   dig.lab = 4,
-  breaks = c(0, 8, 22, 50)
+  breaks = c(0, 1, 7, 50)
 )
 ## Recodage de biometry$alcool_rec en biometry$alcool_rec_rec
 biometry$alcool_rec_rec <- biometry$alcool_rec %>%
   fct_recode(
-    "Exceptionnellement" = "[0,8)",
-    "Régulièrement" = "[8,22)",
-    "Souvent" = "[22,50)"
+    "Jamais" = "[0,1)",
+    "Régulièrement" = "[1,7)",
+    "Souvent" = "[7,50)"
   )
 ```
 
-```{r JC tableau}
-Jeanne_tab <- table(biometry$alcool_rec_rec, biometry$eau)
-Jeanne_tab
-```
-
 ```{r JC graphique}
-chart(data=biometry, aes(x=eau, y=alcool_rec_rec, fill=genre )) +
+chart(data=biometry, aes(x=age, y=alcool_rec_rec, fill=genre )) +
   ylab("Consommation d'alcool") +
-  ggridges::geom_density_ridges(alpha=0.6,bandwidth=0.2, show.legend=FALSE)+
+  ggridges::geom_density_ridges(alpha=0.6,bandwidth=7, show.legend=FALSE)+
   scale_fill_viridis_d()+
   facet_wrap(~genre)
 ```
 
-Pourquoi j'ai rien dans souvent lol à l'aide ???
+```{r JC remaniement 2}
+## Recodage de biometry$age en biometry$age_rec_2
+biometry$age_rec_2 <- cut(biometry$age,
+  include.lowest = TRUE,
+  right = FALSE,
+  dig.lab = 4,
+  breaks = c(10, 40, 70, 100)
+)
+## Recodage de biometry$age_rec_2 en biometry$age_rec_rec_2
+biometry$age_rec_rec_2 <- biometry$age_rec_2 %>%
+  fct_recode(
+    "Jeune adulte" = "[10,40)",
+    "Adulte" = "[40,70)",
+    "Senior" = "[70,100]"
+  )
+```
 
-Pas complètement sûre de moi
+```{r JC tableau}_r)}
+Jeanne_tab <- table(biometry$alcool_rec_rec, biometry$age_rec_rec_2)
+knitr::kable(Jeanne_tab)
+```
 
 ### Description par l'étudiant 4
 
@@ -209,6 +221,8 @@ Cependant, la moyenne des masses corrigées des personnes consommant exceptionne
 
 <!--% Description et formule ci-dessous. -->
 
+$IMC = \frac{\text{Poids (kg)}}{\text{Taille (m)}^2}$
+
 ```{r indice1}
 
 # Calcul de la ou des variables reprenant l'indice sous forme numérique (et facteur)
@@ -223,7 +237,7 @@ biometry$IMC <- biometry$masse / (biometry$taille_m^2)
 biometry$IMC_cat <- cut(
   biometry$IMC,
   breaks = c(-Inf, 18.5, 25, 29.9, 34.9, 39.9, 50, Inf),
-  labels = c("Maigreur", "Poids normal", "Surpoids",
+  labels = c("Sous-poids", "Poids normal", "Surpoids",
     "Obésité modérée (Grade I)", "Obésité sévère (Grade II)",
     "Obésité morbide (Grade III)", "Super-obésité (Obésité massive)"),
   right = TRUE)
@@ -233,34 +247,59 @@ biometry$IMC_cat <- cut(
 <!--% Graphique ou tableau utilisant l'indice calculé.-->
 
 ```{r plot_indice1}
+## Recodage de biometry$fast_food en biometry$fast_food_rec
+biometry$fast_food_rec <- cut(biometry$fast_food,
+  include.lowest = TRUE,
+  right = FALSE,
+  dig.lab = 4,
+  breaks = c(0, 2, 4, 14)
+)
+
+## Recodage de biometry$fast_food_rec en biometry$fast_food_rec_rec
+biometry$fast_food_rec_rec <- biometry$fast_food_rec %>%
+  fct_recode(
+    "Rarement" = "[0,2)",
+    "Régulièrement" = "[2,4)",
+    "Souvent" = "[4,14]"
+  )
 # Graphique ou tableau utilisant l'indice calculé.
-chart(data = biometry, sucre_rec ~  IMC_cat %fill=% IMC_cat) +
-  ggridges::geom_density_ridges(alpha = 0.8, scale = 1.2) +  
-  scale_fill_viridis_d() +  
-  labs(title = "Consommation de fast-food en fonction des résultats d'IMC",
-       x = "Nombre de repas fast-food",
-       y = "Catégorie IMC",
-       fill = "IMC") +
-  theme_minimal() +
-  theme(legend.position = "right",
-        plot.title = element_text(hjust = 0.5, face = "bold", size = 14))
+chart(data=biometry, ~ fast_food_rec_rec %fill=% IMC_cat)+ 
+  geom_bar(position = "dodge")+ 
+  labs (fill= "Catégories IMC")+ 
+  scale_fill_viridis_d()+
+  labs(y="Effectifs", x = "Consommation de fast food ")
 
 ```
 
 <!--% Interprétation en quelques points du graphique ou tableau. -->
 
--   ...
+-   Les consommateurs rares de fast-food ont majoritairement un IMC normal.
 
--   ...
+-   Aucune personne en obésité morbide mange souvent des fast-food.
 
--   ...
+-   Une grande partie des personnes en sous-poids consomme souvent des fast-food.
 
 ### Indice 2
 
 <!--% Description et formule ci-dessous. -->
 
+
+$RTH = \frac{\text{Tour de taille (cm)}}{\text{Tour de hanches (cm)}}$
+
 ```{r indice2}
 # Calcul de la ou des variables reprenant l'indice sous forme numérique (et facteur)
+
+# Calcul du RTH
+biometry$RTH <- biometry$tour_taille / biometry$tour_hanche
+biometry <- smutate(biometry,
+  RTH_rec = case_when(
+    genre == "H" & RTH >= 1 ~ "Élevé",
+    genre == "H" & RTH >= 0.90 ~ "Modéré",
+    genre == "H" & RTH < 0.90 ~ "Faible",
+    genre == "F" & RTH >= 0.9 ~ "Élevé",
+    genre == "F" & RTH >= 0.8 ~ "Modéré",
+    genre == "F" & RTH < 0.8 ~ "Faible"
+  ))
 
 ```
 
@@ -268,7 +307,10 @@ chart(data = biometry, sucre_rec ~  IMC_cat %fill=% IMC_cat) +
 
 ```{r plot_indice2}
 # Graphique ou tableau utilisant l'indice calculé.
-
+chart(biometry, RTH ~ genre %fill=% RTH_rec) +
+  geom_boxplot() +
+  scale_fill_viridis_d() +
+  labs(fill = "Risque", y = "RTH")
 ```
 
 <!--% Interprétation en quelques points du graphique ou tableau. -->
@@ -282,6 +324,10 @@ chart(data = biometry, sucre_rec ~  IMC_cat %fill=% IMC_cat) +
 ### Indice 3
 
 <!--% Description et formule ci-dessous. -->
+
+$Poids\ idéal\ homme = (Taille\ en\ cm - 100) - \frac{(Taille\ en\ cm - 150)}{4}$
+
+$Poids\ idéal\ femme = (Taille\ en\ cm - 100) - \frac{(Taille\ en\ cm - 150)}{2.5}$
 
 ```{r indice3}
 # Calcul de la ou des variables reprenant l'indice sous forme numérique (et facteur)
@@ -349,7 +395,7 @@ kable(table(biometry$sucre_rec, biometry$IMG_cat), caption = "Répartition de l'
 
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
-```{r plot_chi2_1}
+```{r plot_chi2_1 Alexia et Camille}
 
 ```
 
@@ -357,7 +403,7 @@ kable(table(biometry$sucre_rec, biometry$IMG_cat), caption = "Répartition de l'
 
 <!--% Vérification des conditions d'application -->
 
-```{r test_chi2_1}
+```{r test_chi2_1 Alexia et Camille}
 
 ```
 
@@ -367,7 +413,7 @@ kable(table(biometry$sucre_rec, biometry$IMG_cat), caption = "Répartition de l'
 
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
-```{r plot_chi2_2}
+```{r plot_chi2_2 Jeanne et Lou }
 
 ```
 
@@ -375,7 +421,7 @@ kable(table(biometry$sucre_rec, biometry$IMG_cat), caption = "Répartition de l'
 
 <!--% Vérification des conditions d'application -->
 
-```{r test_chi2_2}
+```{r test_chi2_2 Jeanne et Lou }
 
 ```
 
@@ -387,7 +433,7 @@ kable(table(biometry$sucre_rec, biometry$IMG_cat), caption = "Répartition de l'
 
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
-```{r plot_t_1}
+```{r plot_t_1 Camille et Alexia}
 
 ```
 
@@ -395,7 +441,7 @@ kable(table(biometry$sucre_rec, biometry$IMG_cat), caption = "Répartition de l'
 
 <!-- Vérification des conditions d'application -->
 
-```{r test_t_1}
+```{r test_t_1 Camille et Alexia}
 
 ```
 
@@ -405,7 +451,7 @@ kable(table(biometry$sucre_rec, biometry$IMG_cat), caption = "Répartition de l'
 
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
-```{r plot_t_2}
+```{r plot_t_2 Lou et Jeanne}
 
 ```
 
@@ -413,7 +459,7 @@ kable(table(biometry$sucre_rec, biometry$IMG_cat), caption = "Répartition de l'
 
 <!--% Vérification des conditions d'application -->
 
-```{r test_t_2}
+```{r test_t_2 Lou et Jeanne}
 
 ```
 
