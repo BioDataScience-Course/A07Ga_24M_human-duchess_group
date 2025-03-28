@@ -83,15 +83,15 @@ biometry$age_rec <- cut(biometry$age,
   include.lowest = TRUE,
   right = FALSE,
   dig.lab = 2,
-  breaks = c(14, 40, 70, 99)
+  breaks = c(14, 35, 65, 99)
 )
 
 ## Recodage de biometry$age_rec en biometry$age_rec_rec
 biometry$age_rec_rec <- biometry$age_rec %>%
   fct_recode(
-    "Jeune adulte" = "[14,40)",
-    "Adulte" = "[40,70)",
-    "Senior" = "[70,99]"
+    "Jeune adulte" = "[14,35)",
+    "Adulte" = "[35,65)",
+    "Senior" = "[65,99]"
   )
 
 ## Recodage de biometry$sommeil en biometry$sommeil_rec
@@ -292,22 +292,22 @@ biometry$RTH <- biometry$tour_taille / biometry$tour_hanche
 biometry <- smutate(biometry,
   RTH_rec = case_when(
     genre == "H" & RTH >= 1 ~ "risque élevé",
-    genre == "H" & RTH >= 0.95 ~ "risque modéré",
-    genre == "H" & RTH < 0.95 ~ "risque faible",
+    genre == "H" & RTH >= 0.90 ~ "risque modéré",
+    genre == "H" & RTH < 0.90 ~ "risque faible",
     genre == "F" & RTH >= 0.9 ~ "risque élevé",
     genre == "F" & RTH >= 0.8 ~ "risque modéré",
     genre == "F" & RTH < 0.8 ~ "risque faible"
   ))
 
-chart(biometry, RTH ~ genre %fill=% RTH_rec) +
-  geom_boxplot()
 ```
 
 <!--% Graphique ou tableau utilisant l'indice calculé.-->
 
 ```{r plot_indice2}
 # Graphique ou tableau utilisant l'indice calculé.
-
+chart(biometry, RTH ~ genre %fill=% RTH_rec) +
+  geom_boxplot() +
+  scale_fill_viridis_d()
 ```
 
 <!--% Interprétation en quelques points du graphique ou tableau. -->
