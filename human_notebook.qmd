@@ -167,8 +167,8 @@ Pas complètement sûre de moi
 ## Recodage de biometry$sucre en biometry$sucre_rec
 biometry$sucre_rec <- biometry$sucre %>%
   fct_recode(
-    "exception" = "jamais",
-    "exception" = "rarement")
+    "exceptionnellement" = "jamais",
+    "exceptionnellement" = "rarement")
 ```
 
 ```{r LH tableau}
@@ -186,6 +186,10 @@ chart(data = biometry, masse_corr ~ sucre_rec %fill=% genre) +
   stat_summary(fun.data = give_n, geom = "text", hjust = 0.5,
     position = position_dodge(0.75))
 ```
+
+
+
+
 
 ## Calcul d'indices
 
