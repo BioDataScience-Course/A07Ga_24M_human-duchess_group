@@ -352,9 +352,9 @@ $Poids\ idéal\ femme = (Taille\ en\ cm - 100) - \frac{(Taille\ en\ cm - 150)}{2
 
 <!--% Description et formule ci-dessous. -->
 
-(je changerai)
+$IMG = (1.2 \times IMC) + (0.23 \times \text{âge}) - (10.8 \times S) - 5.4$
 
-$IMG = 1,2 * IMC + 0,23 * age - 10,8 * (1 (homme),0(femme)) - 5,4$
+$\text{avec :} \begin{cases} S = 1, \text{ si l'individu est un homme} \\ S = 0, \text{ si l'individu est une femme}\end{cases}$
 
 ```{r indice4}
 # Calcul de la ou des variables reprenant l'indice sous forme numérique (et facteur)
