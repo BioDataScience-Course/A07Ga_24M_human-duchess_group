@@ -127,24 +127,56 @@ chart(data = biometry, ~ sommeil_rec_rec %fill=% age_rec_rec) +
 
 ### Description par l'étudiant 3
 
-```{r JC}
-
+```{r JC remaniement}
+## Recodage de biometry$alcool en biometry$alcool_rec
+biometry$alcool_rec <- cut(biometry$alcool,
+  include.lowest = FALSE,
+  right = FALSE,
+  dig.lab = 4,
+  breaks = c(0, 8, 22, 50)
+)
+## Recodage de biometry$alcool_rec en biometry$alcool_rec_rec
+biometry$alcool_rec_rec <- biometry$alcool_rec %>%
+  fct_recode(
+    "Exceptionnellement" = "[0,8)",
+    "Régulièrement" = "[8,22)",
+    "Souvent" = "[22,50)"
+  )
 ```
+
+```{r JC tableau}
+Jeanne_tab <- table(biometry$alcool_rec_rec, biometry$eau)
+Jeanne_tab
+```
+
+```{r JC graphique}
+chart(data=biometry, aes(x=eau, y=alcool_rec_rec, fill=genre )) +
+  ylab("Consommation d'alcool") +
+  ggridges::geom_density_ridges(alpha=0.6,bandwidth=0.2, show.legend=FALSE)+
+  scale_fill_viridis_d()+
+  facet_wrap(~genre)
+```
+
+Pourquoi j'ai rien dans souvent lol à l'aide ???
+
+Pas complètement sûre de moi
 
 ### Description par l'étudiant 4
 
-```{r LH tableau}
+```{r LH remaniement}
 ## Recodage de biometry$sucre en biometry$sucre_rec
 biometry$sucre_rec <- biometry$sucre %>%
   fct_recode(
     "exception" = "jamais",
     "exception" = "rarement")
+```
 
+```{r LH tableau}
 Lou_tab <- table("Consommation de sucre" = biometry$sucre_rec, "Masse corrigée" = biometry$masse_corr)
   skimr::skim(Lou_tab)
 ```
 
-```{r LH}
+```{r LH graphique}
 give_n <- function(x)
   c(y = max(x) * 1.1, label = length(x)) 
 
