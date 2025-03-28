@@ -341,6 +341,10 @@ biometry <- biometry %>%
 
 <!--% Description et formule ci-dessous. -->
 
+(je changerai)
+
+$IMG = 1,2 * IMC + 0,23 * age - 10,8 * (1 (homme),0(femme)) - 5,4$
+
 ```{r indice4}
 # Calcul de la ou des variables reprenant l'indice sous forme numérique (et facteur)
 
@@ -362,7 +366,8 @@ biometry$IMG_cat <- cut(biometry$IMG,
 ```{r plot_indice4}
 # Graphique ou tableau utilisant l'indice calculé.
 
-kable(table(biometry$sucre_rec, biometry$IMG_cat), caption = "Répartition de l'IMG en fonction de la consommation de sucre")
+kable(table(biometry$sucre_rec, biometry$IMG_cat), caption = "Répartition de l'IMG en fonction de la consommation de sucre") 
+
 ```
 
 <!--% Interprétation en quelques points du graphique ou tableau. -->
