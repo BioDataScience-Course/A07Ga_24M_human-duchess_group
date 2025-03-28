@@ -68,12 +68,12 @@ L'activité physique en minutes par semaine des hommes et des femmes est représ
 
 ```{r AB graphique }
 chart(data=biometry, genre ~ activite_physique %fill=% genre)+ 
-  geom_violin()+
+  geom_violin(show.legend=FALSE)+
   coord_flip()+ 
   scale_fill_viridis_d()
 ```
 
-Les hommes ont une activité physique plutôt diversifiée mais sans valeurs extrêmes. La plupart d'entre eux ayant néanmoins un faible niveau. À l'inverse, il y a deux grands extrêmes chez les les femmes, traduisant une plus grande diversité dans leurs pratiques. Énormément de femmes ont une activité physique assez faible voir nulle alors que quelques unes d'entre elles s'avèrent avoir un niveaux beaucoup plus élevé.
+Les hommes ont une activité physique plutôt éparse mais sans valeurs extrêmes. La plupart d'entre eux ayant néanmoins un faible niveau. À l'inverse, il y a deux grands extrêmes chez les femmes, traduisant une plus grande diversité dans leurs pratiques. Beaucoup de femmes ont une activité physique assez faible voir nulle alors que quelques unes d'entre elles s'avèrent avoir un niveau beaucoup plus élevé.
 
 ### Description par l'étudiant 2
 
