@@ -377,17 +377,18 @@ biometry$IMG_cat <- cut(biometry$IMG,
 ```{r plot_indice4}
 # Graphique ou tableau utilisant l'indice calculé.
 
+library(knitr)
 kable(table(biometry$sucre_rec, biometry$IMG_cat), caption = "Répartition de l'IMG en fonction de la consommation de sucre") 
 
 ```
 
 <!--% Interprétation en quelques points du graphique ou tableau. -->
 
--   ...
+-   Il semble que la consommation fréquente de sucre soit associée à une plus grande variabilité de l'IMG, avec à la fois des individus en insuffisance de graisse et en obésité.
 
--   ...
+-   Cependant, une consommation modérée correspond davantage à une répartition équilibrée de l'IMG.
 
--   ...
+-   Ainsi, nous n'observons pas nécessairement une relation de cause à effet de la consommation de sucre sur l'IMG.
 
 ## Tests d'hypothèses
 
