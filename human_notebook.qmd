@@ -197,6 +197,8 @@ chart(data = biometry, masse_corr ~ sucre_rec %fill=% genre) +
 
 <!--% Description et formule ci-dessous. -->
 
+$IMC = \frac{\text{Poids (kg)}}{\text{Taille (m)}^2}$
+
 ```{r indice1}
 
 # Calcul de la ou des variables reprenant l'indice sous forme numérique (et facteur)
@@ -211,7 +213,7 @@ biometry$IMC <- biometry$masse / (biometry$taille_m^2)
 biometry$IMC_cat <- cut(
   biometry$IMC,
   breaks = c(-Inf, 18.5, 25, 29.9, 34.9, 39.9, 50, Inf),
-  labels = c("Maigreur", "Poids normal", "Surpoids",
+  labels = c("Sous-poids", "Poids normal", "Surpoids",
     "Obésité modérée (Grade I)", "Obésité sévère (Grade II)",
     "Obésité morbide (Grade III)", "Super-obésité (Obésité massive)"),
   right = TRUE)
@@ -221,17 +223,27 @@ biometry$IMC_cat <- cut(
 <!--% Graphique ou tableau utilisant l'indice calculé.-->
 
 ```{r plot_indice1}
+## Recodage de biometry$fast_food en biometry$fast_food_rec
+biometry$fast_food_rec <- cut(biometry$fast_food,
+  include.lowest = TRUE,
+  right = FALSE,
+  dig.lab = 4,
+  breaks = c(0, 2, 4, 14)
+)
+
+## Recodage de biometry$fast_food_rec en biometry$fast_food_rec_rec
+biometry$fast_food_rec_rec <- biometry$fast_food_rec %>%
+  fct_recode(
+    "Rarement" = "[0,2)",
+    "Régulièrement" = "[2,4)",
+    "Souvent" = "[4,14]"
+  )
 # Graphique ou tableau utilisant l'indice calculé.
-chart(data = biometry, sucre_rec ~  IMC_cat %fill=% IMC_cat) +
-  ggridges::geom_density_ridges(alpha = 0.8, scale = 1.2) +  
-  scale_fill_viridis_d() +  
-  labs(title = "Consommation de fast-food en fonction des résultats d'IMC",
-       x = "Nombre de repas fast-food",
-       y = "Catégorie IMC",
-       fill = "IMC") +
-  theme_minimal() +
-  theme(legend.position = "right",
-        plot.title = element_text(hjust = 0.5, face = "bold", size = 14))
+chart(data=biometry, ~ fast_food_rec_rec %fill=% IMC_cat)+ 
+  geom_bar(position = "dodge")+ 
+  labs (fill= "Catégories IMC")+ 
+  scale_fill_viridis_d()+
+  labs(y="Effectifs", x = "Consommation de fast food ")
 
 ```
 
