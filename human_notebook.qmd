@@ -259,11 +259,11 @@ chart(data=biometry, ~ fast_food_rec_rec %fill=% IMC_cat)+
 
 <!--% Interprétation en quelques points du graphique ou tableau. -->
 
--   ...
+-   Les consommateurs rares de fast-food ont majoritairement un IMC normal.
 
--   ...
+-   Aucune personne en obésité morbide mange souvent des fast-food.
 
--   ...
+-   Une grande partie des personnes en sous-poids consomme souvent des fast-food.
 
 ### Indice 2
 
