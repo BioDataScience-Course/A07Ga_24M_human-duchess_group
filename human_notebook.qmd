@@ -127,39 +127,52 @@ chart(data = biometry, ~ sommeil_rec_rec %fill=% age_rec_rec) +
 
 ### Description par l'étudiant 3
 
-```{r JC remaniement}
+```{r JC remaniement 1}
 ## Recodage de biometry$alcool en biometry$alcool_rec
 biometry$alcool_rec <- cut(biometry$alcool,
   include.lowest = FALSE,
   right = FALSE,
   dig.lab = 4,
-  breaks = c(0, 8, 22, 50)
+  breaks = c(0, 1, 7, 50)
 )
 ## Recodage de biometry$alcool_rec en biometry$alcool_rec_rec
 biometry$alcool_rec_rec <- biometry$alcool_rec %>%
   fct_recode(
-    "Exceptionnellement" = "[0,8)",
-    "Régulièrement" = "[8,22)",
-    "Souvent" = "[22,50)"
+    "Jamais" = "[0,1)",
+    "Régulièrement" = "[1,7)",
+    "Souvent" = "[7,50)"
   )
 ```
 
-```{r JC tableau}
-Jeanne_tab <- table(biometry$alcool_rec_rec, biometry$eau)
-Jeanne_tab
-```
-
 ```{r JC graphique}
-chart(data=biometry, aes(x=eau, y=alcool_rec_rec, fill=genre )) +
+chart(data=biometry, aes(x=age, y=alcool_rec_rec, fill=genre )) +
   ylab("Consommation d'alcool") +
-  ggridges::geom_density_ridges(alpha=0.6,bandwidth=0.2, show.legend=FALSE)+
+  ggridges::geom_density_ridges(alpha=0.6,bandwidth=7, show.legend=FALSE)+
   scale_fill_viridis_d()+
   facet_wrap(~genre)
 ```
 
-Pourquoi j'ai rien dans souvent lol à l'aide ???
+```{r JC remaniement 2}
+## Recodage de biometry$age en biometry$age_rec_2
+biometry$age_rec_2 <- cut(biometry$age,
+  include.lowest = TRUE,
+  right = FALSE,
+  dig.lab = 4,
+  breaks = c(10, 40, 70, 100)
+)
+## Recodage de biometry$age_rec_2 en biometry$age_rec_rec_2
+biometry$age_rec_rec_2 <- biometry$age_rec_2 %>%
+  fct_recode(
+    "Jeune adulte" = "[10,40)",
+    "Adulte" = "[40,70)",
+    "Senior" = "[70,100]"
+  )
+```
 
-Pas complètement sûre de moi
+```{r JC tableau}_r)}
+Jeanne_tab <- table(biometry$alcool_rec_rec, biometry$age_rec_rec_2)
+knitr::kable(Jeanne_tab)
+```
 
 ### Description par l'étudiant 4
 
