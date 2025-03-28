@@ -306,6 +306,10 @@ chart(data=biometry, ~ fast_food_rec_rec %fill=% IMC_cat)+
 
 <!--% Description et formule ci-dessous. -->
 
+$Poids\ idéal\ homme = (Taille\ en\ cm - 100) - \frac{(Taille\ en\ cm - 150)}{4}$
+
+$Poids\ idéal\ femme = (Taille\ en\ cm - 100) - \frac{(Taille\ en\ cm - 150)}{2.5}$
+
 ```{r indice3}
 # Calcul de la ou des variables reprenant l'indice sous forme numérique (et facteur)
 
