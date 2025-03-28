@@ -176,6 +176,12 @@ Lou_tab <- table("Consommation de sucre" = biometry$sucre_rec, "Masse corrigée"
   skimr::skim(Lou_tab)
 ```
 
+Ce tableau contient 2 variables facteurs (Consommation de sucre et Masse corrigée) et 1 variable numérique (Frequence). Il n'y a aucune valeur manquante.
+
+(quoi d'autre ??? rajouter le remaniement ?)
+
+La variable "Consommation de sucre" est découpée en 3 parties et non plus 4, regroupant les 2 premières parties initiales, qui présentaient un nombre d'observation trop petite, en une nouvelle catégorie "exceptionnellement".
+
 ```{r LH graphique}
 give_n <- function(x)
   c(y = max(x) * 1.1, label = length(x)) 
@@ -187,9 +193,9 @@ chart(data = biometry, masse_corr ~ sucre_rec %fill=% genre) +
     position = position_dodge(0.75))
 ```
 
+Les médianes des masses corrigées sont toujours supérieures chez les hommes; ce qui semble logique car les hommes ont généralement une masse musculaire supérieure.
 
-
-
+Cependant, la moyenne des masses corrigées des personnes consommant exceptionnellement du sucre avoisinent celle des personnes en consommant souvent voire les surpassent. On pourrait expliquer cela par une inégalité des observations. En effet, on a environ 4 fois moins d'observations dans la catégorie "exceptionnellement", rendant la comparaison non représentative d'une population plus étendue.
 
 ## Calcul d'indices
 
