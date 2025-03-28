@@ -167,8 +167,10 @@ Pas complètement sûre de moi
 ## Recodage de biometry$sucre en biometry$sucre_rec
 biometry$sucre_rec <- biometry$sucre %>%
   fct_recode(
-    "exceptionnellement" = "jamais",
-    "exceptionnellement" = "rarement")
+    "Exceptionnellement" = "jamais",
+    "Exceptionnellement" = "rarement",
+    "Régulièrement" = "régulièrement",
+    "Souvent" = "souvent")
 ```
 
 ```{r LH tableau}
@@ -308,6 +310,17 @@ chart(data = biometry, sucre_rec ~  IMC_cat %fill=% IMC_cat) +
 ```{r indice4}
 # Calcul de la ou des variables reprenant l'indice sous forme numérique (et facteur)
 
+# Calcul de l'IMG
+biometry$IMG <- (1.2 * biometry$IMC) + (0.23 * biometry$age) - (10.8 * as.numeric(biometry$genre == "H")) - 5.4
+
+# Création de catégorie 
+biometry$IMG_cat <- cut(biometry$IMG,
+  include.lowest = TRUE,
+  right = FALSE,
+  dig.lab = 4,
+  breaks = c(-Inf, 22, 28, 35, Inf),
+  labels = c("Pas assez de graisse", "Graisse normal", "Trop de graisse", "Obésité"))
+
 ```
 
 <!--% Graphique ou tableau utilisant l'indice calculé.-->
@@ -315,6 +328,7 @@ chart(data = biometry, sucre_rec ~  IMC_cat %fill=% IMC_cat) +
 ```{r plot_indice4}
 # Graphique ou tableau utilisant l'indice calculé.
 
+kable(table(biometry$sucre_rec, biometry$IMG_cat), caption = "Répartition de l'IMG en fonction de la consommation de sucre")
 ```
 
 <!--% Interprétation en quelques points du graphique ou tableau. -->
