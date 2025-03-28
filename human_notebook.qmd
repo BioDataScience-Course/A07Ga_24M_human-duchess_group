@@ -347,7 +347,7 @@ chart(data=biometry, ~ fast_food_rec_rec %fill=% IMC_cat)+
 
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
-```{r plot_chi2_1}
+```{r plot_chi2_1 Alexia et Camille}
 
 ```
 
@@ -355,7 +355,7 @@ chart(data=biometry, ~ fast_food_rec_rec %fill=% IMC_cat)+
 
 <!--% Vérification des conditions d'application -->
 
-```{r test_chi2_1}
+```{r test_chi2_1 Alexia et Camille}
 
 ```
 
@@ -365,7 +365,7 @@ chart(data=biometry, ~ fast_food_rec_rec %fill=% IMC_cat)+
 
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
-```{r plot_chi2_2}
+```{r plot_chi2_2 Jeanne et Lou }
 
 ```
 
@@ -373,7 +373,7 @@ chart(data=biometry, ~ fast_food_rec_rec %fill=% IMC_cat)+
 
 <!--% Vérification des conditions d'application -->
 
-```{r test_chi2_2}
+```{r test_chi2_2 Jeanne et Lou }
 
 ```
 
@@ -385,7 +385,7 @@ chart(data=biometry, ~ fast_food_rec_rec %fill=% IMC_cat)+
 
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
-```{r plot_t_1}
+```{r plot_t_1 Camille et Alexia}
 
 ```
 
@@ -393,7 +393,7 @@ chart(data=biometry, ~ fast_food_rec_rec %fill=% IMC_cat)+
 
 <!-- Vérification des conditions d'application -->
 
-```{r test_t_1}
+```{r test_t_1 Camille et Alexia}
 
 ```
 
@@ -403,7 +403,7 @@ chart(data=biometry, ~ fast_food_rec_rec %fill=% IMC_cat)+
 
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
-```{r plot_t_2}
+```{r plot_t_2 Lou et Jeanne}
 
 ```
 
@@ -411,7 +411,7 @@ chart(data=biometry, ~ fast_food_rec_rec %fill=% IMC_cat)+
 
 <!--% Vérification des conditions d'application -->
 
-```{r test_t_2}
+```{r test_t_2 Lou et Jeanne}
 
 ```
 
