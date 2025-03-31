@@ -281,7 +281,6 @@ chart(data=biometry, ~ fast_food_rec_rec %fill=% IMC_cat)+
 
 <!--% Description et formule ci-dessous. -->
 
-
 $RTH = \frac{\text{Tour de taille (cm)}}{\text{Tour de hanches (cm)}}$
 
 ```{r indice2}
