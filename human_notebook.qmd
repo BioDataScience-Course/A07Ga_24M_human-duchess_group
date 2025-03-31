@@ -83,15 +83,15 @@ biometry$age_rec <- cut(biometry$age,
   include.lowest = TRUE,
   right = FALSE,
   dig.lab = 2,
-  breaks = c(14, 40, 70, 99)
+  breaks = c(14, 35, 65, 99)
 )
 
 ## Recodage de biometry$age_rec en biometry$age_rec_rec
 biometry$age_rec_rec <- biometry$age_rec %>%
   fct_recode(
-    "Jeune adulte" = "[14,40)",
-    "Adulte" = "[40,70)",
-    "Senior" = "[70,99]"
+    "Jeune adulte" = "[14,35)",
+    "Adulte" = "[35,65)",
+    "Senior" = "[65,99]"
   )
 
 ## Recodage de biometry$sommeil en biometry$sommeil_rec
@@ -179,8 +179,10 @@ knitr::kable(Jeanne_tab)
 ## Recodage de biometry$sucre en biometry$sucre_rec
 biometry$sucre_rec <- biometry$sucre %>%
   fct_recode(
-    "exceptionnellement" = "jamais",
-    "exceptionnellement" = "rarement")
+    "Exceptionnellement" = "jamais",
+    "Exceptionnellement" = "rarement",
+    "Régulièrement" = "régulièrement",
+    "Souvent" = "souvent")
 ```
 
 ```{r LH tableau}
@@ -290,23 +292,24 @@ $RTH = \frac{\text{Tour de taille (cm)}}{\text{Tour de hanches (cm)}}$
 biometry$RTH <- biometry$tour_taille / biometry$tour_hanche
 biometry <- smutate(biometry,
   RTH_rec = case_when(
-    genre == "H" & RTH >= 1 ~ "risque élevé",
-    genre == "H" & RTH >= 0.95 ~ "risque modéré",
-    genre == "H" & RTH < 0.95 ~ "risque faible",
-    genre == "F" & RTH >= 0.9 ~ "risque élevé",
-    genre == "F" & RTH >= 0.8 ~ "risque modéré",
-    genre == "F" & RTH < 0.8 ~ "risque faible"
+    genre == "H" & RTH >= 1 ~ "Élevé",
+    genre == "H" & RTH >= 0.90 ~ "Modéré",
+    genre == "H" & RTH < 0.90 ~ "Faible",
+    genre == "F" & RTH >= 0.9 ~ "Élevé",
+    genre == "F" & RTH >= 0.8 ~ "Modéré",
+    genre == "F" & RTH < 0.8 ~ "Faible"
   ))
 
-chart(biometry, RTH ~ genre %fill=% RTH_rec) +
-  geom_boxplot()
 ```
 
 <!--% Graphique ou tableau utilisant l'indice calculé.-->
 
 ```{r plot_indice2}
 # Graphique ou tableau utilisant l'indice calculé.
-
+chart(biometry, RTH ~ genre %fill=% RTH_rec) +
+  geom_boxplot() +
+  scale_fill_viridis_d() +
+  labs(fill = "Risque", y = "RTH")
 ```
 
 <!--% Interprétation en quelques points du graphique ou tableau. -->
@@ -320,6 +323,10 @@ chart(biometry, RTH ~ genre %fill=% RTH_rec) +
 ### Indice 3
 
 <!--% Description et formule ci-dessous. -->
+
+$Poids\ idéal\ homme = (Taille\ en\ cm - 100) - \frac{(Taille\ en\ cm - 150)}{4}$
+
+$Poids\ idéal\ femme = (Taille\ en\ cm - 100) - \frac{(Taille\ en\ cm - 150)}{2.5}$
 
 ```{r indice3}
 # Calcul de la ou des variables reprenant l'indice sous forme numérique (et facteur)
@@ -345,8 +352,23 @@ chart(biometry, RTH ~ genre %fill=% RTH_rec) +
 
 <!--% Description et formule ci-dessous. -->
 
+$IMG = (1.2 \times IMC) + (0.23 \times \text{âge}) - (10.8 \times S) - 5.4$
+
+$\text{avec :} \begin{cases} S = 1, \text{ si l'individu est un homme} \\ S = 0, \text{ si l'individu est une femme}\end{cases}$
+
 ```{r indice4}
 # Calcul de la ou des variables reprenant l'indice sous forme numérique (et facteur)
+
+# Calcul de l'IMG
+biometry$IMG <- (1.2 * biometry$IMC) + (0.23 * biometry$age) - (10.8 * as.numeric(biometry$genre == "H")) - 5.4
+
+# Création de catégorie 
+biometry$IMG_cat <- cut(biometry$IMG,
+  include.lowest = TRUE,
+  right = FALSE,
+  dig.lab = 4,
+  breaks = c(-Inf, 22, 28, 35, Inf),
+  labels = c("Pas assez de graisse", "Graisse normal", "Trop de graisse", "Obésité"))
 
 ```
 
@@ -355,15 +377,18 @@ chart(biometry, RTH ~ genre %fill=% RTH_rec) +
 ```{r plot_indice4}
 # Graphique ou tableau utilisant l'indice calculé.
 
+library(knitr)
+kable(table(biometry$sucre_rec, biometry$IMG_cat), caption = "Répartition de l'IMG en fonction de la consommation de sucre") 
+
 ```
 
 <!--% Interprétation en quelques points du graphique ou tableau. -->
 
--   ...
+-   Il semble que la consommation fréquente de sucre soit associée à une plus grande variabilité de l'IMG, avec à la fois des individus en insuffisance de graisse et en obésité.
 
--   ...
+-   Cependant, une consommation modérée correspond davantage à une répartition équilibrée de l'IMG.
 
--   ...
+-   Ainsi, nous n'observons pas nécessairement une relation de cause à effet de la consommation de sucre sur l'IMG.
 
 ## Tests d'hypothèses
 
