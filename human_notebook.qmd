@@ -401,15 +401,24 @@ kable(table(biometry$sucre_rec, biometry$IMG_cat), caption = "Répartition de l'
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_chi2_1 Alexia et Camille}
+table_IMC_genre <- table(IMC = biometry$IMC_cat, Genre = biometry$genre)
+tabularise(table_IMC_genre)
+
 
 ```
 
 <!--% Hypothèse nulle et alternative -->
 
+$$H_O = indépendance\:de\:l'IMC\:et\:de\:l'alimentation $$
+
+$$
+H_1 = dépendance\:de\:l'IMC\:et\:de\:l'alimentation 
+$$
+
 <!--% Vérification des conditions d'application -->
 
 ```{r test_chi2_1 Alexia et Camille}
-
+chisq.test(table_IMC_genre)
 ```
 
 <!--% Interprétation statistique et biologique -->
