@@ -192,8 +192,6 @@ Lou_tab <- table("Consommation de sucre" = biometry$sucre_rec, "Masse corrigée"
 
 Ce tableau contient 2 variables facteurs (Consommation de sucre et Masse corrigée) et 1 variable numérique (Frequence). Il n'y a aucune valeur manquante.
 
-(quoi d'autre ??? rajouter le remaniement ?)
-
 La variable "Consommation de sucre" est découpée en 3 parties et non plus 4, regroupant les 2 premières parties initiales, qui présentaient un nombre d'observation trop petite, en une nouvelle catégorie "exceptionnellement".
 
 ```{r LH graphique}
