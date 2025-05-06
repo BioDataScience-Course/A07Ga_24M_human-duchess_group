@@ -452,7 +452,7 @@ chisq.test(table_IMC_fast_food)
 
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
-```{r plot_t_2 Lou et Jeanne}
+```{r plot_t_2 Jeanne et Lou}
 
 ```
 
@@ -460,7 +460,7 @@ chisq.test(table_IMC_fast_food)
 
 <!--% Vérification des conditions d'application -->
 
-```{r test_t_2 Lou et Jeanne}
+```{r test_t_2 Jeanne et Lou}
 
 ```
 
