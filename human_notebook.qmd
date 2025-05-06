@@ -104,9 +104,9 @@ biometry$sommeil_rec <- cut(biometry$sommeil,
 ## Recodage de biometry$sommeil_rec en biometry$sommeil_rec_rec
 biometry$sommeil_rec_rec <- biometry$sommeil_rec %>%
   fct_recode(
-    "Sommeil court" = "[0,6.7)",
-    "Sommeil normal" = "[6.7,8.6)",
-    "Sommeil long" = "[8.6,14]"
+    "sommeil court" = "[0,6.7)",
+    "sommeil normal" = "[6.7,8.6)",
+    "sommeil long" = "[8.6,14]"
   )
   
 ```
@@ -126,7 +126,7 @@ chart(data = biometry, ~ sommeil_rec_rec %fill=% age_rec_rec) +
 
 ### Description par l'étudiant 3
 
-```{r JC remaniement}
+```{r JC remaniement 1}
 ## Recodage de biometry$alcool en biometry$alcool_rec
 biometry$alcool_rec <- cut(biometry$alcool,
   include.lowest = FALSE,
@@ -151,8 +151,25 @@ chart(data=biometry, aes(x=age, y=alcool_rec_rec, fill=genre )) +
   facet_wrap(~genre)
 ```
 
+```{r JC remaniement 2}
+## Recodage de biometry$age en biometry$age_rec_2
+biometry$age_rec_2 <- cut(biometry$age,
+  include.lowest = TRUE,
+  right = FALSE,
+  dig.lab = 4,
+  breaks = c(10, 40, 70, 100)
+)
+## Recodage de biometry$age_rec_2 en biometry$age_rec_rec_2
+biometry$age_rec_rec_2 <- biometry$age_rec_2 %>%
+  fct_recode(
+    "Jeune adulte" = "[10,40)",
+    "Adulte" = "[40,70)",
+    "Senior" = "[70,100]"
+  )
+```
+
 ```{r JC tableau}_r)}
-Jeanne_tab <- table(biometry$alcool_rec_rec, biometry$age_rec_rec)
+Jeanne_tab <- table(biometry$alcool_rec_rec, biometry$age_rec_rec_2)
 knitr::kable(Jeanne_tab)
 ```
 
@@ -312,12 +329,6 @@ $Poids\ idéal\ femme = (Taille\ en\ cm - 100) - \frac{(Taille\ en\ cm - 150)}{2
 ```{r indice3}
 # Calcul de la ou des variables reprenant l'indice sous forme numérique (et facteur)
 
-biometry <- biometry %>%
-  smutate(Poids_Ideal = case_when(
-    genre == "H" ~ (taille - 100) - (taille - 150) / 4,
-    genre == "F" ~ (taille - 100) - (taille - 150) / 2.5
-  ))
-
 ```
 
 <!--% Graphique ou tableau utilisant l'indice calculé.-->
@@ -414,7 +425,7 @@ chisq.test(table_IMC_fast_food)
 
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
-```{r plot_chi2_2 Lou et Jeanne }
+```{r plot_chi2_2 Jeanne et Lou }
 
 ```
 
@@ -422,7 +433,7 @@ chisq.test(table_IMC_fast_food)
 
 <!--% Vérification des conditions d'application -->
 
-```{r test_chi2_2 Lou et Jeanne }
+```{r test_chi2_2 Jeanne et Lou }
 
 ```
 
@@ -435,7 +446,11 @@ chisq.test(table_IMC_fast_food)
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_t_1 Camille et Alexia}
-
+chart(data = biometry, ~ sommeil %fill=% genre | genre) +
+  geom_bar(position = "dodge", show.legend = FALSE) +
+  labs(fill = "Genre") +
+  scale_fill_viridis_d() +
+  labs (y = "Effectifs", x = "Heures de sommeil")
 ```
 
 <!-- Hypothèse nulle et alternative -->
