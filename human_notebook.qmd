@@ -433,19 +433,26 @@ chisq.test(table_IMC_fast_food)
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_t_1 Camille et Alexia}
-chart(data = biometry, ~ sommeil %fill=% genre | genre) +
-  geom_bar(position = "dodge", show.legend = FALSE) +
-  labs(fill = "Genre") +
-  scale_fill_viridis_d() +
-  labs (y = "Effectifs", x = "Heures de sommeil")
+biometry %>.%
+  sgroup_by(., genre) %>.%
+  ssummarise(.,
+    moyenne = fmean(sommeil),
+    variance = fvar(sommeil),
+    n = fn(sommeil)) -> Camille_tab2
+Camille_tab2
 ```
 
 <!-- Hypothèse nulle et alternative -->
 
+HO : moyenne sommeil femme - moyenne sommeil homme = 0
+
+H1 : moyenne sommeil femme - moyenne sommeil homme != 0
+
 <!-- Vérification des conditions d'application -->
 
 ```{r test_t_1 Camille et Alexia}
-
+t.test(data = biometry, sommeil ~ genre,
+  alternative = "two.sided", conf.level = 0.95, var.equal = FALSE)
 ```
 
 <!-- Interprétation statistique et biologique -->
