@@ -175,8 +175,6 @@ Lou_tab <- table("Consommation de sucre" = biometry$sucre_rec, "Masse corrigée"
 
 Ce tableau contient 2 variables facteurs (Consommation de sucre et Masse corrigée) et 1 variable numérique (Frequence). Il n'y a aucune valeur manquante.
 
-(quoi d'autre ??? rajouter le remaniement ?)
-
 La variable "Consommation de sucre" est découpée en 3 parties et non plus 4, regroupant les 2 premières parties initiales, qui présentaient un nombre d'observation trop petite, en une nouvelle catégorie "exceptionnellement".
 
 ```{r LH graphique}
@@ -341,9 +339,9 @@ biometry <- biometry %>%
 
 <!--% Description et formule ci-dessous. -->
 
-(je changerai)
+$IMG = (1.2 \times IMC) + (0.23 \times \text{âge}) - (10.8 \times S) - 5.4$
 
-$IMG = 1,2 * IMC + 0,23 * age - 10,8 * (1 (homme),0(femme)) - 5,4$
+$\text{avec :} \begin{cases} S = 1, \text{ si l'individu est un homme} \\ S = 0, \text{ si l'individu est une femme}\end{cases}$
 
 ```{r indice4}
 # Calcul de la ou des variables reprenant l'indice sous forme numérique (et facteur)
@@ -366,17 +364,18 @@ biometry$IMG_cat <- cut(biometry$IMG,
 ```{r plot_indice4}
 # Graphique ou tableau utilisant l'indice calculé.
 
+library(knitr)
 kable(table(biometry$sucre_rec, biometry$IMG_cat), caption = "Répartition de l'IMG en fonction de la consommation de sucre") 
 
 ```
 
 <!--% Interprétation en quelques points du graphique ou tableau. -->
 
--   ...
+-   Il semble que la consommation fréquente de sucre soit associée à une plus grande variabilité de l'IMG, avec à la fois des individus en insuffisance de graisse et en obésité.
 
--   ...
+-   Cependant, une consommation modérée correspond davantage à une répartition équilibrée de l'IMG.
 
--   ...
+-   Ainsi, nous n'observons pas nécessairement une relation de cause à effet de la consommation de sucre sur l'IMG.
 
 ## Tests d'hypothèses
 
@@ -389,15 +388,24 @@ kable(table(biometry$sucre_rec, biometry$IMG_cat), caption = "Répartition de l'
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_chi2_1 Alexia et Camille}
+table_IMC_fast_food <- table(IMC = biometry$IMC_cat,Fast_food = biometry$fast_food_rec_rec)
+tabularise(table_IMC_fast_food)
+
 
 ```
 
 <!--% Hypothèse nulle et alternative -->
 
+$$H_O = indépendance\:de\:l'IMC\:et\:de\:la\:consomation\:de\:fast\:food $$
+
+$$
+H_1 = dépendance\:de\:l'IMC\:et\:de\:la\:consomation\:de\:fast\:food  
+$$
+
 <!--% Vérification des conditions d'application -->
 
 ```{r test_chi2_1 Alexia et Camille}
-
+chisq.test(table_IMC_fast_food)
 ```
 
 <!--% Interprétation statistique et biologique -->
