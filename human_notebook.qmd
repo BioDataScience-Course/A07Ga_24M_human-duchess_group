@@ -151,25 +151,8 @@ chart(data=biometry, aes(x=age, y=alcool_rec_rec, fill=genre )) +
   facet_wrap(~genre)
 ```
 
-```{r JC remaniement 2}
-## Recodage de biometry$age en biometry$age_rec_2
-biometry$age_rec_2 <- cut(biometry$age,
-  include.lowest = TRUE,
-  right = FALSE,
-  dig.lab = 4,
-  breaks = c(10, 40, 70, 100)
-)
-## Recodage de biometry$age_rec_2 en biometry$age_rec_rec_2
-biometry$age_rec_rec_2 <- biometry$age_rec_2 %>%
-  fct_recode(
-    "Jeune adulte" = "[10,40)",
-    "Adulte" = "[40,70)",
-    "Senior" = "[70,100]"
-  )
-```
-
 ```{r JC tableau}_r)}
-Jeanne_tab <- table(biometry$alcool_rec_rec, biometry$age_rec_rec_2)
+Jeanne_tab <- table(biometry$alcool_rec_rec, biometry$age_rec_rec)
 knitr::kable(Jeanne_tab)
 ```
 
@@ -328,7 +311,11 @@ $Poids\ idéal\ femme = (Taille\ en\ cm - 100) - \frac{(Taille\ en\ cm - 150)}{2
 
 ```{r indice3}
 # Calcul de la ou des variables reprenant l'indice sous forme numérique (et facteur)
-
+biometry<- biometry %>%
+  smutate(Poids_Ideal = case_when(
+    genre == "H" ~ (taille - 100) - (taille - 150) / 4,
+    genre == "F" ~ (taille - 100) - (taille - 150) / 2.5
+  ))
 ```
 
 <!--% Graphique ou tableau utilisant l'indice calculé.-->
@@ -425,7 +412,7 @@ chisq.test(table_IMC_fast_food)
 
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
-```{r plot_chi2_2 Jeanne et Lou }
+```{r plot_chi2_2 Lou et Jeanne }
 
 ```
 
@@ -433,7 +420,7 @@ chisq.test(table_IMC_fast_food)
 
 <!--% Vérification des conditions d'application -->
 
-```{r test_chi2_2 Jeanne et Lou }
+```{r test_chi2_2 Lou et Jeanne }
 
 ```
 
