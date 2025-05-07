@@ -436,23 +436,36 @@ chisq.test(table_IMC_fast_food)
 biometry %>.%
   sgroup_by(., genre) %>.%
   ssummarise(.,
-    moyenne = fmean(sommeil),
-    variance = fvar(sommeil),
-    n = fn(sommeil)) -> Camille_tab2
+    moyenne = fmean(activite_physique),
+    variance = fvar(activite_physique),
+    n = fn(activite_physique)) -> Camille_tab2
 Camille_tab2
 ```
 
 <!-- Hypothèse nulle et alternative -->
 
-HO : moyenne sommeil femme - moyenne sommeil homme = 0
+HO : moyenne AP homme - moyenne AP femme = 0
 
-H1 : moyenne sommeil femme - moyenne sommeil homme != 0
+H1 : moyenne AP homme - moyenne AP femme != 0
 
 <!-- Vérification des conditions d'application -->
 
 ```{r test_t_1 Camille et Alexia}
-t.test(data = biometry, sommeil ~ genre,
-  alternative = "two.sided", conf.level = 0.95, var.equal = FALSE)
+t.test(data = biometry, activite_physique ~ genre,
+  alternative = "greater", conf.level = 0.95, var.equal = FALSE)
+```
+
+```{r}
+wilcox.test(data = biometry, activite_physique ~ genre,
+  alternative = "greater", conf.level = 0.95)
+```
+
+```{r}
+shapiro.test(biometry$activite_physique[biometry$genre=="H"])
+```
+
+```{r}
+shapiro.test(biometry$activite_physique[biometry$genre=="F"])
 ```
 
 <!-- Interprétation statistique et biologique -->
