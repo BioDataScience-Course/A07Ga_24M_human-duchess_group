@@ -481,7 +481,7 @@ t.test(data = biometry, sommeil ~ genre,
 
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
-```{r plot_anova1_1}
+```{r plot_anova1_1 Camille et Alexia}
 
 ```
 
@@ -489,7 +489,7 @@ t.test(data = biometry, sommeil ~ genre,
 
 <!--% Vérification des conditions d'application -->
 
-```{r test_anova1_1}
+```{r test_anova1_1 Camille et Alexia}
 
 ```
 
@@ -499,7 +499,7 @@ t.test(data = biometry, sommeil ~ genre,
 
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
-```{r plot_anova1_2}
+```{r plot_anova1_2 Jeanne et Lou}
 
 ```
 
@@ -507,7 +507,7 @@ t.test(data = biometry, sommeil ~ genre,
 
 <!--% Vérification des conditions d'application -->
 
-```{r test_anova1_2}
+```{r test_anova1_2 Jeanne et Lou}
 
 ```
 
@@ -519,7 +519,7 @@ t.test(data = biometry, sommeil ~ genre,
 
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
-```{r plot_anova2_1}
+```{r plot_anova2_1 Alexia et Camille}
 
 ```
 
@@ -527,7 +527,7 @@ t.test(data = biometry, sommeil ~ genre,
 
 <!--% Vérification des conditions d'application -->
 
-```{r test_anova2_1}
+```{r test_anova2_1 Alexia et Camille}
 
 ```
 
@@ -537,7 +537,7 @@ t.test(data = biometry, sommeil ~ genre,
 
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
-```{r plot_anova2_2}
+```{r plot_anova2_2 Lou et Jeanne}
 
 ```
 
@@ -545,7 +545,7 @@ t.test(data = biometry, sommeil ~ genre,
 
 <!--% Vérification des conditions d'application -->
 
-```{r test_anova2_2}
+```{r test_anova2_2 Lou et Jeanne}
 
 ```
 
