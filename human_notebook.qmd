@@ -418,6 +418,10 @@ chisq.test(table_IMC_fast_food)
 
 <!--% Hypothèse nulle et alternative -->
 
+$$H_O = indépendance\:de\: $$
+
+$$ H_1 = dépendance\:de\:$$
+
 <!--% Vérification des conditions d'application -->
 
 ```{r test_chi2_2 Lou et Jeanne }
@@ -479,6 +483,10 @@ shapiro.test(biometry$activite_physique[biometry$genre=="F"])
 ```
 
 <!--% Hypothèse nulle et alternative -->
+
+$$H_O = \:-\:\:= 0 $$
+
+$$H_1 =  \:-\:\:≠ 0 $$
 
 <!--% Vérification des conditions d'application -->
 
