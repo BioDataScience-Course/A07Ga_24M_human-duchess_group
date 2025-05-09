@@ -331,16 +331,15 @@ biometry<- biometry %>%
 
 ```{r plot_indice3}
 # Graphique ou tableau utilisant l'indice calculé.
-
+biommetry_indice_3 <- biometry[, c(3,6,23,40)]
+sfilter(biommetry_indice_3, genre=="F" & age<=30)|> tabularise()
 ```
 
 <!--% Interprétation en quelques points du graphique ou tableau. -->
 
--   ...
+-   La majorité des individus du tableau présentent un poids supérieur à leur poids idéal, parfois avec un écart important dépassant 30 kg.
 
--   ...
-
--   ...
+-   En moyenne, leur poids réel se situe autour de 66 à 70 kg, alors que leur poids idéal est plutôt autour de 58 à 60 kg, ce qui reflète un surpoids modéré dans l'ensemble du groupe.
 
 ### Indice 4
 
@@ -458,9 +457,9 @@ Camille_tab2
 
 <!-- Hypothèse nulle et alternative -->
 
-H0 : moyenne AP homme - moyenne AP femme = 0
+$$H_0: \overline{Activité\:physique\:des\:hommes} - \overline{Activité\:physique\:des\:femmes} = 0$$
 
-H1 : moyenne AP homme - moyenne AP femme \> 0
+$$H_1: \overline{Activité\:physique\:des\:hommes } - \overline{Activité\:physique\:des\:femmes} > 0$$
 
 <!-- Vérification des conditions d'application -->
 
@@ -476,14 +475,13 @@ t.test(data = biometry, activite_physique ~ genre,
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_t_2 Jeanne et Lou}
-
+test_t_2 <- biometry[, c(14,6,23,40)]
 ```
 
 <!--% Hypothèse nulle et alternative -->
 
-$$H_O = \:-\:\:= 0 $$
-
-$$H_1 =  \:-\:\:≠ 0 $$
+$$H_0: \overline{fumeurs\:consommant\:de\:l'alcool\:} - \overline{fumeurs\:ne\:consommant\:pas\:d'alcool} = 0$$
+$$H_1 =  \overline{fumeurs\:consommant\:de\:l'alcool\:}-\overline{fumeurs\:ne\:consommant\:pas\:d'alcool}≠ 0 $$
 
 <!--% Vérification des conditions d'application -->
 
@@ -500,12 +498,16 @@ $$H_1 =  \:-\:\:≠ 0 $$
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_anova1_1 Camille et Alexia}
-bartlett.test(data = biometry, activite_physique ~ age_rec_rec)
+
 ```
 
 <!--% Hypothèse nulle et alternative -->
 
 <!--% Vérification des conditions d'application -->
+
+```{r}
+bartlett.test(data = biometry, activite_physique ~ age_rec_rec)
+```
 
 ```{r test_anova1_1 Camille et Alexia}
 anova(biometry_anova <- lm(data = biometry, activite_physique ~ age_rec_rec))
@@ -562,15 +564,34 @@ bartlett.test(data = biometry,taille ~ interaction(IMC_cat_rec , fast_food_rec_r
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_anova2_2 Lou et Jeanne}
+# Recodage de biometry$fumeur en biometry$fumeur_rec
+biometry$fumeur_rec <- cut(biometry$fumeur,
+  include.lowest = TRUE,
+  right = FALSE,
+  dig.lab = 4,
+  breaks = c(0, 1, 300),
+  labels = c("Non Fumeur", "Fumeur"))
 
+chart(data = biometry, sommeil ~ fumeur_rec %fill=% genre) +
+  geom_boxplot() +
+  scale_fill_viridis_d() +
+  stat_summary(fun.data = give_n, geom = "text", hjust = 0.5,
+    position = position_dodge(0.75)) +
+  xlab("Fumeur")
 ```
 
 <!--% Hypothèse nulle et alternative -->
 
+$$H_O = \: $$
+
+$$H_1 = \:  $$
+
 <!--% Vérification des conditions d'application -->
 
 ```{r test_anova2_2 Lou et Jeanne}
-
+biometry_anova2 <- lm(data = biometry, )
+anova(biometry_anova2) %>.%
+  tabularise(.)
 ```
 
 <!--% Interprétation statistique et biologique -->
