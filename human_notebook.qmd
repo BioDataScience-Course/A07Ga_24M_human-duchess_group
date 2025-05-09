@@ -415,19 +415,20 @@ chisq.test(table_IMC_fast_food)
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_chi2_2 Lou et Jeanne }
-
+table_IMG_sucre <- table(IMG = biometry$IMG_cat, Sucre = biometry$sucre_rec)
+tabularise(table_IMG_sucre)
 ```
 
 <!--% Hypothèse nulle et alternative -->
 
-$$H_O = indépendance\:de\: $$
+$$H_O = indépendance\:de\:l'IMG\:et\:de\:la\:consommation\:de\:sucre  $$
 
-$$ H_1 = dépendance\:de\:$$
+$$ H_1 = dépendance\:de\:l'IMG\:et\:de\:la\:consommation\:de\:sucre $$
 
 <!--% Vérification des conditions d'application -->
 
 ```{r test_chi2_2 Lou et Jeanne }
-
+chisq.test(table_IMG_sucre)
 ```
 
 <!--% Interprétation statistique et biologique -->
