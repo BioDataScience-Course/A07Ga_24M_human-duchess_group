@@ -474,13 +474,13 @@ t.test(data = biometry, activite_physique ~ genre,
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_t_2 Jeanne et Lou}
-test_t_2 <- biometry[, c(14,6,23,40)]
+chart(data=biometry, alcool~fumeur_rec)+
+  geom_violin()
 ```
 
 <!--% Hypothèse nulle et alternative -->
 
-$$H_0: \overline{fumeurs\:consommant\:de\:l'alcool\:} - \overline{fumeurs\:ne\:consommant\:pas\:d'alcool} = 0$$
-$$H_1 =  \overline{fumeurs\:consommant\:de\:l'alcool\:}-\overline{fumeurs\:ne\:consommant\:pas\:d'alcool}≠ 0 $$
+$$H_0: \overline{fumeurs\:consommant\:de\:l'alcool\:} - \overline{fumeurs\:ne\:consommant\:pas\:d'alcool} = 0$$ $$H_1 =  \overline{fumeurs\:consommant\:de\:l'alcool\:}-\overline{fumeurs\:ne\:consommant\:pas\:d'alcool}≠ 0 $$
 
 <!--% Vérification des conditions d'application -->
 
