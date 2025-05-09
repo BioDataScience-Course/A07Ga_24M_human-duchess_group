@@ -474,14 +474,13 @@ t.test(data = biometry, activite_physique ~ genre,
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_t_2 Jeanne et Lou}
-
+test_t_2 <- biometry[, c(14,6,23,40)]
 ```
 
 <!--% Hypothèse nulle et alternative -->
 
-$$H_O = \:-\:\:= 0 $$
-
-$$H_1 =  \:-\:\:≠ 0 $$
+$$H_0: \overline{fumeurs\:consommant\:de\:l'alcool\:} - \overline{fumeurs\:ne\:consommant\:pas\:d'alcool} = 0$$
+$$H_1 =  \overline{fumeurs\:consommant\:de\:l'alcool\:}-\overline{fumeurs\:ne\:consommant\:pas\:d'alcool}≠ 0 $$
 
 <!--% Vérification des conditions d'application -->
 
@@ -558,15 +557,34 @@ anova(biometry_anova <- lm(data = biometry, activite_physique ~ age_rec_rec))
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_anova2_2 Lou et Jeanne}
+# Recodage de biometry$fumeur en biometry$fumeur_rec
+biometry$fumeur_rec <- cut(biometry$fumeur,
+  include.lowest = TRUE,
+  right = FALSE,
+  dig.lab = 4,
+  breaks = c(0, 1, 300),
+  labels = c("Non Fumeur", "Fumeur"))
 
+chart(data = biometry, sommeil ~ fumeur_rec %fill=% genre) +
+  geom_boxplot() +
+  scale_fill_viridis_d() +
+  stat_summary(fun.data = give_n, geom = "text", hjust = 0.5,
+    position = position_dodge(0.75)) +
+  xlab("Fumeur")
 ```
 
 <!--% Hypothèse nulle et alternative -->
 
+$$H_O = \: $$
+
+$$H_1 = \:  $$
+
 <!--% Vérification des conditions d'application -->
 
 ```{r test_anova2_2 Lou et Jeanne}
-
+biometry_anova2 <- lm(data = biometry, )
+anova(biometry_anova2) %>.%
+  tabularise(.)
 ```
 
 <!--% Interprétation statistique et biologique -->
