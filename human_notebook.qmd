@@ -116,7 +116,7 @@ Camille_tab <- table(biometry$sommeil_rec_rec, biometry$age_rec_rec)
 pander::pander(Camille_tab)
 ```
 
-Le tableau montre que, de façon générale, le sommeil normal est le plus répandu dans toutes les tranches d\'âge. Les jeunes adultes présentent une plus grande variabilité, avec une part importante de sommeil court et un peu de sommeil long. À mesure que l\'on avance en âge, cette variabilité diminue. Chez les adultes, il y a presque autant de sommeil court que de sommeil long, et chez les seniors, les cas de sommeil court ou long deviennent très rares.
+Le tableau montre que, de façon générale, le sommeil normal est le plus répandu dans toutes les tranches d'âge. Les jeunes adultes présentent une plus grande variabilité, avec une part importante de sommeil court et un peu de sommeil long. À mesure que l'on avance en âge, cette variabilité diminue. Chez les adultes, il y a presque autant de sommeil court que de sommeil long, et chez les seniors, les cas de sommeil court ou long deviennent très rares.
 
 ```{r CS}
 chart(data = biometry, ~ sommeil_rec_rec %fill=% age_rec_rec) +
@@ -549,15 +549,34 @@ anova(biometry_anova <- lm(data = biometry, activite_physique ~ age_rec_rec))
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_anova2_2 Lou et Jeanne}
+# Recodage de biometry$fumeur en biometry$fumeur_rec
+biometry$fumeur_rec <- cut(biometry$fumeur,
+  include.lowest = TRUE,
+  right = FALSE,
+  dig.lab = 4,
+  breaks = c(0, 1, 300),
+  labels = c("Non Fumeur", "Fumeur"))
 
+chart(data = biometry, sommeil ~ fumeur_rec %fill=% genre) +
+  geom_boxplot() +
+  scale_fill_viridis_d() +
+  stat_summary(fun.data = give_n, geom = "text", hjust = 0.5,
+    position = position_dodge(0.75)) +
+  xlab("Fumeur")
 ```
 
 <!--% Hypothèse nulle et alternative -->
 
+$$H_O = \: $$
+
+$$H_1 = \:  $$
+
 <!--% Vérification des conditions d'application -->
 
 ```{r test_anova2_2 Lou et Jeanne}
-
+biometry_anova2 <- lm(data = biometry, )
+anova(biometry_anova2) %>.%
+  tabularise(.)
 ```
 
 <!--% Interprétation statistique et biologique -->
