@@ -116,7 +116,7 @@ Camille_tab <- table(biometry$sommeil_rec_rec, biometry$age_rec_rec)
 pander::pander(Camille_tab)
 ```
 
-Le tableau montre que, de façon générale, le sommeil normal est le plus répandu dans toutes les tranches d\'âge. Les jeunes adultes présentent une plus grande variabilité, avec une part importante de sommeil court et un peu de sommeil long. À mesure que l\'on avance en âge, cette variabilité diminue. Chez les adultes, il y a presque autant de sommeil court que de sommeil long, et chez les seniors, les cas de sommeil court ou long deviennent très rares.
+Le tableau montre que, de façon générale, le sommeil normal est le plus répandu dans toutes les tranches d'âge. Les jeunes adultes présentent une plus grande variabilité, avec une part importante de sommeil court et un peu de sommeil long. À mesure que l'on avance en âge, cette variabilité diminue. Chez les adultes, il y a presque autant de sommeil court que de sommeil long, et chez les seniors, les cas de sommeil court ou long deviennent très rares.
 
 ```{r CS}
 chart(data = biometry, ~ sommeil_rec_rec %fill=% age_rec_rec) +
@@ -451,9 +451,10 @@ Camille_tab2
 
 <!-- Hypothèse nulle et alternative -->
 
-H0 : moyenne AP homme - moyenne AP femme = 0
+$$H_0: \overline{Activité\:physique\:des\:hommes} - \overline{Activité\:physique\:des\:femmes} = 0$$
 
-H1 : moyenne AP homme - moyenne AP femme \> 0
+$$H_1: \overline{Activité\:physique\:des\:hommes } - \overline{Activité\:physique\:des\:femmes} > 0$$
+
 
 <!-- Vérification des conditions d'application -->
 
