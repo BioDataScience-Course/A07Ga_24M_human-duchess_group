@@ -116,7 +116,7 @@ Camille_tab <- table(biometry$sommeil_rec_rec, biometry$age_rec_rec)
 pander::pander(Camille_tab)
 ```
 
-Le tableau montre que, de façon générale, le sommeil normal est le plus répandu dans toutes les tranches d\'âge. Les jeunes adultes présentent une plus grande variabilité, avec une part importante de sommeil court et un peu de sommeil long. À mesure que l\'on avance en âge, cette variabilité diminue. Chez les adultes, il y a presque autant de sommeil court que de sommeil long, et chez les seniors, les cas de sommeil court ou long deviennent très rares.
+Le tableau montre que, de façon générale, le sommeil normal est le plus répandu dans toutes les tranches d'âge. Les jeunes adultes présentent une plus grande variabilité, avec une part importante de sommeil court et un peu de sommeil long. À mesure que l'on avance en âge, cette variabilité diminue. Chez les adultes, il y a presque autant de sommeil court que de sommeil long, et chez les seniors, les cas de sommeil court ou long deviennent très rares.
 
 ```{r CS}
 chart(data = biometry, ~ sommeil_rec_rec %fill=% age_rec_rec) +
@@ -227,9 +227,10 @@ biometry$IMC_cat <- cut(
 ## Recodage de biometry$IMC_cat en biometry$IMC_cat_rec
 biometry$IMC_cat_rec <- biometry$IMC_cat %>%
   fct_recode(
-    "Obésité sévère à morbide" = "Obésité sévère (Grade II)",
-    "Obésité sévère à morbide" = "Obésité morbide (Grade III)",
-    "Obésité sévère à morbide" = "Super-obésité (Obésité massive)"
+    "Obésité" = "Obésité modérée (Grade I)",
+    "Obésité" = "Obésité sévère (Grade II)",
+    "Obésité" = "Obésité morbide (Grade III)",
+    "Obésité" = "Super-obésité (Obésité massive)"
   )
 ```
 
@@ -544,7 +545,13 @@ anova(biometry_anova <- lm(data = biometry, activite_physique ~ age_rec_rec))
 
 <!--% Vérification des conditions d'application -->
 
-```{r test_anova2_1 Alexia et Camille}
+```{r test_bartlett_1 Alexia et Camille}
+bartlett.test(data = biometry,taille ~ interaction(IMC_cat_rec , fast_food_rec_rec))
+
+
+```
+
+```{r.test_anova2_1 Alexia et Camille}
 
 ```
 
