@@ -451,7 +451,7 @@ Camille_tab2
 
 HO : moyenne AP homme - moyenne AP femme = 0
 
-H1 : moyenne AP homme - moyenne AP femme != 0
+H1 : moyenne AP homme - moyenne AP femme \> 0
 
 <!-- Vérification des conditions d'application -->
 
@@ -504,7 +504,7 @@ $$H_1 =  \:-\:\:≠ 0 $$
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_anova1_1 Camille et Alexia}
-
+bartlett.test(data = biometry, activite_physique ~ age_rec_rec)
 ```
 
 <!--% Hypothèse nulle et alternative -->
@@ -512,7 +512,7 @@ $$H_1 =  \:-\:\:≠ 0 $$
 <!--% Vérification des conditions d'application -->
 
 ```{r test_anova1_1 Camille et Alexia}
-
+anova(lm(biometry, activite_physique ~ age_rec_rec)) |> tabularise()
 ```
 
 <!--% Interprétation statistique et biologique -->
