@@ -470,6 +470,8 @@ t.test(data = biometry, activite_physique ~ genre,
 
 <!-- Interprétation statistique et biologique -->
 
+Nous rejetons H0 et nous pouvons dire que l'activité physique diffère de manière significative entre le hommes et les femmes au seuil α de 5% (test de Welch, *t* = 2,62, ddl = 129,8, valeur *p* = 0,0049).
+
 ### Test t de Student 2
 
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
@@ -540,10 +542,20 @@ anova(biometry_anova <- lm(data = biometry, activite_physique ~ age_rec_rec))
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_anova2_1 Alexia et Camille}
-
+biometry %>.%
+  sgroup_by(., IMC_cat_rec, fast_food_rec_rec) %>.%
+  ssummarise(.,
+    mean  = fmean(taille),
+    var   = fvar(taille),
+    count = fnobs(taille))
 ```
 
 <!--% Hypothèse nulle et alternative -->
+
+$$
+H_0:σ_τ2=0 $$ 
+$$ H_1:σ_τ2>0
+$$
 
 <!--% Vérification des conditions d'application -->
 
@@ -553,8 +565,9 @@ bartlett.test(data = biometry,taille ~ interaction(IMC_cat_rec , fast_food_rec_r
 
 ```
 
-```{r.test_anova2_1 Alexia et Camille}
-
+```{r}
+anova(anova_a <- lm(data = biometry, taille ~ IMC_cat_rec + fast_food_rec_rec)) %>.%
+  tabularise(.)
 ```
 
 <!--% Interprétation statistique et biologique -->
