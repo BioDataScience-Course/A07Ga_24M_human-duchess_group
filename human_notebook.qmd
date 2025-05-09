@@ -222,7 +222,13 @@ biometry$IMC_cat <- cut(
     "Obésité modérée (Grade I)", "Obésité sévère (Grade II)",
     "Obésité morbide (Grade III)", "Super-obésité (Obésité massive)"),
   right = TRUE)
-
+## Recodage de biometry$IMC_cat en biometry$IMC_cat_rec
+biometry$IMC_cat_rec <- biometry$IMC_cat %>%
+  fct_recode(
+    "Obésité sévère à morbide" = "Obésité sévère (Grade II)",
+    "Obésité sévère à morbide" = "Obésité morbide (Grade III)",
+    "Obésité sévère à morbide" = "Super-obésité (Obésité massive)"
+  )
 ```
 
 <!--% Graphique ou tableau utilisant l'indice calculé.-->
@@ -386,7 +392,7 @@ kable(table(biometry$sucre_rec, biometry$IMG_cat), caption = "Répartition de l'
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_chi2_1 Alexia et Camille}
-table_IMC_fast_food <- table(IMC = biometry$IMC_cat,Fast_food = biometry$fast_food_rec_rec)
+table_IMC_fast_food <- table(IMC = biometry$IMC_cat_rec,Fast_food = biometry$fast_food_rec_rec)
 tabularise(table_IMC_fast_food)
 
 
