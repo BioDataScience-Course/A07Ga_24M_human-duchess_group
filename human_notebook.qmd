@@ -116,6 +116,8 @@ Camille_tab <- table(biometry$sommeil_rec_rec, biometry$age_rec_rec)
 pander::pander(Camille_tab)
 ```
 
+Le tableau montre que, de façon générale, le sommeil normal est le plus répandu dans toutes les tranches d\'âge. Les jeunes adultes présentent une plus grande variabilité, avec une part importante de sommeil court et un peu de sommeil long. À mesure que l\'on avance en âge, cette variabilité diminue. Chez les adultes, il y a presque autant de sommeil court que de sommeil long, et chez les seniors, les cas de sommeil court ou long deviennent très rares.
+
 ```{r CS}
 chart(data = biometry, ~ sommeil_rec_rec %fill=% age_rec_rec) +
   geom_bar(position = "dodge") +
@@ -190,7 +192,7 @@ chart(data = biometry, masse_corr ~ sucre_rec %fill=% genre) +
 
 Les médianes des masses corrigées sont toujours supérieures chez les hommes; ce qui semble logique car les hommes ont généralement une masse musculaire supérieure.
 
-Cependant, la moyenne des masses corrigées des personnes consommant exceptionnellement du sucre avoisinent celle des personnes en consommant souvent voire les surpassent. On pourrait expliquer cela par une inégalité des observations. En effet, on a environ 4 fois moins d'observations dans la catégorie "exceptionnellement", rendant la comparaison non représentative d'une population plus étendue.
+Cependant, la moyenne des masses corrigées des personnes consommant exceptionnellement du sucre avoisinent celle des personnes en consommant souvent voire les surpassent. Cela pourrait s'expliquer par une inégalité des observations. En effet, on a environ 4 fois moins d'observations dans la catégorie "exceptionnellement", rendant la comparaison non représentative d'une population plus étendue.
 
 ## Calcul d'indices
 
@@ -379,7 +381,7 @@ kable(table(biometry$sucre_rec, biometry$IMG_cat), caption = "Répartition de l'
 
 -   Cependant, une consommation modérée correspond davantage à une répartition équilibrée de l'IMG.
 
--   Ainsi, nous n'observons pas nécessairement une relation de cause à effet de la consommation de sucre sur l'IMG.
+-   Ainsi, Il n'existe pas nécessairement une relation de cause à effet de la consommation de sucre sur l'IMG.
 
 ## Tests d'hypothèses
 
@@ -455,7 +457,7 @@ Camille_tab2
 
 <!-- Hypothèse nulle et alternative -->
 
-HO : moyenne AP homme - moyenne AP femme = 0
+H0 : moyenne AP homme - moyenne AP femme = 0
 
 H1 : moyenne AP homme - moyenne AP femme \> 0
 
@@ -464,19 +466,6 @@ H1 : moyenne AP homme - moyenne AP femme \> 0
 ```{r test_t_1 Camille et Alexia}
 t.test(data = biometry, activite_physique ~ genre,
   alternative = "greater", conf.level = 0.95, var.equal = FALSE)
-```
-
-```{r}
-wilcox.test(data = biometry, activite_physique ~ genre,
-  alternative = "greater", conf.level = 0.95)
-```
-
-```{r}
-shapiro.test(biometry$activite_physique[biometry$genre=="H"])
-```
-
-```{r}
-shapiro.test(biometry$activite_physique[biometry$genre=="F"])
 ```
 
 <!-- Interprétation statistique et biologique -->
@@ -518,7 +507,7 @@ bartlett.test(data = biometry, activite_physique ~ age_rec_rec)
 <!--% Vérification des conditions d'application -->
 
 ```{r test_anova1_1 Camille et Alexia}
-anova(lm(biometry, activite_physique ~ age_rec_rec)) |> tabularise()
+anova(biometry_anova <- lm(data = biometry, activite_physique ~ age_rec_rec))
 ```
 
 <!--% Interprétation statistique et biologique -->
