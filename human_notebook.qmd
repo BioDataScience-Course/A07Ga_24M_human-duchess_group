@@ -192,7 +192,7 @@ chart(data = biometry, masse_corr ~ sucre_rec %fill=% genre) +
 
 Les médianes des masses corrigées sont toujours supérieures chez les hommes; ce qui semble logique car les hommes ont généralement une masse musculaire supérieure.
 
-Cependant, la moyenne des masses corrigées des personnes consommant exceptionnellement du sucre avoisinent celle des personnes en consommant souvent voire les surpassent. On pourrait expliquer cela par une inégalité des observations. En effet, on a environ 4 fois moins d'observations dans la catégorie "exceptionnellement", rendant la comparaison non représentative d'une population plus étendue.
+Cependant, la moyenne des masses corrigées des personnes consommant exceptionnellement du sucre avoisinent celle des personnes en consommant souvent voire les surpassent. Cela pourrait s'expliquer par une inégalité des observations. En effet, on a environ 4 fois moins d'observations dans la catégorie "exceptionnellement", rendant la comparaison non représentative d'une population plus étendue.
 
 ## Calcul d'indices
 
@@ -224,7 +224,13 @@ biometry$IMC_cat <- cut(
     "Obésité modérée (Grade I)", "Obésité sévère (Grade II)",
     "Obésité morbide (Grade III)", "Super-obésité (Obésité massive)"),
   right = TRUE)
-
+## Recodage de biometry$IMC_cat en biometry$IMC_cat_rec
+biometry$IMC_cat_rec <- biometry$IMC_cat %>%
+  fct_recode(
+    "Obésité sévère à morbide" = "Obésité sévère (Grade II)",
+    "Obésité sévère à morbide" = "Obésité morbide (Grade III)",
+    "Obésité sévère à morbide" = "Super-obésité (Obésité massive)"
+  )
 ```
 
 <!--% Graphique ou tableau utilisant l'indice calculé.-->
@@ -375,7 +381,7 @@ kable(table(biometry$sucre_rec, biometry$IMG_cat), caption = "Répartition de l'
 
 -   Cependant, une consommation modérée correspond davantage à une répartition équilibrée de l'IMG.
 
--   Ainsi, nous n'observons pas nécessairement une relation de cause à effet de la consommation de sucre sur l'IMG.
+-   Ainsi, Il n'existe pas nécessairement une relation de cause à effet de la consommation de sucre sur l'IMG.
 
 ## Tests d'hypothèses
 
@@ -388,7 +394,7 @@ kable(table(biometry$sucre_rec, biometry$IMG_cat), caption = "Répartition de l'
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_chi2_1 Alexia et Camille}
-table_IMC_fast_food <- table(IMC = biometry$IMC_cat,Fast_food = biometry$fast_food_rec_rec)
+table_IMC_fast_food <- table(IMC = biometry$IMC_cat_rec,Fast_food = biometry$fast_food_rec_rec)
 tabularise(table_IMC_fast_food)
 
 
