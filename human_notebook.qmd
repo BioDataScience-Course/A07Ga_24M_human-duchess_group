@@ -470,7 +470,7 @@ t.test(data = biometry, activite_physique ~ genre,
 
 <!-- Interprétation statistique et biologique -->
 
-Nous rejetons H0 et nous pouvons dire que l'activité physique diffère de manière significative entre le hommes et les femmes au seuil α de 5% (test de Welch, *t* = 2,62, ddl = 129,8, valeur *p* = 0,0049).
+Nous rejetons H₀ et nous pouvons dire que l'activité physique diffère de manière significative entre le hommes et les femmes au seuil α de 5% (test de Welch, *t* = 2,62, ddl = 129,8, valeur *p* = 0,0049).
 
 ### Test t de Student 2
 
@@ -517,6 +517,8 @@ anova(biometry_anova <- lm(data = biometry, activite_physique ~ age_rec_rec))
 
 <!--% Interprétation statistique et biologique -->
 
+Ici, nous ne rejetons pas H₀ et nous ne pouvons donc pas conclure à une différence significative de l\'activité physique entre les différentes classes d\'âge au seuil α de 5 % (test ANOVA, F = 2,51, ddl = 2 et 141, p = 0,0848).
+
 ### ANOVA à un facteur 2
 
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
@@ -553,8 +555,10 @@ biometry %>.%
 <!--% Hypothèse nulle et alternative -->
 
 $$
-H_0:σ_τ2=0 $$ 
-$$ H_1:σ_τ2>0
+H_0: Interaction\:entre\:la\:consomation\:de\:fast\:food\:et\:l'IMC
+$$
+$$
+H_1: Pas\:d'interaction\:entre\:la\:consomation\:de\:fast\:food\:et\:l'IMC
 $$
 
 <!--% Vérification des conditions d'application -->
