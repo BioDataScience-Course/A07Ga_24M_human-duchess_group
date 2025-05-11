@@ -481,6 +481,14 @@ Nous rejetons H₀ et nous pouvons dire que l'activité physique diffère de man
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_t_2 Jeanne et Lou}
+# Recodage de biometry$fumeur en biometry$fumeur_rec
+biometry$fumeur_rec <- cut(biometry$fumeur,
+  include.lowest = TRUE,
+  right = FALSE,
+  dig.lab = 4,
+  breaks = c(0, 1, 300),
+  labels = c("Non Fumeur", "Fumeur"))
+
 biometry %>%
   sgroup_by(., fumeur_rec)%>%
   ssummarise(., 
@@ -549,8 +557,12 @@ Ici, nous ne rejetons pas H₀ et nous ne pouvons donc pas conclure à une diff�
 
 <!--% Vérification des conditions d'application -->
 
-```{r test_anova1_2 Jeanne et Lou}
+```{r}
+bartlett.test(data=biometry, Poids_Ideal~alcool_rec_rec)
+```
 
+```{r test_anova1_2 Jeanne et Lou}
+anova(biometry_anova1 <- lm(data=biometry, Poids_Ideal~alcool))
 ```
 
 <!--% Interprétation statistique et biologique -->
@@ -635,6 +647,7 @@ anova(biometry_anova2) %>.%
 ```
 
 ```{r quantile_quantile_2 Lou et Jeanne}
+<<<<<<< HEAD
 library(ggplot2)
 
 residus_std <- rstandard(biometry_anova2)
@@ -646,6 +659,14 @@ ggplot(data.frame(residus_std), aes(sample = residus_std)) +
   theme_minimal() + 
   theme(panel.grid = element_blank())
 
+=======
+library(broom.mixed)
+biometry_anova2 %>.%
+  augment(.) %>.%
+  car::qqPlot(.$.resid, distribution = "norm",
+    envelope = 0.95, col = "Black", xlab = "Quantiles théoriques",
+    ylab = "Résidus standardisés")
+>>>>>>> dbf3853b31b658d30978579b98896e9e8316d1dc
 ```
 
 <!--% Interprétation statistique et biologique -->
