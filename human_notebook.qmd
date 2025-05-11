@@ -462,6 +462,11 @@ $$H_1: \overline{Activité\:physique\:des\:hommes } - \overline{Activité\:physi
 
 <!-- Vérification des conditions d'application -->
 
+```{r}
+car::qqPlot(biometry[["activite_physique"]], distribution = "norm",
+  envelope = 0.95, col = "Black", ylab = "Activité physique", xlab="Quantiles")
+```
+
 ```{r test_t_1 Camille et Alexia}
 t.test(data = biometry, activite_physique ~ genre,
   alternative = "greater", conf.level = 0.95, var.equal = FALSE)
