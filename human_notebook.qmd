@@ -552,7 +552,10 @@ Dans ce cas, un test de Kruskal-Wallis a été réalisé car la distribution des
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_anova1_2 Jeanne et Lou}
-
+chart(data=biometry, Poids_Ideal~alcool_rec_rec %fill=%alcool_rec_rec)+
+  geom_boxplot(show.legend=FALSE)+
+  scale_fill_viridis_d()+
+  labs(y="Poids idéal", x="Alcool")
 ```
 
 <!--% Hypothèse nulle et alternative -->
