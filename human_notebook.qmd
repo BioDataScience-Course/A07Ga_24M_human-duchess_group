@@ -576,6 +576,8 @@ anova(anova_a <- lm(data = biometry, taille ~ IMC_cat_rec + fast_food_rec_rec)) 
 
 <!--% Interprétation statistique et biologique -->
 
+Nous ne rejetons pas H₀. Donc, nous ne pouvons pas conclure que la taille est significativement différente au seuil α de 5 % , que ce soit en fonction de de l'IMC (*F* = 1,28, ddl = 3 et 137, valeur *p* = 0,284) ou de la consommation de fast food (*F* = 1,62, ddl = 2 et 137, valeur *p* = 0,203).
+
 ### ANOVA à deux facteurs 2
 
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
