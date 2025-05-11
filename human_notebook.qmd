@@ -589,24 +589,30 @@ biometry$fumeur_rec <- cut(biometry$fumeur,
   breaks = c(0, 1, 300),
   labels = c("Non Fumeur", "Fumeur"))
 
-chart(data = biometry, sommeil ~ fumeur_rec %fill=% genre) +
+
+
+chart(data = biometry, IMG ~ fumeur_rec %fill=% sommeil_rec_rec) +
   geom_boxplot() +
   scale_fill_viridis_d() +
   stat_summary(fun.data = give_n, geom = "text", hjust = 0.5,
-    position = position_dodge(0.75)) +
-  xlab("Fumeur")
+    position = position_dodge(0.75), title = "Sommeil") +
+  labs(x = "Fumeur", y = "IMG [%]", fill = "Sommeil")
 ```
 
 <!--% Hypothèse nulle et alternative -->
 
-$$H_O = \: $$
+$$H_O = Pas\:d'interaction\:entre\:le\:tabagisme\:et\:le\:sommeil\:sur\:l'IMG $$
 
-$$H_1 = \:  $$
+$$H_1 = Interaction\:entre\:le\:tabagisme\:et\:le\:sommeil\:sur\:l'IMG  $$
 
 <!--% Vérification des conditions d'application -->
 
+```{r bartlett_test_2 Lou et Jeanne}
+bartlett.test(data = biometry,IMG ~ interaction(fumeur_rec, sommeil_rec_rec))
+```
+
 ```{r test_anova2_2 Lou et Jeanne}
-biometry_anova2 <- lm(data = )
+biometry_anova2 <- lm(data = biometry, IMG ~ fumeur_rec * sommeil_rec_rec)
 anova(biometry_anova2) %>.%
   tabularise(.)
 ```
