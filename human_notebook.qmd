@@ -126,7 +126,7 @@ chart(data = biometry, ~ sommeil_rec_rec %fill=% age_rec_rec) +
   labs (y = "Effectifs", x = "Qualité du sommeil")
 ```
 
-Le graphique met en évidence une prédominance du sommeil normal dans l’ensemble des tranches d’âge, avec un maximum observé chez les jeunes adultes. Une proportion non négligeable de sommeil court est également présente chez cette population, indiquant une plus grande variabilité. Chez les adultes, le sommeil normal reste majoritaire, mais les cas de sommeil court sont également fréquents. Le sommeil long demeure peu représenté dans toutes les catégories. Enfin, chez les seniors, la distribution se resserre nettement autour du sommeil normal, tandis que les occurrences de sommeil court ou long deviennent très rares. Ces observations suggèrent une tendance générale à la stabilisation du sommeil avec l’âge.
+Le graphique met en évidence une prédominance du sommeil normal dans l'ensemble des tranches d'âge, avec un maximum observé chez les jeunes adultes. Une proportion non négligeable de sommeil court est également présente chez cette population, indiquant une plus grande variabilité. Chez les adultes, le sommeil normal reste majoritaire, mais les cas de sommeil court sont également fréquents. Le sommeil long demeure peu représenté dans toutes les catégories. Enfin, chez les seniors, la distribution se resserre nettement autour du sommeil normal, tandis que les occurrences de sommeil court ou long deviennent très rares. Ces observations suggèrent une tendance générale à la stabilisation du sommeil avec l'âge.
 
 ### Description par l'étudiant 3
 
@@ -417,6 +417,8 @@ chisq.test(table_IMC_fast_food)
 
 <!--% Interprétation statistique et biologique -->
 
+Nous ne rejetons pas H₀ et nous ne pouvons pas conclure que la valeur de l'IMC dépend significativement de la consommation d au seuil α de 5% (Chi carré d'indépendance, ddl = 6, valeur *p* = 0,3282).
+
 ### Test de Chi^2^ 2
 
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
@@ -565,8 +567,6 @@ $$
 
 ```{r test_bartlett_1 Alexia et Camille}
 bartlett.test(data = biometry,taille ~ interaction(IMC_cat_rec , fast_food_rec_rec))
-
-
 ```
 
 ```{r}
