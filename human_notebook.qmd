@@ -515,7 +515,10 @@ t.test(biometry$fumeur, biometry$alcool, alternative="two.sided",
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_anova1_1 Camille et Alexia}
-
+chart(data=biometry, activite_physique ~ age_rec_rec %fill=% age_rec_rec) +
+  geom_boxplot(show.legend=FALSE) +
+  labs(x="Âge") +
+  scale_fill_viridis_d()
 ```
 
 <!--% Hypothèse nulle et alternative -->
@@ -527,7 +530,7 @@ bartlett.test(data = biometry, activite_physique ~ age_rec_rec)
 ```
 
 ```{r test_anova1_1 Camille et Alexia}
-anova(biometry_anova <- lm(data = biometry, activite_physique ~ age_rec_rec))
+kruskal.test(data = biometry, activite_physique ~ age_rec_rec)
 ```
 
 <!--% Interprétation statistique et biologique -->
@@ -639,9 +642,7 @@ residus_std <- rstandard(biometry_anova2)
 ggplot(data.frame(residus_std), aes(sample = residus_std)) +
   stat_qq() +
   stat_qq_line(color = "black") +
-  labs(title = "Graphique quantile-quantile des résidus - biometry_anova2",
-       x = "Quantiles théoriques",
-       y = "Résidus standardisés") +
+  labs(x = "Quantiles théoriques", y = "Résidus standardisés") +
   theme_minimal() + 
   theme(panel.grid = element_blank())
 
