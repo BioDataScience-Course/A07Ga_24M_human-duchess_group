@@ -530,6 +530,8 @@ chart(data=biometry, activite_physique ~ age_rec_rec %fill=% age_rec_rec) +
 ```
 
 <!--% Hypothèse nulle et alternative -->
+$$H_0:mr_{ja} = mr_a = mr_s$$
+$$H_1: \exists(i, j) \mathrm{\ tel\ que\ } mr_i \neq mr_j$$
 
 <!--% Vérification des conditions d'application -->
 
