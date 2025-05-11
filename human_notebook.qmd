@@ -227,9 +227,10 @@ biometry$IMC_cat <- cut(
 ## Recodage de biometry$IMC_cat en biometry$IMC_cat_rec
 biometry$IMC_cat_rec <- biometry$IMC_cat %>%
   fct_recode(
-    "Obésité sévère à morbide" = "Obésité sévère (Grade II)",
-    "Obésité sévère à morbide" = "Obésité morbide (Grade III)",
-    "Obésité sévère à morbide" = "Super-obésité (Obésité massive)"
+    "Obésité" = "Obésité modérée (Grade I)",
+    "Obésité" = "Obésité sévère (Grade II)",
+    "Obésité" = "Obésité morbide (Grade III)",
+    "Obésité" = "Super-obésité (Obésité massive)"
   )
 ```
 
@@ -396,7 +397,6 @@ kable(table(biometry$sucre_rec, biometry$IMG_cat), caption = "Répartition de l'
 table_IMC_fast_food <- table(IMC = biometry$IMC_cat_rec,Fast_food = biometry$fast_food_rec_rec)
 tabularise(table_IMC_fast_food)
 
-
 ```
 
 <!--% Hypothèse nulle et alternative -->
@@ -469,12 +469,15 @@ t.test(data = biometry, activite_physique ~ genre,
 
 <!-- Interprétation statistique et biologique -->
 
+Nous rejetons H₀ et nous pouvons dire que l'activité physique diffère de manière significative entre le hommes et les femmes au seuil α de 5% (test de Welch, *t* = 2,62, ddl = 129,8, valeur *p* = 0,0049).
+
 ### Test t de Student 2
 
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_t_2 Jeanne et Lou}
-test_t_2 <- biometry[, c(14,6,23,40)]
+chart(data=biometry, alcool~fumeur_rec)+
+  geom_violin()
 ```
 
 <!--% Hypothèse nulle et alternative -->
@@ -496,18 +499,24 @@ $$H_0: \overline{fumeurs\:consommant\:de\:l'alcool\:} - \overline{fumeurs\:ne\:c
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_anova1_1 Camille et Alexia}
-bartlett.test(data = biometry, activite_physique ~ age_rec_rec)
+
 ```
 
 <!--% Hypothèse nulle et alternative -->
 
 <!--% Vérification des conditions d'application -->
 
+```{r}
+bartlett.test(data = biometry, activite_physique ~ age_rec_rec)
+```
+
 ```{r test_anova1_1 Camille et Alexia}
 anova(biometry_anova <- lm(data = biometry, activite_physique ~ age_rec_rec))
 ```
 
 <!--% Interprétation statistique et biologique -->
+
+Ici, nous ne rejetons pas H₀ et nous ne pouvons donc pas conclure à une différence significative de l'activité physique entre les différentes classes d'âge au seuil α de 5 % (test ANOVA, F = 2,51, ddl = 2 et 141, p = 0,0848).
 
 ### ANOVA à un facteur 2
 
@@ -534,15 +543,33 @@ anova(biometry_anova <- lm(data = biometry, activite_physique ~ age_rec_rec))
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_anova2_1 Alexia et Camille}
-
+biometry %>.%
+  sgroup_by(., IMC_cat_rec, fast_food_rec_rec) %>.%
+  ssummarise(.,
+    mean  = fmean(taille),
+    var   = fvar(taille),
+    count = fnobs(taille))
 ```
 
 <!--% Hypothèse nulle et alternative -->
 
+$$
+H_0: Interaction\:entre\:la\:consomation\:de\:fast\:food\:et\:l'IMC
+$$ $$
+H_1: Pas\:d'interaction\:entre\:la\:consomation\:de\:fast\:food\:et\:l'IMC
+$$
+
 <!--% Vérification des conditions d'application -->
 
-```{r test_anova2_1 Alexia et Camille}
+```{r test_bartlett_1 Alexia et Camille}
+bartlett.test(data = biometry,taille ~ interaction(IMC_cat_rec , fast_food_rec_rec))
 
+
+```
+
+```{r}
+anova(anova_a <- lm(data = biometry, taille ~ IMC_cat_rec + fast_food_rec_rec)) %>.%
+  tabularise(.)
 ```
 
 <!--% Interprétation statistique et biologique -->
