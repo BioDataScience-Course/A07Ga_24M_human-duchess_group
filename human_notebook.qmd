@@ -560,6 +560,10 @@ chart(data=biometry, Poids_Ideal~alcool_rec_rec %fill=%alcool_rec_rec)+
 
 <!--% Hypothèse nulle et alternative -->
 
+$$H_0:mu_{ja} = mu_{re} = mu_{sou}$$
+
+$$H_1: \exists(i, j) \mathrm{\ tel\ que\ } mu_i \neq mu_j$$
+
 <!--% Vérification des conditions d'application -->
 
 ```{r}
@@ -567,7 +571,7 @@ bartlett.test(data=biometry, Poids_Ideal~alcool_rec_rec)
 ```
 
 ```{r test_anova1_2 Jeanne et Lou}
-anova(biometry_anova1 <- lm(data=biometry, Poids_Ideal~alcool))
+anova(biometry_anova1 <- lm(data = biometry, Poids_Ideal~alcool))
 ```
 
 <!--% Interprétation statistique et biologique -->
