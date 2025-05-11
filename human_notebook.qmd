@@ -615,6 +615,22 @@ anova(biometry_anova2) %>.%
   tabularise(.)
 ```
 
+```{r quantile_quantile_2 Lou et Jeanne}
+library(ggplot2)
+
+residus_std <- rstandard(biometry_anova2)
+
+ggplot(data.frame(residus_std), aes(sample = residus_std)) +
+  stat_qq() +
+  stat_qq_line(color = "black") +
+  labs(title = "Graphique quantile-quantile des résidus - biometry_anova2",
+       x = "Quantiles théoriques",
+       y = "Résidus standardisés") +
+  theme_minimal() + 
+  theme(panel.grid = element_blank())
+
+```
+
 <!--% Interprétation statistique et biologique -->
 
 # Discussion et conclusions
