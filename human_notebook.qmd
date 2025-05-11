@@ -554,8 +554,12 @@ Ici, nous ne rejetons pas H₀ et nous ne pouvons donc pas conclure à une diff�
 
 <!--% Vérification des conditions d'application -->
 
-```{r test_anova1_2 Jeanne et Lou}
+```{r}
+bartlett.test(data=biometry, Poids_Ideal~alcool_rec_rec)
+```
 
+```{r test_anova1_2 Jeanne et Lou}
+anova(biometry_anova1 <- lm(data=biometry, Poids_Ideal~alcool))
 ```
 
 <!--% Interprétation statistique et biologique -->
