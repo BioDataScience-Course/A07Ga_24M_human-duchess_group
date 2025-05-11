@@ -329,7 +329,7 @@ biometry<- biometry %>%
 
 ```{r plot_indice3}
 # Graphique ou tableau utilisant l'indice calculé.
-biommetry_indice_3 <- biometry[, c(3,6,23,40)]
+biommetry_indice_3 <- biometry[, c(3,6,23,41)]
 sfilter(biommetry_indice_3, genre=="F" & age<=30)|> tabularise()
 ```
 
@@ -476,18 +476,29 @@ Nous rejetons H₀ et nous pouvons dire que l'activité physique diffère de man
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_t_2 Jeanne et Lou}
-chart(data=biometry, alcool~fumeur_rec)+
-  geom_violin()
+biometry %>%
+  sgroup_by(., fumeur_rec)%>%
+  ssummarise(., 
+  verre_alcool = fmean(alcool),
+  n = fn(alcool)
+  )
+```
+
+```{r}
+chart(data=biometry, fumeur~alcool)+
+  geom_point()+
+  geom_abline(slope=1, intercept=0)
 ```
 
 <!--% Hypothèse nulle et alternative -->
 
-$$H_0: \overline{fumeurs\:consommant\:de\:l'alcool\:} - \overline{fumeurs\:ne\:consommant\:pas\:d'alcool} = 0$$ $$H_1 =  \overline{fumeurs\:consommant\:de\:l'alcool\:}-\overline{fumeurs\:ne\:consommant\:pas\:d'alcool}≠ 0 $$
+$$H_0: \overline{nombre\:de\:cigarettes\:par\:semaine\:\:-\:nombre\:de\:verres\:d'alcool\:par\:semaine} = 0$$ $$H_1 :  \overline{nombre\:de\:cigarettes\:par\:semaine\:\:-\:nombre\:de\:verres\:d'alcool\:par\:semaine} ≠ 0 $$
 
 <!--% Vérification des conditions d'application -->
 
 ```{r test_t_2 Jeanne et Lou}
-
+t.test(biometry$fumeur, biometry$alcool, alternative="two.sided", 
+  conf.level=0.95, paired=TRUE)
 ```
 
 <!--% Interprétation statistique et biologique -->
