@@ -523,10 +523,15 @@ t.test(biometry$fumeur, biometry$alcool, alternative="two.sided",
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_anova1_1 Camille et Alexia}
-
+chart(data=biometry, activite_physique ~ age_rec_rec %fill=% age_rec_rec) +
+  geom_boxplot(show.legend=FALSE) +
+  labs(x="Âge") +
+  scale_fill_viridis_d()
 ```
 
 <!--% Hypothèse nulle et alternative -->
+$$H_0:mr_{ja} = mr_a = mr_s$$
+$$H_1: \exists(i, j) \mathrm{\ tel\ que\ } mr_i \neq mr_j$$
 
 <!--% Vérification des conditions d'application -->
 
@@ -535,12 +540,12 @@ bartlett.test(data = biometry, activite_physique ~ age_rec_rec)
 ```
 
 ```{r test_anova1_1 Camille et Alexia}
-anova(biometry_anova <- lm(data = biometry, activite_physique ~ age_rec_rec))
+kruskal.test(data = biometry, activite_physique ~ age_rec_rec)
 ```
 
 <!--% Interprétation statistique et biologique -->
 
-Ici, nous ne rejetons pas H₀ et nous ne pouvons donc pas conclure à une différence significative de l'activité physique entre les différentes classes d'âge au seuil α de 5 % (test ANOVA, F = 2,51, ddl = 2 et 141, p = 0,0848).
+Dans ce cas, un test de Kruskal-Wallis a été réalisé car la distribution des résidus n'est pas normale. Nous rejetons H₀ et nous pouvons donc conclure à une différence significative de l'activité physique entre les différentes classes d'âge au seuil α de 5 % (test Kruskal-Wallis, Chi carré = 6,58, ddl = 2, valeur p = 0,03719).
 
 ### ANOVA à un facteur 2
 
@@ -647,6 +652,7 @@ anova(biometry_anova2) %>.%
 ```
 
 ```{r quantile_quantile_2 Lou et Jeanne}
+
 library(broom.mixed)
 biometry_anova2 %>.%
   augment(.) %>.%
