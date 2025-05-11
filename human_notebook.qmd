@@ -481,6 +481,14 @@ Nous rejetons H₀ et nous pouvons dire que l'activité physique diffère de man
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_t_2 Jeanne et Lou}
+# Recodage de biometry$fumeur en biometry$fumeur_rec
+biometry$fumeur_rec <- cut(biometry$fumeur,
+  include.lowest = TRUE,
+  right = FALSE,
+  dig.lab = 4,
+  breaks = c(0, 1, 300),
+  labels = c("Non Fumeur", "Fumeur"))
+
 biometry %>%
   sgroup_by(., fumeur_rec)%>%
   ssummarise(., 
