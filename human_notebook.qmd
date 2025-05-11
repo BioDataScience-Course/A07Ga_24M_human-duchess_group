@@ -545,7 +545,7 @@ kruskal.test(data = biometry, activite_physique ~ age_rec_rec)
 
 <!--% Interprétation statistique et biologique -->
 
-Ici, nous ne rejetons pas H₀ et nous ne pouvons donc pas conclure à une différence significative de l'activité physique entre les différentes classes d'âge au seuil α de 5 % (test ANOVA, F = 2,51, ddl = 2 et 141, p = 0,0848).
+Dans ce cas, un test de Kruskal-Wallis a été réalisé car la distribution des résidus n'est pas normale. Nous rejetons H₀ et nous pouvons donc conclure à une différence significative de l'activité physique entre les différentes classes d'âge au seuil α de 5 % (test Kruskal-Wallis, Chi carré = 6,58, ddl = 2, valeur p = 0,03719).
 
 ### ANOVA à un facteur 2
 
