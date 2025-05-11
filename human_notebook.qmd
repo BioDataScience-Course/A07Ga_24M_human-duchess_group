@@ -640,19 +640,12 @@ anova(biometry_anova2) %>.%
 ```
 
 ```{r quantile_quantile_2 Lou et Jeanne}
-library(ggplot2)
-
-residus_std <- rstandard(biometry_anova2)
-
-ggplot(data.frame(residus_std), aes(sample = residus_std)) +
-  stat_qq() +
-  stat_qq_line(color = "black") +
-  labs(title = "Graphique quantile-quantile des résidus - biometry_anova2",
-       x = "Quantiles théoriques",
-       y = "Résidus standardisés") +
-  theme_minimal() + 
-  theme(panel.grid = element_blank())
-
+library(broom.mixed)
+biometry_anova2 %>.%
+  augment(.) %>.%
+  car::qqPlot(.$.resid, distribution = "norm",
+    envelope = 0.95, col = "Black", xlab = "Quantiles théoriques",
+    ylab = "Résidus standardisés")
 ```
 
 <!--% Interprétation statistique et biologique -->
