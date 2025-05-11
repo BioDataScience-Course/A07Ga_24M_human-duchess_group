@@ -306,11 +306,11 @@ chart(biometry, RTH ~ genre %fill=% RTH_rec) +
 
 <!--% Interprétation en quelques points du graphique ou tableau. -->
 
--   ...
+-   Le RTH augmente avec le niveau de risque, quel que soit le genre. Les catégories "risque élevé" ont des RTH systématiquement plus hauts que les catégories "risque faible" ou "risque modéré".
 
--   ...
+-   Les hommes ont globalement des RTH plus élevés que les femmes, quel que soit le niveau de risque.
 
--   ...
+-   La différence de RTH entre les niveaux de risque est plus marquée chez les femmes, notamment entre le risque faible et modéré.
 
 ### Indice 3
 
