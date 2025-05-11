@@ -177,9 +177,7 @@ Lou_tab <- table("Consommation de sucre" = biometry$sucre_rec, "Masse corrigée"
   skimr::skim(Lou_tab)
 ```
 
-Ce tableau contient 2 variables facteurs (Consommation de sucre et Masse corrigée) et 1 variable numérique (Frequence). Il n'y a aucune valeur manquante.
-
-La variable "Consommation de sucre" est découpée en 3 parties et non plus 4, regroupant les 2 premières parties initiales, qui présentaient un nombre d'observation trop petite, en une nouvelle catégorie "exceptionnellement".
+Ce tableau contient 2 variables facteurs (Consommation de sucre et Masse corrigée) et 1 variable numérique (Frequence). Il n'y a aucune valeur manquante. La variable "Consommation de sucre" est découpée en 3 parties et non plus 4, regroupant les 2 premières parties initiales, qui présentaient un nombre d'observation trop petite, en une nouvelle catégorie "exceptionnellement".
 
 ```{r LH graphique}
 give_n <- function(x)
@@ -192,9 +190,7 @@ chart(data = biometry, masse_corr ~ sucre_rec %fill=% genre) +
     position = position_dodge(0.75))
 ```
 
-Les médianes des masses corrigées sont toujours supérieures chez les hommes; ce qui semble logique car les hommes ont généralement une masse musculaire supérieure.
-
-Cependant, la moyenne des masses corrigées des personnes consommant exceptionnellement du sucre avoisinent celle des personnes en consommant souvent voire les surpassent. Cela pourrait s'expliquer par une inégalité des observations. En effet, on a environ 4 fois moins d'observations dans la catégorie "exceptionnellement", rendant la comparaison non représentative d'une population plus étendue.
+Les médianes des masses corrigées sont toujours supérieures chez les hommes; ce qui semble logique car les hommes ont généralement une masse musculaire supérieure. Cependant, la moyenne des masses corrigées des personnes consommant exceptionnellement du sucre avoisinent celle des personnes en consommant souvent voire les surpassent. Cela pourrait s'expliquer par une inégalité des observations. En effet, on a environ 4 fois moins d'observations dans la catégorie "exceptionnellement", rendant la comparaison non représentative d'une population plus étendue.
 
 ## Calcul d'indices
 
@@ -333,7 +329,7 @@ biometry<- biometry %>%
 
 ```{r plot_indice3}
 # Graphique ou tableau utilisant l'indice calculé.
-biommetry_indice_3 <- biometry[, c(3,6,23,40)]
+biommetry_indice_3 <- biometry[, c(3,6,23,41)]
 sfilter(biommetry_indice_3, genre=="F" & age<=30)|> tabularise()
 ```
 
@@ -417,6 +413,8 @@ chisq.test(table_IMC_fast_food)
 
 <!--% Interprétation statistique et biologique -->
 
+Nous ne rejetons pas H₀ et nous ne pouvons pas conclure que la valeur de l'IMC dépend significativement de la consommation de fast food au seuil α de 5% (Chi^2^ d'indépendance, ddl = 6, valeur *p* = 0,3282).
+
 ### Test de Chi^2^ 2
 
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
@@ -464,6 +462,11 @@ $$H_1: \overline{Activité\:physique\:des\:hommes } - \overline{Activité\:physi
 
 <!-- Vérification des conditions d'application -->
 
+```{r}
+car::qqPlot(biometry[["activite_physique"]], distribution = "norm",
+  envelope = 0.95, col = "Black", ylab = "Activité physique", xlab="Quantiles")
+```
+
 ```{r test_t_1 Camille et Alexia}
 t.test(data = biometry, activite_physique ~ genre,
   alternative = "greater", conf.level = 0.95, var.equal = FALSE)
@@ -471,25 +474,44 @@ t.test(data = biometry, activite_physique ~ genre,
 
 <!-- Interprétation statistique et biologique -->
 
-Nous rejetons H₀ et nous pouvons dire que l'activité physique diffère de manière significative entre le hommes et les femmes au seuil α de 5% (test de Welch, *t* = 2,62, ddl = 129,8, valeur *p* = 0,0049).
+Nous rejetons H₀ et nous pouvons dire que l'activité physique diffère de manière significative entre le hommes et les femmes, et que les hommes ont un activité physique significativement plus importante que celle des femmes au seuil α de 5% (test de Welch, *t* = 2,62, ddl = 129,8, valeur *p* = 0,0049).
 
 ### Test t de Student 2
 
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_t_2 Jeanne et Lou}
-chart(data=biometry, alcool~fumeur_rec)+
-  geom_violin()
+# Recodage de biometry$fumeur en biometry$fumeur_rec
+biometry$fumeur_rec <- cut(biometry$fumeur,
+  include.lowest = TRUE,
+  right = FALSE,
+  dig.lab = 4,
+  breaks = c(0, 1, 300),
+  labels = c("Non Fumeur", "Fumeur"))
+
+biometry %>%
+  sgroup_by(., fumeur_rec)%>%
+  ssummarise(., 
+  verre_alcool = fmean(alcool),
+  n = fn(alcool)
+  )
+```
+
+```{r}
+chart(data=biometry, fumeur~alcool)+
+  geom_point()+
+  geom_abline(slope=1, intercept=0)
 ```
 
 <!--% Hypothèse nulle et alternative -->
 
-$$H_0: \overline{fumeurs\:consommant\:de\:l'alcool\:} - \overline{fumeurs\:ne\:consommant\:pas\:d'alcool} = 0$$ $$H_1 =  \overline{fumeurs\:consommant\:de\:l'alcool\:}-\overline{fumeurs\:ne\:consommant\:pas\:d'alcool}≠ 0 $$
+$$H_0: \overline{nombre\:de\:cigarettes\:par\:semaine\:\:-\:nombre\:de\:verres\:d'alcool\:par\:semaine} = 0$$ $$H_1 :  \overline{nombre\:de\:cigarettes\:par\:semaine\:\:-\:nombre\:de\:verres\:d'alcool\:par\:semaine} ≠ 0 $$
 
 <!--% Vérification des conditions d'application -->
 
 ```{r test_t_2 Jeanne et Lou}
-
+t.test(biometry$fumeur, biometry$alcool, alternative="two.sided", 
+  conf.level=0.95, paired=TRUE)
 ```
 
 <!--% Interprétation statistique et biologique -->
@@ -501,10 +523,15 @@ $$H_0: \overline{fumeurs\:consommant\:de\:l'alcool\:} - \overline{fumeurs\:ne\:c
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_anova1_1 Camille et Alexia}
-
+chart(data=biometry, activite_physique ~ age_rec_rec %fill=% age_rec_rec) +
+  geom_boxplot(show.legend=FALSE) +
+  labs(x="Âge") +
+  scale_fill_viridis_d()
 ```
 
 <!--% Hypothèse nulle et alternative -->
+
+$$H_0:mr_{ja} = mr_a = mr_s$$ $$H_1: \exists(i, j) \mathrm{\ tel\ que\ } mr_i \neq mr_j$$
 
 <!--% Vérification des conditions d'application -->
 
@@ -513,27 +540,38 @@ bartlett.test(data = biometry, activite_physique ~ age_rec_rec)
 ```
 
 ```{r test_anova1_1 Camille et Alexia}
-anova(biometry_anova <- lm(data = biometry, activite_physique ~ age_rec_rec))
+kruskal.test(data = biometry, activite_physique ~ age_rec_rec)
 ```
 
 <!--% Interprétation statistique et biologique -->
 
-Ici, nous ne rejetons pas H₀ et nous ne pouvons donc pas conclure à une différence significative de l'activité physique entre les différentes classes d'âge au seuil α de 5 % (test ANOVA, F = 2,51, ddl = 2 et 141, p = 0,0848).
+Dans ce cas, un test de Kruskal-Wallis a été réalisé car la distribution des résidus n'est pas normale. Nous rejetons H₀ et nous pouvons donc conclure à une différence significative de l'activité physique entre au moins une des différentes classes d'âge au seuil α de 5 % (test Kruskal-Wallis, Chi carré = 6,58, ddl = 2, valeur p = 0,03719).
 
 ### ANOVA à un facteur 2
 
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_anova1_2 Jeanne et Lou}
-
+chart(data=biometry, Poids_Ideal~alcool_rec_rec %fill=%alcool_rec_rec)+
+  geom_boxplot(show.legend=FALSE)+
+  scale_fill_viridis_d()+
+  labs(y="Poids idéal", x="Alcool")
 ```
 
 <!--% Hypothèse nulle et alternative -->
 
+$$H_0:mu_{ja} = mu_{re} = mu_{sou}$$
+
+$$H_1: \exists(i, j) \mathrm{\ tel\ que\ } mu_i \neq mu_j$$
+
 <!--% Vérification des conditions d'application -->
 
-```{r test_anova1_2 Jeanne et Lou}
+```{r}
+bartlett.test(data=biometry, Poids_Ideal~alcool_rec_rec)
+```
 
+```{r test_anova1_2 Jeanne et Lou}
+anova(biometry_anova1 <- lm(data = biometry, Poids_Ideal~alcool))
 ```
 
 <!--% Interprétation statistique et biologique -->
@@ -565,8 +603,6 @@ $$
 
 ```{r test_bartlett_1 Alexia et Camille}
 bartlett.test(data = biometry,taille ~ interaction(IMC_cat_rec , fast_food_rec_rec))
-
-
 ```
 
 ```{r}
@@ -575,6 +611,8 @@ anova(anova_a <- lm(data = biometry, taille ~ IMC_cat_rec + fast_food_rec_rec)) 
 ```
 
 <!--% Interprétation statistique et biologique -->
+
+Nous ne rejetons pas H₀. Donc, nous ne pouvons pas conclure que la taille est significativement différente au seuil α de 5 % , que ce soit en fonction de de l'IMC (*F* = 1,28, ddl = 3 et 137, valeur *p* = 0,284) ou de la consommation de fast food (*F* = 1,62, ddl = 2 et 137, valeur *p* = 0,203).
 
 ### ANOVA à deux facteurs 2
 
@@ -618,19 +656,13 @@ anova(biometry_anova2) %>.%
 ```
 
 ```{r quantile_quantile_2 Lou et Jeanne}
-library(ggplot2)
 
-residus_std <- rstandard(biometry_anova2)
-
-ggplot(data.frame(residus_std), aes(sample = residus_std)) +
-  stat_qq() +
-  stat_qq_line(color = "black") +
-  labs(title = "Graphique quantile-quantile des résidus - biometry_anova2",
-       x = "Quantiles théoriques",
-       y = "Résidus standardisés") +
-  theme_minimal() + 
-  theme(panel.grid = element_blank())
-
+library(broom.mixed)
+biometry_anova2 %>.%
+  augment(.) %>.%
+  car::qqPlot(.$.resid, distribution = "norm",
+    envelope = 0.95, col = "Black", xlab = "Quantiles théoriques",
+    ylab = "Résidus standardisés")
 ```
 
 <!--% Interprétation statistique et biologique -->
