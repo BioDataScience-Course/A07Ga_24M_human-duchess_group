@@ -126,6 +126,8 @@ chart(data = biometry, ~ sommeil_rec_rec %fill=% age_rec_rec) +
   labs (y = "Effectifs", x = "Qualité du sommeil")
 ```
 
+Le graphique met en évidence une prédominance du sommeil normal dans l’ensemble des tranches d’âge, avec un maximum observé chez les jeunes adultes. Une proportion non négligeable de sommeil court est également présente chez cette population, indiquant une plus grande variabilité. Chez les adultes, le sommeil normal reste majoritaire, mais les cas de sommeil court sont également fréquents. Le sommeil long demeure peu représenté dans toutes les catégories. Enfin, chez les seniors, la distribution se resserre nettement autour du sommeil normal, tandis que les occurrences de sommeil court ou long deviennent très rares. Ces observations suggèrent une tendance générale à la stabilisation du sommeil avec l’âge.
+
 ### Description par l'étudiant 3
 
 ```{r JC remaniement 1}
@@ -304,11 +306,11 @@ chart(biometry, RTH ~ genre %fill=% RTH_rec) +
 
 <!--% Interprétation en quelques points du graphique ou tableau. -->
 
--   ...
+-   Le RTH augmente avec le niveau de risque, quel que soit le genre. Les catégories "risque élevé" ont des RTH systématiquement plus hauts que les catégories "risque faible" ou "risque modéré".
 
--   ...
+-   Les hommes ont globalement des RTH plus élevés que les femmes, quel que soit le niveau de risque.
 
--   ...
+-   La différence de RTH entre les niveaux de risque est plus marquée chez les femmes, notamment entre le risque faible et modéré.
 
 ### Indice 3
 
