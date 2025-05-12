@@ -516,7 +516,7 @@ t.test(biometry$fumeur, biometry$alcool, alternative="two.sided",
 
 <!--% Interprétation statistique et biologique -->
 
-Nous ne rejetons pas H₀ et nous ne pouvons pas dire que le nombre de cigarettes fumées par semaine diffère de manière significative du nombre de verres d\'alcool consommés par semaine au seuil α de 5% (test *t*  apparié, *t* = 0.47906, ddl = 143, valeur *p* = 0,6326).
+Nous ne rejetons pas H₀ et nous ne pouvons pas dire que le nombre de cigarettes fumées par semaine diffère de manière significative du nombre de verres d'alcool consommés par semaine au seuil α de 5% (test *t*  apparié, *t* = 0.47906, ddl = 143, valeur *p* = 0,6326).
 
 <!--# Travaillez jusqu'ici pour le module 8. Commencez à travailler sur le rapport (intro, mat&met). -->
 
@@ -578,7 +578,7 @@ anova(biometry_anova1 <- lm(data = biometry, Poids_Ideal~alcool))
 
 <!--% Interprétation statistique et biologique -->
 
-Nous ne rejetons pas H₀ et nous ne pouvons donc pas conclure à une différence significative du poids idéal entre les différentes catégories de consommation d\'alcool au seuil α de 5 % (test ANOVA, *F* = 3.7499, ddl = 1, valeur p = 0,05481).
+Nous ne rejetons pas H₀ et nous ne pouvons donc pas conclure à une différence significative du poids idéal entre les différentes catégories de consommation d'alcool au seuil α de 5 % (test ANOVA, *F* = 3.7499, ddl = 1, valeur p = 0,05481).
 
 <!--# Travaillez jusqu'ici pour le module 9. Commencez à rédiger la partie résultats avec la description des données. -->
 

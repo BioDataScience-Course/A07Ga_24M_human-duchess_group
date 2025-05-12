@@ -31,13 +31,17 @@ SciViews::R(___, lang = "fr")
 
 <!--# Ce projet porte sur la santé humaine liée à l'obésité, à la façon de se nourrir et aux activités réalisées (plus ou moins sédentaire ou actif) ... Réalisez des recherches bibliographiques afin d'avoir une vision précise de la thématique. Existe-t-il des indicateurs calculables pour quantifier l'état de santé d'un individu, par exemple ? Naturellement, ces indicateurs doivent être calculables sur bases des variables mesurées dans votre jeu de données. Focalisez-vous donc sur ces variables-là. -->
 
-...Votre introduction ici...
+L'obésité est un problème majeur en santé publique. Ce problème connaît malheureusement une augmentation continue à travers le monde. En Belgique, une proportion non négligeable de la population présente une surcharge pondérale, et ce, en raison de modes de vie de plus en plus inactifs et d'une alimentation trop riche. Ces facteurs, bien que déjà très néfastes, accentuent le risque de développer des pathologies chroniques telles que le diabète de type 2, ou encore des maladies cardiovasculaires.
+
+Pour évaluer l'état de santé des individus, il existe plusieurs indicateurs simples, facilement calculables à partir de données anthropométriques. Les 3 indicateurs principaux sont : l'indice de masse corporelle (IMC), le tour de taille et le ratio entre tour de taille et taille. [@lebacq2015] D'autres indices seront calculé au cours de ce projet tels que l'indice de masse graisseuse (IMG) ou encore le rapport taille hanche (RTH). L'ensemble de ces derniers permettent d'évaluer le niveau de surcharge pondérale, et le risque métabolique de celle-ci.
+
+Ce projet a pour objectif d'analyser l'état de santé de la population selon les indicateurs cités ci-dessus, et selon les habitudes alimentaires, les niveaux d'activité physique, la consommation d'alcool et de bien d'autres comme le démontre [@mas2021]. L\'objectif étant d\'identifier des profils à risque et de mieux comprendre l\'impact des comportements sur la santé, à l\'aide des variables disponibles dans notre jeu de données.
 
 # But
 
 <!--% Formulez ici de façon concise et précise votre question de recherche en 1 à 2 phrases. -->
 
-...Votre but ici...
+Cette étude porte à mesurer l'état de santé, en lien direct avec l'obésité, de différents individus. Pour ce faire, on partira d'indicateurs simples afin d'identifier au mieux les profils à risque selon leurs habitudes. Cela nous permettra de comprendre l'impact de ces facteurs sur la santé.
 
 # Matériel et méthodes
 
