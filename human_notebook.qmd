@@ -598,9 +598,9 @@ biometry %>.%
 <!--% Hypothèse nulle et alternative -->
 
 $$
-H_0: Interaction\:entre\:la\:consomation\:de\:fast\:food\:et\:l'IMC
+H_0: Interaction\:entre\:la\:consomation\:de\:fast\:food\:et\:l'IMC\:sur\:la\:taille
 $$ $$
-H_1: Pas\:d'interaction\:entre\:la\:consomation\:de\:fast\:food\:et\:l'IMC
+H_1: Pas\:d'interaction\:entre\:la\:consomation\:de\:fast\:food\:et\:l'IMC:sur\:la\:taille
 $$
 
 <!--% Vérification des conditions d'application -->
