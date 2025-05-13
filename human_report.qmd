@@ -35,7 +35,7 @@ L'obésité est un problème majeur en santé publique. Ce problème connaît ma
 
 Pour évaluer l'état de santé des individus, il existe plusieurs indicateurs simples, facilement calculables à partir de données anthropométriques. Les 3 indicateurs principaux sont : l'indice de masse corporelle (IMC), le tour de taille et le ratio entre tour de taille et taille. [@lebacq2015] D'autres indices seront calculé au cours de ce projet tels que l'indice de masse graisseuse (IMG) ou encore le rapport taille hanche (RTH). L'ensemble de ces derniers permettent d'évaluer le niveau de surcharge pondérale, et le risque métabolique de celle-ci.
 
-Ce projet a pour objectif d'analyser l'état de santé de la population selon les indicateurs cités ci-dessus, et selon les habitudes alimentaires, les niveaux d'activité physique, la consommation d'alcool et de bien d'autres comme le démontre [@mas2021]. L\'objectif étant d\'identifier des profils à risque et de mieux comprendre l\'impact des comportements sur la santé, à l\'aide des variables disponibles dans notre jeu de données.
+Ce projet a pour objectif d'analyser l'état de santé de la population selon les indicateurs cités ci-dessus, et selon les habitudes alimentaires, les niveaux d'activité physique, la consommation d'alcool et de bien d'autres comme le démontre [@mas2021]. L'objectif étant d'identifier des profils à risque et de mieux comprendre l'impact des comportements sur la santé, à l'aide des variables disponibles dans notre jeu de données.
 
 # But
 
@@ -47,13 +47,13 @@ Cette étude porte à mesurer l'état de santé, en lien direct avec l'obésité
 
 <!--% Cette section doit comprendre une explication technique sur les mesures effectuées et sur le protocole relatif à l'acquisition des données en 3 à 4 paragraphes. Vous ajouterez aussi un paragraphe qui détaille les outils logiciels et statistiques utilisés (logiciels et versions des logiciels). Un simple copier-coller du matériel et méthodes du bloc-notes ne sera PAS considéré comme acceptable. -->
 
-Afin de collecter les données, une trentaine d\'expérimentateurs ont interrogé et mesuré quatre personnes chacun. On comptabilise donc 144 individus dans notre jeu de données. La sélection des questions ainsi que le choix des mesures a été effectuée en amont afin d\'établir un dictionnaire de données commun. Ce dictionnaire a pour but de normaliser les données, les unités mais aussi de modéliser les questions posées.
+Afin de collecter les données, une trentaine d'expérimentateurs ont interrogé et mesuré quatre personnes chacun. On comptabilise donc 144 individus dans notre jeu de données. La sélection des questions ainsi que le choix des mesures a été effectuée en amont afin d'établir un dictionnaire de données commun. Ce dictionnaire a pour but de normaliser les données, les unités mais aussi de modéliser les questions posées.
 
-Pour les mesures telles que la masse corporelle, sensibles aux différences entre balances, une intercalibration a été nécessaire afin de garantir la comparabilité des résultats. Chaque expérimentateur s\'est d\'abord pesé sur une balance de référence, puis sur la balance utilisée pour mesurer les participants, ce qui a permis d\'évaluer l\'écart entre les deux instruments. Cette procédure d\'intercalibration a pour but de limiter les erreurs liés aux variations entre appareils de mesure et à renforcer la fiabilité des données collectées.
+Pour les mesures telles que la masse corporelle, sensibles aux différences entre balances, une intercalibration a été nécessaire afin de garantir la comparabilité des résultats. Chaque expérimentateur s'est d'abord pesé sur une balance de référence, puis sur la balance utilisée pour mesurer les participants, ce qui a permis d'évaluer l'écart entre les deux instruments. Cette procédure d'intercalibration a pour but de limiter les erreurs liés aux variations entre appareils de mesure et à renforcer la fiabilité des données collectées.
 
-Les données obtenues, ainsi que le nom des 144 individus testés, ont été pseudonymisées dans le but de respecter l\'anonymat des sujets, conformément au RGPD (Règlement général sur la protection des données, règlement applicable en Europe).
+Les données obtenues, ainsi que le nom des 144 individus testés, ont été pseudonymisées dans le but de respecter l'anonymat des sujets, conformément au RGPD (Règlement général sur la protection des données, règlement applicable en Europe).
 
-La description des données ainsi que les analyses statistiques ont été réalisées dans l\'environnement SciViews Box 2024, sous Linux, via [Saturncloud](https://saturncloud.io/), à l\'aide du [logiciel R](https://www.r-project.org/) (version : `R.version.string`).
+La description des données ainsi que les analyses statistiques ont été réalisées dans l'environnement SciViews Box 2024, sous Linux, via [Saturncloud](https://saturncloud.io/), à l'aide du [logiciel R](https://www.r-project.org/) (version : `R.version.string`).
 
 # Résultats
 
