@@ -104,7 +104,141 @@ Les médianes des masses corrigées sont toujours supérieures chez les hommes, 
 
 <!--% Sélectionnez les 4 tests d'hypothèses les plus pertinents depuis `human_notebook.qmd`, ainsi bien sûr que les calculs des indices nécessaires que vous placerez juste au-dessus de vos tests. Ces tests doivent répondre à votre question de recherche (le but). Reformulez les interprétations pour former un texte qui se lit en continu. -->
 
-...Vos tests d'hypothèses ici...
+### Calcul de l'IMC
+
+$IMC = \frac{\text{Poids (kg)}}{\text{Taille (m)}^2}$
+
+```{r indice1}
+
+# Calcul de la ou des variables reprenant l'indice sous forme numérique (et facteur)
+
+# Conversion de la taille en mètres car dans IMC taille = en mètres 
+biometry$taille_m <- biometry$taille / 100
+
+# Calcul de l'IMC
+biometry$IMC <- biometry$masse / (biometry$taille_m^2)
+
+# Création de catégorie 
+biometry$IMC_cat <- cut(
+  biometry$IMC,
+  breaks = c(-Inf, 18.5, 25, 29.9, 34.9, 39.9, 50, Inf),
+  labels = c("Sous-poids", "Poids normal", "Surpoids",
+    "Obésité modérée (Grade I)", "Obésité sévère (Grade II)",
+    "Obésité morbide (Grade III)", "Super-obésité (Obésité massive)"),
+  right = TRUE)
+## Recodage de biometry$IMC_cat en biometry$IMC_cat_rec
+biometry$IMC_cat_rec <- biometry$IMC_cat %>%
+  fct_recode(
+    "Obésité" = "Obésité modérée (Grade I)",
+    "Obésité" = "Obésité sévère (Grade II)",
+    "Obésité" = "Obésité morbide (Grade III)",
+    "Obésité" = "Super-obésité (Obésité massive)"
+  )
+```
+
+```{r plot_indice1}
+## Recodage de biometry$fast_food en biometry$fast_food_rec
+biometry$fast_food_rec <- cut(biometry$fast_food,
+  include.lowest = TRUE,
+  right = FALSE,
+  dig.lab = 4,
+  breaks = c(0, 2, 4, 14)
+)
+
+## Recodage de biometry$fast_food_rec en biometry$fast_food_rec_rec
+biometry$fast_food_rec_rec <- biometry$fast_food_rec %>%
+  fct_recode(
+    "Rarement" = "[0,2)",
+    "Régulièrement" = "[2,4)",
+    "Souvent" = "[4,14]"
+  )
+# Graphique ou tableau utilisant l'indice calculé.
+chart(data=biometry, ~ fast_food_rec_rec %fill=% IMC_cat)+ 
+  geom_bar(position = "dodge")+ 
+  labs (fill= "Catégories IMC")+ 
+  scale_fill_viridis_d()+
+  labs(y="Effectifs", x = "Consommation de fast food ")
+```
+
+### Test de Chi^2^
+
+$$H_O = indépendance\:de\:l'IMC\:et\:de\:la\:consomation\:de\:fast\:food $$
+
+$$
+H_1 = dépendance\:de\:l'IMC\:et\:de\:la\:consomation\:de\:fast\:food  
+$$
+
+```{r test_chi2_1 Alexia et Camille}
+chisq.test(table_IMC_fast_food)
+```
+
+Nous ne rejetons pas H₀ et nous ne pouvons pas conclure que la valeur de l'IMC dépend significativement de la consommation de fast food au seuil α de 5% (Chi^2^ d'indépendance, ddl = 6, valeur *p* = 0,3282).
+
+### Test t de Student
+
+$$H_0: \overline{Activité\:physique\:des\:hommes} - \overline{Activité\:physique\:des\:femmes} = 0$$
+
+$$H_1: \overline{Activité\:physique\:des\:hommes } - \overline{Activité\:physique\:des\:femmes} > 0$$
+
+```{r test_t_1 Camille et Alexia}
+t.test(data = biometry, activite_physique ~ genre,
+  alternative = "greater", conf.level = 0.95, var.equal = FALSE)
+```
+
+Nous rejetons H₀ et nous pouvons dire que l'activité physique diffère de manière significative entre le hommes et les femmes, et que les hommes ont un activité physique significativement plus importante que celle des femmes au seuil α de 5% (test de Welch, *t* = 2,62, ddl = 129,8, valeur *p* = 0,0049).
+
+### ANOVA à un facteur
+
+$$H_0:mr_{ja} = mr_a = mr_s$$
+
+$$H_1: \exists(i, j) \mathrm{\ tel\ que\ } mr_i \neq mr_j$$
+
+```{r test_anova1_1 Camille et Alexia}
+kruskal.test(data = biometry, activite_physique ~ age_rec_rec)
+```
+
+Dans ce cas, un test de Kruskal-Wallis a été réalisé car la distribution des résidus n'est pas normale. Nous rejetons H₀ et nous pouvons donc conclure à une différence significative de l'activité physique entre au moins une des différentes classes d'âge au seuil α de 5 % (test Kruskal-Wallis, Chi carré = 6,58, ddl = 2, valeur p = 0,03719).
+
+### Calcul de l'IMG
+
+$IMG = (1.2 \times IMC) + (0.23 \times \text{âge}) - (10.8 \times S) - 5.4$
+
+$\text{avec :} \begin{cases} S = 1, \text{ si l'individu est un homme} \\ S = 0, \text{ si l'individu est une femme}\end{cases}$
+
+```{r indice4}
+# Calcul de la ou des variables reprenant l'indice sous forme numérique (et facteur)
+
+# Calcul de l'IMG
+biometry$IMG <- (1.2 * biometry$IMC) + (0.23 * biometry$age) - (10.8 * as.numeric(biometry$genre == "H")) - 5.4
+
+# Création de catégorie 
+biometry$IMG_cat <- cut(biometry$IMG,
+  include.lowest = TRUE,
+  right = FALSE,
+  dig.lab = 4,
+  breaks = c(-Inf, 22, 28, 35, Inf),
+  labels = c("Pas assez de graisse", "Graisse normal", "Trop de graisse", "Obésité"))
+```
+
+```{r plot_indice4}
+# Graphique ou tableau utilisant l'indice calculé.
+
+library(knitr)
+kable(table(biometry$sucre_rec, biometry$IMG_cat), caption = "Répartition de l'IMG en fonction de la consommation de sucre") 
+
+```
+
+### ANOVA à deux facteurs
+
+$$H_O = Pas\:d'interaction\:entre\:le\:tabagisme\:et\:le\:sommeil\:sur\:l'IMG $$
+
+$$H_1 = Interaction\:entre\:le\:tabagisme\:et\:le\:sommeil\:sur\:l'IMG  $$
+
+```{r test_anova2_2 Lou et Jeanne}
+biometry_anova2 <- lm(data = biometry, IMG ~ fumeur_rec * sommeil_rec_rec)
+anova(biometry_anova2) %>.%
+  tabularise(.)
+```
 
 # Discussion et conclusions
 
