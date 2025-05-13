@@ -155,10 +155,14 @@ chart(data=biometry, aes(x=age, y=alcool_rec_rec, fill=genre )) +
   facet_wrap(~genre)
 ```
 
+Le graphique montre que la consommation d\'alcool évolue selon l\'âge et le sexe. Les jeunes adultes, autour de 25 ans, sont les plus nombreux à ne jamais consommer d\'alcool, aussi bien chez les hommes que chez les femmes. Ensuite, la consommation régulière et fréquente augmente avec l\'âge, atteignant un pic vers 40 à 60 ans, surtout chez les hommes. À partir de 60 ans, la consommation fréquente diminue nettement. On observe aussi que, quel que soit l\'âge, les femmes consomment généralement moins souvent de l\'alcool que les hommes.
+
 ```{r JC tableau}_r)}
 Jeanne_tab <- table(biometry$alcool_rec_rec, biometry$age_rec_rec)
 knitr::kable(Jeanne_tab)
 ```
+
+La consommation d\'alcool évolue avec l\'âge. Les jeunes adultes sont nombreux à ne jamais boire, mais une part importante consomme régulièrement ou souvent. Chez les adultes, la consommation est plus équilibrée, avec davantage de consommation régulière. Les seniors, quant à eux, consomment très peu, et aucun ne boit fréquemment. On constate donc une diminution progressive de la consommation fréquente à mesure que l\'âge augmente.
 
 ### Description par l'étudiant 4
 
@@ -438,6 +442,8 @@ chisq.test(table_IMG_sucre)
 
 <!--% Interprétation statistique et biologique -->
 
+Nous ne rejetons pas H₀ et nous ne pouvons pas conclure que la valeur de l'IMG dépend significativement de la consommation en sucre au seuil α de 5% (Chi^2^ d'indépendance, ddl = 6, valeur *p* = 0,2995).
+
 <!--# Travaillez jusqu'ici pour le module 7. -->
 
 ### Test t de Student 1
@@ -616,7 +622,7 @@ anova(anova_a <- lm(data = biometry, taille ~ IMC_cat_rec + fast_food_rec_rec)) 
 
 <!--% Interprétation statistique et biologique -->
 
-Nous ne rejetons pas H₀. Donc, nous ne pouvons pas conclure que la taille est significativement différente au seuil α de 5 % , que ce soit en fonction de de l'IMC (*F* = 1,28, ddl = 3 et 137, valeur *p* = 0,284) ou de la consommation de fast food (*F* = 1,62, ddl = 2 et 137, valeur *p* = 0,203).
+Nous ne rejetons pas H₀. Donc, nous ne pouvons pas conclure que la taille est significativement différente au seuil α de 5 % , que ce soit en fonction de l'IMC (*F* = 1,28, ddl = 3 et 137, valeur *p* = 0,284) ou de la consommation de fast food (*F* = 1,62, ddl = 2 et 137, valeur *p* = 0,203).
 
 ### ANOVA à deux facteurs 2
 
@@ -671,19 +677,17 @@ biometry_anova2 %>.%
 
 <!--% Interprétation statistique et biologique -->
 
+Nous ne rejetons pas H₀. Donc, nous ne pouvons pas conclure que l'MG est significativement différent au seuil α de 5 % , que ce soit en fonction du tabagisme (*F* = 0,193, ddl = 1 et 137, valeur *p* = 0,661) ou du sommeil (*F* = 1,935, ddl = 2 et 137, valeur *p* = 0,148). De plus, notre test confirme qu'il n'y a pas d'interactions entre le tabagisme et le sommeil au seuil α de 5% (*F* = 1,076, ddl = 2 et 137, valeur *p* = 0,344).
+
 # Discussion et conclusions
 
 <!--% Reprenez ci-dessous sous forme d'éléments de listes brefs les résultats les plus importants que vous retirez de votre analyse. Ils doivent vous guider pour décider quels tests (les plus intéressants) vous allez conserver dans le rapport. -->
 
--   ...
+-   L\'IMC ne montre aucune association significative avec la consommation de fast food.
 
--   ...
+-   La masse grasse (IMG) n\'est pas significativement influencée par le tabagisme, le sommeil ou leur interaction.
 
--   ...
-
--   ...
-
--   ...
+-   L\'activité physique varie significativement selon le sexe, avec une pratique plus élevée chez les hommes, et selon l\'âge, certaines tranches étant plus actives que d\'autres.
 
 <!--# Important : ce document doit compiler SANS ERREURS avec le bouton 'Rendu' sinon le travail sera sanctionné lourdement. La compilation du document Quarto est maintenant considérée comme acquise. -->
 
