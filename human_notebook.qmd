@@ -147,6 +147,13 @@ biometry$alcool_rec_rec <- biometry$alcool_rec %>%
   )
 ```
 
+```{r JC tableau}
+al_ag_tab <- table(biometry$alcool_rec_rec, biometry$age_rec_rec)
+knitr::kable(al_ag_tab)
+```
+
+La consommation d'alcool évolue avec l'âge. Les jeunes adultes sont nombreux à ne jamais boire, mais une part importante consomme régulièrement ou souvent. Chez les adultes, la consommation est plus équilibrée, avec davantage de consommation régulière. Les seniors, quant à eux, consomment très peu, et aucun ne boit fréquemment. On constate donc une diminution progressive de la consommation fréquente à mesure que l'âge augmente.
+
 ```{r JC graphique}
 chart(data=biometry, aes(x=age, y=alcool_rec_rec, fill=genre )) +
   ylab("Consommation d'alcool") +
@@ -156,13 +163,6 @@ chart(data=biometry, aes(x=age, y=alcool_rec_rec, fill=genre )) +
 ```
 
 Le graphique montre que la consommation d'alcool évolue selon l'âge et le sexe. Les jeunes adultes, autour de 25 ans, sont les plus nombreux à ne jamais consommer d'alcool, aussi bien chez les hommes que chez les femmes. Ensuite, la consommation régulière et fréquente augmente avec l'âge, atteignant un pic vers 40 à 60 ans, surtout chez les hommes. À partir de 60 ans, la consommation fréquente diminue nettement. On observe aussi que, quel que soit l'âge, les femmes consomment généralement moins souvent de l'alcool que les hommes.
-
-```{r JC tableau}_r)}
-al_ag_tab <- table(biometry$alcool_rec_rec, biometry$age_rec_rec)
-knitr::kable(al_ag_tab)
-```
-
-La consommation d'alcool évolue avec l'âge. Les jeunes adultes sont nombreux à ne jamais boire, mais une part importante consomme régulièrement ou souvent. Chez les adultes, la consommation est plus équilibrée, avec davantage de consommation régulière. Les seniors, quant à eux, consomment très peu, et aucun ne boit fréquemment. On constate donc une diminution progressive de la consommation fréquente à mesure que l'âge augmente.
 
 ### Description par l'étudiant 4
 
@@ -467,7 +467,7 @@ $$H_1: \overline{Activité\:physique\:des\:hommes } - \overline{Activité\:physi
 
 <!-- Vérification des conditions d'application -->
 
-```{r}
+```{r graphique qqplot Camille et Alexia}
 car::qqPlot(biometry[["activite_physique"]], distribution = "norm",
   envelope = 0.95, col = "Black", ylab = "Activité physique", xlab="Quantiles")
 ```
@@ -556,7 +556,7 @@ $$H_1: \exists(i, j) \mathrm{\ tel\ que\ } mu_i \neq mu_j$$
 
 <!--% Vérification des conditions d'application -->
 
-```{r test de Bartelett Jeanne et Lou}
+```{r test_Bartlett Jeanne et Lou}
 bartlett.test(data=biometry, Poids_Ideal~alcool_rec_rec)
 ```
 
@@ -597,7 +597,7 @@ $$
 bartlett.test(data = biometry,taille ~ interaction(IMC_cat_rec , fast_food_rec_rec))
 ```
 
-```{r}
+```{r test_anova2_1 Alexia et Camille}
 anova(anova_a <- lm(data = biometry, taille ~ IMC_cat_rec + fast_food_rec_rec)) %>.%
   tabularise(.)
 ```
