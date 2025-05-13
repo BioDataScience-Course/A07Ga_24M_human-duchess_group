@@ -60,8 +60,8 @@ biometry$activite_physique_rec <- cut(biometry$activite_physique,
 ```
 
 ```{r AB tableau}
-Alexia_tab <- table("Activité physique"= biometry$activite_physique_rec,"Genre"= biometry$genre) 
-tabularise(Alexia_tab)
+ap_g_tab <- table("Activité physique"= biometry$activite_physique_rec,"Genre"= biometry$genre) 
+tabularise(ap_g_tab)
 ```
 
 L'activité physique en minutes par semaine des hommes et des femmes est représentée dans ce tableau. Une grande majorité de personnes pratiquent moins de 500 minutes par semaine. Parmi celles qui dépassent ce seuil, le nombre d'hommes est deux fois plus élevé que celui des femmes.
@@ -73,7 +73,7 @@ chart(data=biometry, genre ~ activite_physique %fill=% genre)+
   scale_fill_viridis_d()
 ```
 
-Les hommes ont une activité physique plutôt éparse mais sans valeurs extrêmes. La plupart d'entre eux ayant néanmoins un faible niveau. À l'inverse, il y a deux grands extrêmes chez les femmes, traduisant une plus grande diversité dans leurs pratiques. Beaucoup de femmes ont une activité physique assez faible voir nulle alors que quelques unes d'entre elles s'avèrent avoir un niveau beaucoup plus élevé.
+Les hommes ont une activité physique plutôt éparse mais sans valeurs extrêmes, la plupart d'entre eux ayant néanmoins un faible niveau. À l'inverse, il y a deux grands extrêmes chez les femmes, traduisant une plus grande diversité dans leurs pratiques. Beaucoup de femmes ont une activité physique assez faible voir nulle alors que quelques unes d'entre elles s'avèrent avoir un niveau beaucoup plus élevé.
 
 ### Description par l'étudiant 2
 
@@ -104,16 +104,16 @@ biometry$sommeil_rec <- cut(biometry$sommeil,
 ## Recodage de biometry$sommeil_rec en biometry$sommeil_rec_rec
 biometry$sommeil_rec_rec <- biometry$sommeil_rec %>%
   fct_recode(
-    "sommeil court" = "[0,6.7)",
-    "sommeil normal" = "[6.7,8.6)",
-    "sommeil long" = "[8.6,14]"
+    "Sommeil court" = "[0,6.7)",
+    "Sommeil normal" = "[6.7,8.6)",
+    "Sommeil long" = "[8.6,14]"
   )
   
 ```
 
 ```{r CS tableau}
-Camille_tab <- table(biometry$sommeil_rec_rec, biometry$age_rec_rec)
-pander::pander(Camille_tab)
+s_a_tab <- table(biometry$sommeil_rec_rec, biometry$age_rec_rec)
+pander::pander(s_a_tab)
 ```
 
 Le tableau montre que, de façon générale, le sommeil normal est le plus répandu dans toutes les tranches d'âge. Les jeunes adultes présentent une plus grande variabilité, avec une part importante de sommeil court et un peu de sommeil long. À mesure que l'on avance en âge, cette variabilité diminue. Chez les adultes, il y a presque autant de sommeil court que de sommeil long, et chez les seniors, les cas de sommeil court ou long deviennent très rares.
@@ -130,7 +130,7 @@ Le graphique met en évidence une prédominance du sommeil normal dans l'ensembl
 
 ### Description par l'étudiant 3
 
-```{r JC remaniement 1}
+```{r JC remaniement}
 ## Recodage de biometry$alcool en biometry$alcool_rec
 biometry$alcool_rec <- cut(biometry$alcool,
   include.lowest = FALSE,
@@ -158,8 +158,8 @@ chart(data=biometry, aes(x=age, y=alcool_rec_rec, fill=genre )) +
 Le graphique montre que la consommation d\'alcool évolue selon l\'âge et le sexe. Les jeunes adultes, autour de 25 ans, sont les plus nombreux à ne jamais consommer d\'alcool, aussi bien chez les hommes que chez les femmes. Ensuite, la consommation régulière et fréquente augmente avec l\'âge, atteignant un pic vers 40 à 60 ans, surtout chez les hommes. À partir de 60 ans, la consommation fréquente diminue nettement. On observe aussi que, quel que soit l\'âge, les femmes consomment généralement moins souvent de l\'alcool que les hommes.
 
 ```{r JC tableau}_r)}
-Jeanne_tab <- table(biometry$alcool_rec_rec, biometry$age_rec_rec)
-knitr::kable(Jeanne_tab)
+al_ag_tab <- table(biometry$alcool_rec_rec, biometry$age_rec_rec)
+knitr::kable(al_ag_tab)
 ```
 
 La consommation d\'alcool évolue avec l\'âge. Les jeunes adultes sont nombreux à ne jamais boire, mais une part importante consomme régulièrement ou souvent. Chez les adultes, la consommation est plus équilibrée, avec davantage de consommation régulière. Les seniors, quant à eux, consomment très peu, et aucun ne boit fréquemment. On constate donc une diminution progressive de la consommation fréquente à mesure que l\'âge augmente.
@@ -177,8 +177,8 @@ biometry$sucre_rec <- biometry$sucre %>%
 ```
 
 ```{r LH tableau}
-Lou_tab <- table("Consommation de sucre" = biometry$sucre_rec, "Masse corrigée" = biometry$masse_corr)
-  skimr::skim(Lou_tab)
+s_m_tab <- table("Consommation de sucre" = biometry$sucre_rec, "Masse corrigée" = biometry$masse_corr)
+  skimr::skim(s_m_tab)
 ```
 
 Ce tableau contient 2 variables facteurs (Consommation de sucre et Masse corrigée) et 1 variable numérique (Frequence). Il n'y a aucune valeur manquante. La variable "Consommation de sucre" est découpée en 3 parties et non plus 4, regroupant les 2 premières parties initiales, qui présentaient un nombre d'observation trop petite, en une nouvelle catégorie "exceptionnellement".
@@ -267,7 +267,7 @@ chart(data=biometry, ~ fast_food_rec_rec %fill=% IMC_cat)+
 
 -   Les consommateurs rares de fast-food ont majoritairement un IMC normal.
 
--   Aucune personne en obésité morbide mange souvent des fast-food.
+-   Aucune personne en obésité morbide ne mange souvent des fast-food.
 
 -   Une grande partie des personnes en sous-poids consomme souvent des fast-food.
 
@@ -333,15 +333,15 @@ biometry<- biometry %>%
 
 ```{r plot_indice3}
 # Graphique ou tableau utilisant l'indice calculé.
-biommetry_indice_3 <- biometry[, c(3,6,23,41)]
-sfilter(biommetry_indice_3, genre=="F" & age<=30)|> tabularise()
+PI_tab <- biometry[, c(3,6,23,41)]
+sfilter(PI_tab, genre=="F" & age<=30)|> tabularise$headtail()
 ```
 
 <!--% Interprétation en quelques points du graphique ou tableau. -->
 
 -   La majorité des individus du tableau présentent un poids supérieur à leur poids idéal, parfois avec un écart important dépassant 30 kg.
 
--   En moyenne, leur poids réel se situe autour de 66 à 70 kg, alors que leur poids idéal est plutôt autour de 58 à 60 kg, ce qui reflète un surpoids modéré dans l'ensemble du groupe.
+-   En moyenne, leur poids réel se situe autour de 66 à 70 kg, alors que leur poids idéal est plutôt autour de 58 à 60 kg, ce qui reflète un surpoids modéré dans l'ensemble du groupe (femmes de moins de 30 ans).
 
 ### Indice 4
 
@@ -383,7 +383,7 @@ kable(table(biometry$sucre_rec, biometry$IMG_cat), caption = "Répartition de l'
 
 -   Cependant, une consommation modérée correspond davantage à une répartition équilibrée de l'IMG.
 
--   Ainsi, Il n'existe pas nécessairement une relation de cause à effet de la consommation de sucre sur l'IMG.
+-   Ainsi, il n'existe pas nécessairement une relation de cause à effet de la consommation de sucre sur l'IMG.
 
 ## Tests d'hypothèses
 
@@ -398,12 +398,11 @@ kable(table(biometry$sucre_rec, biometry$IMG_cat), caption = "Répartition de l'
 ```{r plot_chi2_1 Alexia et Camille}
 table_IMC_fast_food <- table(IMC = biometry$IMC_cat_rec,Fast_food = biometry$fast_food_rec_rec)
 tabularise(table_IMC_fast_food)
-
 ```
 
 <!--% Hypothèse nulle et alternative -->
 
-$$H_O = indépendance\:de\:l'IMC\:et\:de\:la\:consomation\:de\:fast\:food $$
+$$H_0 = indépendance\:de\:l'IMC\:et\:de\:la\:consomation\:de\:fast\:food $$
 
 $$
 H_1 = dépendance\:de\:l'IMC\:et\:de\:la\:consomation\:de\:fast\:food  
@@ -430,7 +429,7 @@ tabularise(table_IMG_sucre)
 
 <!--% Hypothèse nulle et alternative -->
 
-$$H_O = indépendance\:de\:l'IMG\:et\:de\:la\:consommation\:de\:sucre  $$
+$$H_0 = indépendance\:de\:l'IMG\:et\:de\:la\:consommation\:de\:sucre  $$
 
 $$ H_1 = dépendance\:de\:l'IMG\:et\:de\:la\:consommation\:de\:sucre $$
 
@@ -456,8 +455,8 @@ biometry %>.%
   ssummarise(.,
     moyenne = fmean(activite_physique),
     variance = fvar(activite_physique),
-    n = fn(activite_physique)) -> Camille_tab2
-Camille_tab2
+    n = fn(activite_physique)) -> t_test_1_tab
+t_test_1_tab
 ```
 
 <!-- Hypothèse nulle et alternative -->
@@ -480,30 +479,13 @@ t.test(data = biometry, activite_physique ~ genre,
 
 <!-- Interprétation statistique et biologique -->
 
-Nous rejetons H₀ et nous pouvons dire que l'activité physique diffère de manière significative entre le hommes et les femmes, et que les hommes ont un activité physique significativement plus importante que celle des femmes au seuil α de 5% (test de Welch, *t* = 2,62, ddl = 129,8, valeur *p* = 0,0049).
+Nous rejetons H₀ et nous pouvons dire que l'activité physique diffère de manière significative entre le hommes et les femmes, et que les hommes ont un activité physique significativement plus importante que celle des femmes au seuil α de 5% (test de Welch, *t* = 2,62, ddl = 129,8, valeur *p* = 0,004924).
 
 ### Test t de Student 2
 
 <!--% Graphique ou tableau présentant les données par rapport au test à réaliser. -->
 
 ```{r plot_t_2 Jeanne et Lou}
-# Recodage de biometry$fumeur en biometry$fumeur_rec
-biometry$fumeur_rec <- cut(biometry$fumeur,
-  include.lowest = TRUE,
-  right = FALSE,
-  dig.lab = 4,
-  breaks = c(0, 1, 300),
-  labels = c("Non Fumeur", "Fumeur"))
-
-biometry %>%
-  sgroup_by(., fumeur_rec)%>%
-  ssummarise(., 
-  verre_alcool = fmean(alcool),
-  n = fn(alcool)
-  )
-```
-
-```{r}
 chart(data=biometry, fumeur~alcool)+
   geom_point()+
   geom_abline(slope=1, intercept=0)
@@ -522,7 +504,7 @@ t.test(biometry$fumeur, biometry$alcool, alternative="two.sided",
 
 <!--% Interprétation statistique et biologique -->
 
-Nous ne rejetons pas H₀ et nous ne pouvons pas dire que le nombre de cigarettes fumées par semaine diffère de manière significative du nombre de verres d'alcool consommés par semaine au seuil α de 5% (test *t*  apparié, *t* = 0.47906, ddl = 143, valeur *p* = 0,6326).
+Nous ne rejetons pas H₀ et nous ne pouvons pas dire que le nombre de cigarettes fumées par semaine diffère de manière significative du nombre de verres d'alcool consommés par semaine au seuil α de 5% (test *t* apparié, *t* = 0,48, ddl = 143, valeur *p* = 0,6326).
 
 <!--# Travaillez jusqu'ici pour le module 8. Commencez à travailler sur le rapport (intro, mat&met). -->
 
@@ -543,7 +525,7 @@ $$H_0:mr_{ja} = mr_a = mr_s$$ $$H_1: \exists(i, j) \mathrm{\ tel\ que\ } mr_i \n
 
 <!--% Vérification des conditions d'application -->
 
-```{r}
+```{r test de Bartlett Camille et Alexia}
 bartlett.test(data = biometry, activite_physique ~ age_rec_rec)
 ```
 
@@ -553,7 +535,7 @@ kruskal.test(data = biometry, activite_physique ~ age_rec_rec)
 
 <!--% Interprétation statistique et biologique -->
 
-Dans ce cas, un test de Kruskal-Wallis a été réalisé car la distribution des résidus n'est pas normale. Nous rejetons H₀ et nous pouvons donc conclure à une différence significative de l'activité physique entre au moins une des différentes classes d'âge au seuil α de 5 % (test Kruskal-Wallis, Chi carré = 6,58, ddl = 2, valeur p = 0,03719).
+Dans ce cas, un test de Kruskal-Wallis a été réalisé car la distribution des résidus n'est pas normale. Nous rejetons H₀ et nous pouvons donc conclure à une différence significative de l'activité physique entre au moins une des différentes classes d'âge au seuil α de 5% (test Kruskal-Wallis, Chi carré = 6,58, ddl = 2, valeur p = 0,03719).
 
 ### ANOVA à un facteur 2
 
@@ -574,7 +556,7 @@ $$H_1: \exists(i, j) \mathrm{\ tel\ que\ } mu_i \neq mu_j$$
 
 <!--% Vérification des conditions d'application -->
 
-```{r}
+```{r test de Bartelett Jeanne et Lou}
 bartlett.test(data=biometry, Poids_Ideal~alcool_rec_rec)
 ```
 
@@ -622,7 +604,7 @@ anova(anova_a <- lm(data = biometry, taille ~ IMC_cat_rec + fast_food_rec_rec)) 
 
 <!--% Interprétation statistique et biologique -->
 
-Nous ne rejetons pas H₀. Donc, nous ne pouvons pas conclure que la taille est significativement différente au seuil α de 5 % , que ce soit en fonction de l'IMC (*F* = 1,28, ddl = 3 et 137, valeur *p* = 0,284) ou de la consommation de fast food (*F* = 1,62, ddl = 2 et 137, valeur *p* = 0,203).
+Nous ne rejetons pas H₀ et nous ne pouvons pas conclure que la taille est significativement différente au seuil α de 5%, que ce soit en fonction de l'IMC (*F* = 1,28, ddl = 3 et 137, valeur *p* = 0,284) ou de la consommation de fast food (*F* = 1,62, ddl = 2 et 137, valeur *p* = 0,203).
 
 ### ANOVA à deux facteurs 2
 
@@ -649,7 +631,7 @@ chart(data = biometry, IMG ~ fumeur_rec %fill=% sommeil_rec_rec) +
 
 <!--% Hypothèse nulle et alternative -->
 
-$$H_O = Pas\:d'interaction\:entre\:le\:tabagisme\:et\:le\:sommeil\:sur\:l'IMG $$
+$$H_0 = Pas\:d'interaction\:entre\:le\:tabagisme\:et\:le\:sommeil\:sur\:l'IMG $$
 
 $$H_1 = Interaction\:entre\:le\:tabagisme\:et\:le\:sommeil\:sur\:l'IMG  $$
 
@@ -666,7 +648,6 @@ anova(biometry_anova2) %>.%
 ```
 
 ```{r quantile_quantile_2 Lou et Jeanne}
-
 library(broom.mixed)
 biometry_anova2 %>.%
   augment(.) %>.%
@@ -677,7 +658,7 @@ biometry_anova2 %>.%
 
 <!--% Interprétation statistique et biologique -->
 
-Nous ne rejetons pas H₀. Donc, nous ne pouvons pas conclure que l'MG est significativement différent au seuil α de 5 % , que ce soit en fonction du tabagisme (*F* = 0,193, ddl = 1 et 137, valeur *p* = 0,661) ou du sommeil (*F* = 1,935, ddl = 2 et 137, valeur *p* = 0,148). De plus, notre test confirme qu'il n'y a pas d'interactions entre le tabagisme et le sommeil au seuil α de 5% (*F* = 1,076, ddl = 2 et 137, valeur *p* = 0,344).
+Nous ne rejetons pas H₀, nous ne pouvons pas conclure que l'MG est significativement différent au seuil α de 5%, que ce soit en fonction du tabagisme (*F* = 0,193, ddl = 1 et 137, valeur *p* = 0,661) ou du sommeil (*F* = 1,935, ddl = 2 et 137, valeur *p* = 0,148). De plus, notre test confirme qu'il n'y a pas d'interaction entre le tabagisme et le sommeil au seuil α de 5% (*F* = 1,076, ddl = 2 et 137, valeur *p* = 0,344).
 
 # Discussion et conclusions
 
@@ -685,7 +666,7 @@ Nous ne rejetons pas H₀. Donc, nous ne pouvons pas conclure que l'MG est signi
 
 -   L\'IMC ne montre aucune association significative avec la consommation de fast food.
 
--   La masse grasse (IMG) n\'est pas significativement influencée par le tabagisme, le sommeil ou leur interaction.
+-   La masse graisseuse (IMG) n\'est pas significativement influencée par le tabagisme, le sommeil ou leur interaction.
 
 -   L\'activité physique varie significativement selon le sexe, avec une pratique plus élevée chez les hommes, et selon l\'âge, certaines tranches étant plus actives que d\'autres.
 

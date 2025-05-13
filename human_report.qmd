@@ -1,5 +1,5 @@
 ---
-title: "___"
+title: "Santé humaine liée à l'obésité"
 author: "Alexia BAIRE, Camille SPAGNA, Jeanne CURTO, Lou HALLOT"
 date: "`r Sys.Date()`"
 format:
@@ -25,6 +25,10 @@ if (!"tools:tests" %in% search())
 SciViews::R("infer", lang = "fr")
 ```
 
+```{r import}
+biometry <- read("data/biometry.rds") 
+```
+
 # Introduction
 
 <!--% Sur base de la bibliographie (lecture de l'article fourni et de vos propres recherches sur Internet), rédigez une introduction du sujet en 3 à 4 paragraphes. Cette introduction doit guider le lecteur vers votre but. Vous devez citer vos sources, c'est-à-dire qu’il faut indiquer au minimum la référence bibliographique fournie de manière correcte (inspirez-vous de ce qui est indiqué dans le bloc-notes, mais reformulez : un simple copier-coller de l'introduction du bloc-notes n'est PAS considéré comme l'exercice réalisé !) -->
@@ -33,23 +37,23 @@ SciViews::R("infer", lang = "fr")
 
 L'obésité est un problème majeur en santé publique. Ce problème connaît malheureusement une augmentation continue à travers le monde. En Belgique, une proportion non négligeable de la population présente une surcharge pondérale, et ce, en raison de modes de vie de plus en plus inactifs et d'une alimentation trop riche. Ces facteurs, bien que déjà très néfastes, accentuent le risque de développer des pathologies chroniques telles que le diabète de type 2, ou encore des maladies cardiovasculaires.
 
-Pour évaluer l'état de santé des individus, il existe plusieurs indicateurs simples, facilement calculables à partir de données anthropométriques. Les 3 indicateurs principaux sont : l'indice de masse corporelle (IMC), le tour de taille et le ratio entre tour de taille et taille. [@lebacq2015] D'autres indices seront calculé au cours de ce projet tels que l'indice de masse graisseuse (IMG) ou encore le rapport taille hanche (RTH). L'ensemble de ces derniers permettent d'évaluer le niveau de surcharge pondérale, et le risque métabolique de celle-ci.
+Pour évaluer l'état de santé des individus, il existe plusieurs indicateurs simples, facilement calculables à partir de données anthropométriques. Les 3 indicateurs principaux sont : l'indice de masse corporelle (IMC), le tour de taille et le ratio entre tour de taille et taille. [@lebacq2015] D'autres indices seront calculés au cours de ce projet tels que l'indice de masse graisseuse (IMG) ou encore le rapport tour de taille/tour de hanche (RTH). L'ensemble de ces derniers permettent d'évaluer le niveau de surcharge pondérale, et le risque métabolique de celle-ci.
 
-Ce projet a pour objectif d'analyser l'état de santé de la population selon les indicateurs cités ci-dessus, et selon les habitudes alimentaires, les niveaux d'activité physique, la consommation d'alcool et de bien d'autres comme le démontre [@mas2021]. L'objectif étant d'identifier des profils à risque et de mieux comprendre l'impact des comportements sur la santé, à l'aide des variables disponibles dans notre jeu de données.
+Ce projet a pour objectif d'analyser l'état de santé de la population selon les indicateurs cités ci-dessus, et selon les habitudes alimentaires, les niveaux d'activité physique, la consommation d'alcool et de bien d'autres, comme le démontre [@mas2021]. L'objectif est d'identifier des profils à risque et de mieux comprendre l'impact des comportements sur la santé, à l'aide des variables disponibles dans notre jeu de données.
 
 # But
 
 <!--% Formulez ici de façon concise et précise votre question de recherche en 1 à 2 phrases. -->
 
-Cette étude porte à mesurer l'état de santé, en lien direct avec l'obésité, de différents individus. Pour ce faire, on partira d'indicateurs simples afin d'identifier au mieux les profils à risque selon leurs habitudes. Cela nous permettra de comprendre l'impact de ces facteurs sur la santé.
+Cette étude a pour but de mesurer l'état de santé, en lien direct avec l'obésité, de différents individus. Pour ce faire, on partira d'indicateurs simples afin d'identifier au mieux les profils à risque selon leurs habitudes. Cela nous permettra de comprendre l'impact de ces facteurs sur la santé.
 
 # Matériel et méthodes
 
 <!--% Cette section doit comprendre une explication technique sur les mesures effectuées et sur le protocole relatif à l'acquisition des données en 3 à 4 paragraphes. Vous ajouterez aussi un paragraphe qui détaille les outils logiciels et statistiques utilisés (logiciels et versions des logiciels). Un simple copier-coller du matériel et méthodes du bloc-notes ne sera PAS considéré comme acceptable. -->
 
-Afin de collecter les données, une trentaine d'expérimentateurs ont interrogé et mesuré quatre personnes chacun. On comptabilise donc 144 individus dans notre jeu de données. La sélection des questions ainsi que le choix des mesures a été effectuée en amont afin d'établir un dictionnaire de données commun. Ce dictionnaire a pour but de normaliser les données, les unités mais aussi de modéliser les questions posées.
+Afin de collecter les données, une trentaine d'expérimentateurs ont interrogé et mesuré quatre personnes chacun. On comptabilise donc 144 individus dans notre jeu de données. La sélection des questions ainsi que le choix des mesures ont été effectués en amont afin d'établir un dictionnaire de données commun. Ce dictionnaire a pour but de normaliser les données, les unités mais aussi de modéliser les questions posées.
 
-Pour les mesures telles que la masse corporelle, sensibles aux différences entre balances, une intercalibration a été nécessaire afin de garantir la comparabilité des résultats. Chaque expérimentateur s'est d'abord pesé sur une balance de référence, puis sur la balance utilisée pour mesurer les participants, ce qui a permis d'évaluer l'écart entre les deux instruments. Cette procédure d'intercalibration a pour but de limiter les erreurs liés aux variations entre appareils de mesure et à renforcer la fiabilité des données collectées.
+Pour les mesures telles que la masse corporelle, sensibles aux différences entre balances, une intercalibration a été nécessaire afin de garantir la comparabilité des résultats. Chaque expérimentateur s'est d'abord pesé sur une balance de référence, puis sur la balance utilisée pour mesurer les participants, ce qui a permis d'évaluer l'écart entre les deux instruments. Cette procédure d'intercalibration a pour but de limiter les erreurs liées aux variations entre appareils de mesure et à renforcer la fiabilité des données collectées.
 
 Les données obtenues, ainsi que le nom des 144 individus testés, ont été pseudonymisées dans le but de respecter l'anonymat des sujets, conformément au RGPD (Règlement général sur la protection des données, règlement applicable en Europe).
 
@@ -72,6 +76,39 @@ chart(data=biometry, genre ~ activite_physique %fill=% genre)+
 
 Les hommes ont une activité physique plutôt éparse mais sans valeurs extrêmes. La plupart d'entre eux ayant néanmoins un faible niveau. À l'inverse, il y a deux grands extrêmes chez les femmes, traduisant une plus grande diversité dans leurs pratiques. Beaucoup de femmes ont une activité physique assez faible voir nulle alors que quelques unes d'entre elles s'avèrent avoir un niveau beaucoup plus élevé.
 
+```{r CS remaniement}
+## Recodage de biometry$age en biometry$age_rec
+biometry$age_rec <- cut(biometry$age,
+  include.lowest = TRUE,
+  right = FALSE,
+  dig.lab = 2,
+  breaks = c(14, 35, 65, 99)
+)
+
+## Recodage de biometry$age_rec en biometry$age_rec_rec
+biometry$age_rec_rec <- biometry$age_rec %>%
+  fct_recode(
+    "Jeune adulte" = "[14,35)",
+    "Adulte" = "[35,65)",
+    "Senior" = "[65,99]"
+  )
+
+## Recodage de biometry$sommeil en biometry$sommeil_rec
+biometry$sommeil_rec <- cut(biometry$sommeil,
+  include.lowest = TRUE,
+  right = FALSE,
+  dig.lab = 4,
+  breaks = c(0, 6.7, 8.6, 14))
+
+## Recodage de biometry$sommeil_rec en biometry$sommeil_rec_rec
+biometry$sommeil_rec_rec <- biometry$sommeil_rec %>%
+  fct_recode(
+    "Sommeil court" = "[0,6.7)",
+    "Sommeil normal" = "[6.7,8.6)",
+    "Sommeil long" = "[8.6,14]"
+  )
+```
+
 ```{r CS}
 chart(data = biometry, ~ sommeil_rec_rec %fill=% age_rec_rec) +
   geom_bar(position = "dodge") +
@@ -82,12 +119,39 @@ chart(data = biometry, ~ sommeil_rec_rec %fill=% age_rec_rec) +
 
 Le graphique met en évidence une prédominance du sommeil normal dans l'ensemble des tranches d'âge, avec un maximum observé chez les jeunes adultes. Une proportion non négligeable de sommeil court est également présente chez cette population, indiquant une plus grande variabilité. Chez les adultes, le sommeil normal reste majoritaire, mais les cas de sommeil court sont également fréquents. Le sommeil long demeure peu représenté dans toutes les catégories. Enfin, chez les seniors, la distribution se resserre nettement autour du sommeil normal, tandis que les occurrences de sommeil court ou long deviennent très rares. Ces observations suggèrent une tendance générale à la stabilisation du sommeil avec l'âge.
 
+```{r JC remaniement}
+## Recodage de biometry$alcool en biometry$alcool_rec
+biometry$alcool_rec <- cut(biometry$alcool,
+  include.lowest = FALSE,
+  right = FALSE,
+  dig.lab = 4,
+  breaks = c(0, 1, 7, 50)
+)
+## Recodage de biometry$alcool_rec en biometry$alcool_rec_rec
+biometry$alcool_rec_rec <- biometry$alcool_rec %>%
+  fct_recode(
+    "Jamais" = "[0,1)",
+    "Régulièrement" = "[1,7)",
+    "Souvent" = "[7,50)"
+  )
+```
+
 ```{r JC tableau}_r)}
-Jeanne_tab <- table(biometry$alcool_rec_rec, biometry$age_rec_rec)
-knitr::kable(Jeanne_tab)
+al_ag_tab <- table(biometry$alcool_rec_rec, biometry$age_rec_rec)
+knitr::kable(al_ag_tab)
 ```
 
 La consommation d\'alcool évolue avec l\'âge. Les jeunes adultes sont nombreux à ne jamais boire, mais une part importante consomme régulièrement ou souvent. Chez les adultes, la consommation est plus équilibrée, avec davantage de consommation régulière. Les seniors, quant à eux, consomment très peu, et aucun ne boit fréquemment. On constate donc une diminution progressive de la consommation fréquente à mesure que l\'âge augmente.
+
+```{r LH remaniement}
+## Recodage de biometry$sucre en biometry$sucre_rec
+biometry$sucre_rec <- biometry$sucre %>%
+  fct_recode(
+    "Exceptionnellement" = "jamais",
+    "Exceptionnellement" = "rarement",
+    "Régulièrement" = "régulièrement",
+    "Souvent" = "souvent")
+```
 
 ```{r LH graphique}
 give_n <- function(x)
@@ -164,7 +228,12 @@ chart(data=biometry, ~ fast_food_rec_rec %fill=% IMC_cat)+
 
 ### Test de Chi^2^
 
-$$H_O = indépendance\:de\:l'IMC\:et\:de\:la\:consomation\:de\:fast\:food $$
+```{r plot_chi2_1 Alexia et Camille}
+table_IMC_fast_food <- table(IMC = biometry$IMC_cat_rec,Fast_food = biometry$fast_food_rec_rec)
+tabularise(table_IMC_fast_food)
+```
+
+$$H_0 = indépendance\:de\:l'IMC\:et\:de\:la\:consomation\:de\:fast\:food $$
 
 $$
 H_1 = dépendance\:de\:l'IMC\:et\:de\:la\:consomation\:de\:fast\:food  
@@ -199,7 +268,7 @@ $$H_1: \exists(i, j) \mathrm{\ tel\ que\ } mr_i \neq mr_j$$
 kruskal.test(data = biometry, activite_physique ~ age_rec_rec)
 ```
 
-Dans ce cas, un test de Kruskal-Wallis a été réalisé car la distribution des résidus n'est pas normale. Nous rejetons H₀ et nous pouvons donc conclure à une différence significative de l'activité physique entre au moins une des différentes classes d'âge au seuil α de 5 % (test Kruskal-Wallis, Chi carré = 6,58, ddl = 2, valeur p = 0,03719).
+Dans ce cas, un test de Kruskal-Wallis a été réalisé car la distribution des résidus n'est pas normale. Nous rejetons H₀ et nous pouvons donc conclure à une différence significative de l'activité physique entre au moins une des différentes classes d'âge au seuil α de 5% (test Kruskal-Wallis, Chi carré = 6,58, ddl = 2, valeur p = 0,03719).
 
 ### Calcul de l'IMG
 
@@ -232,7 +301,17 @@ kable(table(biometry$sucre_rec, biometry$IMG_cat), caption = "Répartition de l'
 
 ### ANOVA à deux facteurs
 
-$$H_O = Pas\:d'interaction\:entre\:le\:tabagisme\:et\:le\:sommeil\:sur\:l'IMG $$
+```{r remaniement}
+# Recodage de biometry$fumeur en biometry$fumeur_rec
+biometry$fumeur_rec <- cut(biometry$fumeur,
+  include.lowest = TRUE,
+  right = FALSE,
+  dig.lab = 4,
+  breaks = c(0, 1, 300),
+  labels = c("Non Fumeur", "Fumeur"))
+```
+
+$$H_0 = Pas\:d'interaction\:entre\:le\:tabagisme\:et\:le\:sommeil\:sur\:l'IMG $$
 
 $$H_1 = Interaction\:entre\:le\:tabagisme\:et\:le\:sommeil\:sur\:l'IMG  $$
 
@@ -242,13 +321,17 @@ anova(biometry_anova2) %>.%
   tabularise(.)
 ```
 
-Nous ne rejetons pas H₀. Donc, nous ne pouvons pas conclure que l'MG est significativement différent au seuil α de 5 % , que ce soit en fonction du tabagisme (*F* = 0,193, ddl = 1 et 137, valeur *p* = 0,661) ou du sommeil (*F* = 1,935, ddl = 2 et 137, valeur *p* = 0,148). De plus, notre test confirme qu'il n'y a pas d'interactions entre le tabagisme et le sommeil au seuil α de 5% (*F* = 1,076, ddl = 2 et 137, valeur *p* = 0,344).
+Nous ne rejetons pas H₀, nous ne pouvons pas conclure que l'MG est significativement différent au seuil α de 5%, que ce soit en fonction du tabagisme (*F* = 0,193, ddl = 1 et 137, valeur *p* = 0,661) ou du sommeil (*F* = 1,935, ddl = 2 et 137, valeur *p* = 0,148). De plus, notre test confirme qu'il n'y a pas d'interactions entre le tabagisme et le sommeil au seuil α de 5% (*F* = 1,076, ddl = 2 et 137, valeur *p* = 0,344).
 
 # Discussion et conclusions
 
 <!--% Reprenez les résultats obtenus, discutez-les d'un point de vue biologique en 4 à 5 paragraphes et concluez votre travail. Vous pouvez les mettre également en relation avec vos recherches bibliographiques dans cette section. -->
 
-Les analyses menées permettent de dégager plusieurs observations. D\'une part, l\'IMC ne semble pas influencé par la consommation de fast food, et la masse grasse (IMG) n\'est pas significativement affectée par le tabagisme, le sommeil, ni par l\'interaction entre ces deux facteurs. D\'autre part, l\'activité physique montre des différences significatives selon le sexe, avec une pratique plus élevée chez les hommes, ainsi qu\'en fonction de l\'âge, certaines tranches étant plus actives que d\'autres. Ces résultats suggèrent que seuls le sexe, l\'âge et le niveau d\'activité physique apparaissent comme des éléments réellement discriminants dans le cadre de cette étude.
+Les résultats montrent que l\'IMC n\'est pas significativement associé à la consommation de fast food. Cela peut s\'expliquer par la nature globale de l\'IMC, qui ne tient pas compte de la répartition corporelle ni des habitudes alimentaires sur le long terme. Une consommation ponctuelle de fast food peut être neutralisée par d\'autres facteurs comme l\'activité physique ou le métabolisme.
+
+L\'IMG ne semble pas non plus influencée par le tabagisme, le sommeil ou leur interaction. Bien que le tabac et un mauvais sommeil soient associés dans la littérature à des dérèglements métaboliques, ces effets varient beaucoup selon les individus. L\'absence de lien ici peut refléter la complexité des interactions biologiques ou une mesure trop simplifiée des comportements.
+
+L\'activité physique, en revanche, diffère selon le sexe et l\'âge. Les hommes sont globalement plus actifs, ce qui peut s\'expliquer par des facteurs hormonaux et socioculturels. L\'âge joue aussi un rôle : les plus jeunes sont souvent plus actifs, tandis que l\'activité diminue avec le temps en raison de contraintes personnelles ou professionnelles.
 
 <!--# Important : ce document doit compiler SANS ERREURS avec le bouton 'Rendu' sinon le travail sera sanctionné lourdement. La compilation du document Quarto est maintenant considérée comme acquise. -->
 
