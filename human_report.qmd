@@ -141,7 +141,7 @@ al_ag_tab <- table(biometry$alcool_rec_rec, biometry$age_rec_rec)
 knitr::kable(al_ag_tab)
 ```
 
-La consommation d\'alcool évolue avec l\'âge. Les jeunes adultes sont nombreux à ne jamais boire, mais une part importante consomme régulièrement ou souvent. Chez les adultes, la consommation est plus équilibrée, avec davantage de consommation régulière. Les seniors, quant à eux, consomment très peu, et aucun ne boit fréquemment. On constate donc une diminution progressive de la consommation fréquente à mesure que l\'âge augmente.
+La consommation d'alcool évolue avec l'âge. Les jeunes adultes sont nombreux à ne jamais boire, mais une part importante consomme régulièrement ou souvent. Chez les adultes, la consommation est plus équilibrée, avec davantage de consommation régulière. Les seniors, quant à eux, consomment très peu, et aucun ne boit fréquemment. On constate donc une diminution progressive de la consommation fréquente à mesure que l'âge augmente.
 
 ```{r LH remaniement}
 ## Recodage de biometry$sucre en biometry$sucre_rec
@@ -327,11 +327,11 @@ Nous ne rejetons pas H₀, nous ne pouvons pas conclure que l'MG est significati
 
 <!--% Reprenez les résultats obtenus, discutez-les d'un point de vue biologique en 4 à 5 paragraphes et concluez votre travail. Vous pouvez les mettre également en relation avec vos recherches bibliographiques dans cette section. -->
 
-Les résultats montrent que l\'IMC n\'est pas significativement associé à la consommation de fast food. Cela peut s\'expliquer par la nature globale de l\'IMC, qui ne tient pas compte de la répartition corporelle ni des habitudes alimentaires sur le long terme. Une consommation ponctuelle de fast food peut être neutralisée par d\'autres facteurs comme l\'activité physique ou le métabolisme.
+Les résultats montrent que l'IMC n'est pas significativement associé à la consommation de fast food. Cela peut s'expliquer par la nature globale de l'IMC, qui ne tient pas compte de la répartition corporelle ni des habitudes alimentaires sur le long terme. Une consommation ponctuelle de fast food peut être neutralisée par d'autres facteurs comme l'activité physique ou le métabolisme.
 
-L\'IMG ne semble pas non plus influencée par le tabagisme, le sommeil ou leur interaction. Bien que le tabac et un mauvais sommeil soient associés dans la littérature à des dérèglements métaboliques, ces effets varient beaucoup selon les individus. L\'absence de lien ici peut refléter la complexité des interactions biologiques ou une mesure trop simplifiée des comportements.
+L'IMG ne semble pas non plus influencée par le tabagisme, le sommeil ou leur interaction. Bien que le tabac et un mauvais sommeil soient associés dans la littérature à des dérèglements métaboliques, ces effets varient beaucoup selon les individus. L'absence de lien ici peut refléter la complexité des interactions biologiques ou une mesure trop simplifiée des comportements.
 
-L\'activité physique, en revanche, diffère selon le sexe et l\'âge. Les hommes sont globalement plus actifs, ce qui peut s\'expliquer par des facteurs hormonaux et socioculturels. L\'âge joue aussi un rôle : les plus jeunes sont souvent plus actifs, tandis que l\'activité diminue avec le temps en raison de contraintes personnelles ou professionnelles.
+L'activité physique, en revanche, diffère selon le sexe et l'âge. Les hommes sont globalement plus actifs, ce qui peut s'expliquer par des facteurs hormonaux et socioculturels. L'âge joue aussi un rôle : les plus jeunes sont souvent plus actifs, tandis que l'activité diminue avec le temps en raison de contraintes personnelles ou professionnelles.
 
 <!--# Important : ce document doit compiler SANS ERREURS avec le bouton 'Rendu' sinon le travail sera sanctionné lourdement. La compilation du document Quarto est maintenant considérée comme acquise. -->
 
