@@ -22,7 +22,7 @@ if (!"tools:tests" %in% search())
   source(here::here("tests/tools_tests.R"), attach(NULL, name = "tools:tests"))
 
 # Configuration de l'environnement SciViews::R
-SciViews::R(___, lang = "fr")
+SciViews::R("infer", lang = "fr")
 ```
 
 # Introduction
@@ -31,19 +31,29 @@ SciViews::R(___, lang = "fr")
 
 <!--# Ce projet porte sur la santé humaine liée à l'obésité, à la façon de se nourrir et aux activités réalisées (plus ou moins sédentaire ou actif) ... Réalisez des recherches bibliographiques afin d'avoir une vision précise de la thématique. Existe-t-il des indicateurs calculables pour quantifier l'état de santé d'un individu, par exemple ? Naturellement, ces indicateurs doivent être calculables sur bases des variables mesurées dans votre jeu de données. Focalisez-vous donc sur ces variables-là. -->
 
-...Votre introduction ici...
+L'obésité est un problème majeur en santé publique. Ce problème connaît malheureusement une augmentation continue à travers le monde. En Belgique, une proportion non négligeable de la population présente une surcharge pondérale, et ce, en raison de modes de vie de plus en plus inactifs et d'une alimentation trop riche. Ces facteurs, bien que déjà très néfastes, accentuent le risque de développer des pathologies chroniques telles que le diabète de type 2, ou encore des maladies cardiovasculaires.
+
+Pour évaluer l'état de santé des individus, il existe plusieurs indicateurs simples, facilement calculables à partir de données anthropométriques. Les 3 indicateurs principaux sont : l'indice de masse corporelle (IMC), le tour de taille et le ratio entre tour de taille et taille. [@lebacq2015] D'autres indices seront calculé au cours de ce projet tels que l'indice de masse graisseuse (IMG) ou encore le rapport taille hanche (RTH). L'ensemble de ces derniers permettent d'évaluer le niveau de surcharge pondérale, et le risque métabolique de celle-ci.
+
+Ce projet a pour objectif d'analyser l'état de santé de la population selon les indicateurs cités ci-dessus, et selon les habitudes alimentaires, les niveaux d'activité physique, la consommation d'alcool et de bien d'autres comme le démontre [@mas2021]. L'objectif étant d'identifier des profils à risque et de mieux comprendre l'impact des comportements sur la santé, à l'aide des variables disponibles dans notre jeu de données.
 
 # But
 
 <!--% Formulez ici de façon concise et précise votre question de recherche en 1 à 2 phrases. -->
 
-...Votre but ici...
+Cette étude porte à mesurer l'état de santé, en lien direct avec l'obésité, de différents individus. Pour ce faire, on partira d'indicateurs simples afin d'identifier au mieux les profils à risque selon leurs habitudes. Cela nous permettra de comprendre l'impact de ces facteurs sur la santé.
 
 # Matériel et méthodes
 
 <!--% Cette section doit comprendre une explication technique sur les mesures effectuées et sur le protocole relatif à l'acquisition des données en 3 à 4 paragraphes. Vous ajouterez aussi un paragraphe qui détaille les outils logiciels et statistiques utilisés (logiciels et versions des logiciels). Un simple copier-coller du matériel et méthodes du bloc-notes ne sera PAS considéré comme acceptable. -->
 
-...Votre matmet ici...
+Afin de collecter les données, une trentaine d'expérimentateurs ont interrogé et mesuré quatre personnes chacun. On comptabilise donc 144 individus dans notre jeu de données. La sélection des questions ainsi que le choix des mesures a été effectuée en amont afin d'établir un dictionnaire de données commun. Ce dictionnaire a pour but de normaliser les données, les unités mais aussi de modéliser les questions posées.
+
+Pour les mesures telles que la masse corporelle, sensibles aux différences entre balances, une intercalibration a été nécessaire afin de garantir la comparabilité des résultats. Chaque expérimentateur s'est d'abord pesé sur une balance de référence, puis sur la balance utilisée pour mesurer les participants, ce qui a permis d'évaluer l'écart entre les deux instruments. Cette procédure d'intercalibration a pour but de limiter les erreurs liés aux variations entre appareils de mesure et à renforcer la fiabilité des données collectées.
+
+Les données obtenues, ainsi que le nom des 144 individus testés, ont été pseudonymisées dans le but de respecter l'anonymat des sujets, conformément au RGPD (Règlement général sur la protection des données, règlement applicable en Europe).
+
+La description des données ainsi que les analyses statistiques ont été réalisées dans l'environnement SciViews Box 2024, sous Linux, via [Saturncloud](https://saturncloud.io/), à l'aide du [logiciel R](https://www.r-project.org/) (version : `R.version.string`).
 
 # Résultats
 
@@ -53,7 +63,42 @@ SciViews::R(___, lang = "fr")
 
 <!--# N'oubliez pas que ce document doit pouvoir compiler indépendamment du reste. Cela implique que vous ajoutiez un chunk d'importation des données et que vous recalculiez tout ce qui doit l'être... Par contre, un simple copier-coller de toute la partie résultats du bloc-notes ne sera pas considéré comme un travail réalisé : vous devez sélectionner, et éventuellement remanier un peu le code, pour ne conserver que ce qui est utile ici. -->
 
-...Vos descriptions des données ici...
+```{r AB graphique }
+chart(data=biometry, genre ~ activite_physique %fill=% genre)+ 
+  geom_violin(show.legend=FALSE)+
+  coord_flip()+ 
+  scale_fill_viridis_d()
+```
+
+Les hommes ont une activité physique plutôt éparse mais sans valeurs extrêmes. La plupart d'entre eux ayant néanmoins un faible niveau. À l'inverse, il y a deux grands extrêmes chez les femmes, traduisant une plus grande diversité dans leurs pratiques. Beaucoup de femmes ont une activité physique assez faible voir nulle alors que quelques unes d'entre elles s'avèrent avoir un niveau beaucoup plus élevé.
+
+```{r CS}
+chart(data = biometry, ~ sommeil_rec_rec %fill=% age_rec_rec) +
+  geom_bar(position = "dodge") +
+  labs(fill = "Âge") +
+  scale_fill_viridis_d() +
+  labs (y = "Effectifs", x = "Qualité du sommeil")
+```
+
+Le graphique met en évidence une prédominance du sommeil normal dans l'ensemble des tranches d'âge, avec un maximum observé chez les jeunes adultes. Une proportion non négligeable de sommeil court est également présente chez cette population, indiquant une plus grande variabilité. Chez les adultes, le sommeil normal reste majoritaire, mais les cas de sommeil court sont également fréquents. Le sommeil long demeure peu représenté dans toutes les catégories. Enfin, chez les seniors, la distribution se resserre nettement autour du sommeil normal, tandis que les occurrences de sommeil court ou long deviennent très rares. Ces observations suggèrent une tendance générale à la stabilisation du sommeil avec l'âge.
+
+```{r JC tableau}_r)}
+Jeanne_tab <- table(biometry$alcool_rec_rec, biometry$age_rec_rec)
+knitr::kable(Jeanne_tab)
+```
+
+```{r LH graphique}
+give_n <- function(x)
+  c(y = max(x) * 1.1, label = length(x)) 
+
+chart(data = biometry, masse_corr ~ sucre_rec %fill=% genre) +
+  geom_boxplot() + 
+  scale_fill_viridis_d() +
+  stat_summary(fun.data = give_n, geom = "text", hjust = 0.5,
+    position = position_dodge(0.75))
+```
+
+Les médianes des masses corrigées sont toujours supérieures chez les hommes, ce qui semble logique car les hommes ont généralement une masse musculaire supérieure. Cependant, la moyenne des masses corrigées des personnes consommant exceptionnellement du sucre avoisinent celle des personnes en consommant souvent voire les surpassent. Cela pourrait s'expliquer par une inégalité des observations. En effet, on a environ 4 fois moins d'observations dans la catégorie "exceptionnellement", rendant la comparaison non représentative d'une population plus étendue.
 
 ## Tests d'hypothèses
 
