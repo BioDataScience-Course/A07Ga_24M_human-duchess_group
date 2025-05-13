@@ -190,7 +190,7 @@ chart(data = biometry, masse_corr ~ sucre_rec %fill=% genre) +
     position = position_dodge(0.75))
 ```
 
-Les médianes des masses corrigées sont toujours supérieures chez les hommes; ce qui semble logique car les hommes ont généralement une masse musculaire supérieure. Cependant, la moyenne des masses corrigées des personnes consommant exceptionnellement du sucre avoisinent celle des personnes en consommant souvent voire les surpassent. Cela pourrait s'expliquer par une inégalité des observations. En effet, on a environ 4 fois moins d'observations dans la catégorie "exceptionnellement", rendant la comparaison non représentative d'une population plus étendue.
+Les médianes des masses corrigées sont toujours supérieures chez les hommes, ce qui semble logique car les hommes ont généralement une masse musculaire supérieure. Cependant, la moyenne des masses corrigées des personnes consommant exceptionnellement du sucre avoisinent celle des personnes en consommant souvent voire les surpassent. Cela pourrait s'expliquer par une inégalité des observations. En effet, on a environ 4 fois moins d'observations dans la catégorie "exceptionnellement", rendant la comparaison non représentative d'une population plus étendue.
 
 ## Calcul d'indices
 
