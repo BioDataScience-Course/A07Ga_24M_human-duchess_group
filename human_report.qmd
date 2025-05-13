@@ -1,5 +1,5 @@
 ---
-title: "___"
+title: "Santé humaine liée à l'obésité (rapport)"
 author: "Alexia BAIRE, Camille SPAGNA, Jeanne CURTO, Lou HALLOT"
 date: "`r Sys.Date()`"
 format:
@@ -87,7 +87,7 @@ Jeanne_tab <- table(biometry$alcool_rec_rec, biometry$age_rec_rec)
 knitr::kable(Jeanne_tab)
 ```
 
-La consommation d\'alcool évolue avec l\'âge. Les jeunes adultes sont nombreux à ne jamais boire, mais une part importante consomme régulièrement ou souvent. Chez les adultes, la consommation est plus équilibrée, avec davantage de consommation régulière. Les seniors, quant à eux, consomment très peu, et aucun ne boit fréquemment. On constate donc une diminution progressive de la consommation fréquente à mesure que l\'âge augmente.
+La consommation d'alcool évolue avec l'âge. Les jeunes adultes sont nombreux à ne jamais boire, mais une part importante consomme régulièrement ou souvent. Chez les adultes, la consommation est plus équilibrée, avec davantage de consommation régulière. Les seniors, quant à eux, consomment très peu, et aucun ne boit fréquemment. On constate donc une diminution progressive de la consommation fréquente à mesure que l'âge augmente.
 
 ```{r LH graphique}
 give_n <- function(x)
@@ -248,7 +248,7 @@ Nous ne rejetons pas H₀. Donc, nous ne pouvons pas conclure que l'MG est signi
 
 <!--% Reprenez les résultats obtenus, discutez-les d'un point de vue biologique en 4 à 5 paragraphes et concluez votre travail. Vous pouvez les mettre également en relation avec vos recherches bibliographiques dans cette section. -->
 
-Les analyses menées permettent de dégager plusieurs observations. D\'une part, l\'IMC ne semble pas influencé par la consommation de fast food, et la masse grasse (IMG) n\'est pas significativement affectée par le tabagisme, le sommeil, ni par l\'interaction entre ces deux facteurs. D\'autre part, l\'activité physique montre des différences significatives selon le sexe, avec une pratique plus élevée chez les hommes, ainsi qu\'en fonction de l\'âge, certaines tranches étant plus actives que d\'autres. Ces résultats suggèrent que seuls le sexe, l\'âge et le niveau d\'activité physique apparaissent comme des éléments réellement discriminants dans le cadre de cette étude.
+Les analyses menées permettent de dégager plusieurs observations. D'une part, l'IMC ne semble pas influencé par la consommation de fast food, et la masse grasse (IMG) n'est pas significativement affectée par le tabagisme, le sommeil, ni par l'interaction entre ces deux facteurs. D'autre part, l'activité physique montre des différences significatives selon le sexe, avec une pratique plus élevée chez les hommes, ainsi qu'en fonction de l'âge, certaines tranches étant plus actives que d'autres. Ces résultats suggèrent que seuls le sexe, l'âge et le niveau d'activité physique apparaissent comme des éléments réellement discriminants dans le cadre de cette étude.
 
 <!--# Important : ce document doit compiler SANS ERREURS avec le bouton 'Rendu' sinon le travail sera sanctionné lourdement. La compilation du document Quarto est maintenant considérée comme acquise. -->
 

@@ -155,14 +155,14 @@ chart(data=biometry, aes(x=age, y=alcool_rec_rec, fill=genre )) +
   facet_wrap(~genre)
 ```
 
-Le graphique montre que la consommation d\'alcool évolue selon l\'âge et le sexe. Les jeunes adultes, autour de 25 ans, sont les plus nombreux à ne jamais consommer d\'alcool, aussi bien chez les hommes que chez les femmes. Ensuite, la consommation régulière et fréquente augmente avec l\'âge, atteignant un pic vers 40 à 60 ans, surtout chez les hommes. À partir de 60 ans, la consommation fréquente diminue nettement. On observe aussi que, quel que soit l\'âge, les femmes consomment généralement moins souvent de l\'alcool que les hommes.
+Le graphique montre que la consommation d'alcool évolue selon l'âge et le sexe. Les jeunes adultes, autour de 25 ans, sont les plus nombreux à ne jamais consommer d'alcool, aussi bien chez les hommes que chez les femmes. Ensuite, la consommation régulière et fréquente augmente avec l'âge, atteignant un pic vers 40 à 60 ans, surtout chez les hommes. À partir de 60 ans, la consommation fréquente diminue nettement. On observe aussi que, quel que soit l'âge, les femmes consomment généralement moins souvent de l'alcool que les hommes.
 
 ```{r JC tableau}_r)}
 Jeanne_tab <- table(biometry$alcool_rec_rec, biometry$age_rec_rec)
 knitr::kable(Jeanne_tab)
 ```
 
-La consommation d\'alcool évolue avec l\'âge. Les jeunes adultes sont nombreux à ne jamais boire, mais une part importante consomme régulièrement ou souvent. Chez les adultes, la consommation est plus équilibrée, avec davantage de consommation régulière. Les seniors, quant à eux, consomment très peu, et aucun ne boit fréquemment. On constate donc une diminution progressive de la consommation fréquente à mesure que l\'âge augmente.
+La consommation d'alcool évolue avec l'âge. Les jeunes adultes sont nombreux à ne jamais boire, mais une part importante consomme régulièrement ou souvent. Chez les adultes, la consommation est plus équilibrée, avec davantage de consommation régulière. Les seniors, quant à eux, consomment très peu, et aucun ne boit fréquemment. On constate donc une diminution progressive de la consommation fréquente à mesure que l'âge augmente.
 
 ### Description par l'étudiant 4
 
@@ -683,11 +683,11 @@ Nous ne rejetons pas H₀. Donc, nous ne pouvons pas conclure que l'MG est signi
 
 <!--% Reprenez ci-dessous sous forme d'éléments de listes brefs les résultats les plus importants que vous retirez de votre analyse. Ils doivent vous guider pour décider quels tests (les plus intéressants) vous allez conserver dans le rapport. -->
 
--   L\'IMC ne montre aucune association significative avec la consommation de fast food.
+-   L'IMC ne montre aucune association significative avec la consommation de fast food.
 
--   La masse grasse (IMG) n\'est pas significativement influencée par le tabagisme, le sommeil ou leur interaction.
+-   La masse grasse (IMG) n'est pas significativement influencée par le tabagisme, le sommeil ou leur interaction.
 
--   L\'activité physique varie significativement selon le sexe, avec une pratique plus élevée chez les hommes, et selon l\'âge, certaines tranches étant plus actives que d\'autres.
+-   L'activité physique varie significativement selon le sexe, avec une pratique plus élevée chez les hommes, et selon l'âge, certaines tranches étant plus actives que d'autres.
 
 <!--# Important : ce document doit compiler SANS ERREURS avec le bouton 'Rendu' sinon le travail sera sanctionné lourdement. La compilation du document Quarto est maintenant considérée comme acquise. -->
 
